@@ -1,0 +1,181 @@
+/**
+ * Steps on the ridge. Wide screens: the stops sit on the drawn line, a dotted drop leads down to
+ * each one's figure. Narrow screens: one stop under the other along a straight line. Sets (a half
+ * and a full day) take turns under a switch.
+ */
+
+.bb-steps {
+  --ridge: clamp(110px, 11vw, 160px);
+}
+
+.bb-steps__track {
+  margin-top: var(--wp--preset--spacing--50);
+  position: relative;
+}
+
+/* Sets: the switch under the intro, the chosen day's line rising in. */
+.bb-steps__switch {
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.bb-steps__switch + .bb-steps__track {
+  margin-top: 36px;
+}
+
+.bb-steps__track[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bb-steps__track[data-set] {
+    animation: bb-steps-in 0.5s ease both;
+  }
+}
+
+@keyframes bb-steps-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.bb-steps__ridge {
+  height: var(--ridge);
+  left: 0;
+  overflow: visible;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.bb-steps__ridge path,
+.bb-season__ridge path,
+.bb-route__line path {
+  fill: none;
+  stroke: var(--wp--preset--color--contrast);
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.bb-steps__ridge path {
+  opacity: 0.32;
+}
+
+.bb-steps__list {
+  display: grid;
+  grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-steps__step {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--ridge) + 44px) 16px 0;
+  position: relative;
+  text-align: center;
+}
+
+.bb-steps__step > * {
+  margin: 0;
+}
+
+/* The stop on the line, and the dotted drop from it to the words. */
+.bb-steps__dot {
+  background: var(--bb-ground);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--wp--preset--color--contrast);
+  height: 16px;
+  left: 50%;
+  position: absolute;
+  top: calc(var(--y) / 100 * var(--ridge));
+  transform: translate(-50%, -50%);
+  width: 16px;
+  z-index: 1;
+}
+
+.bb-steps__step::before {
+  border-left: 1.5px dotted var(--bb-line-soft);
+  content: "";
+  height: calc(var(--ridge) + 30px - var(--y) / 100 * var(--ridge) - 14px);
+  left: 50%;
+  position: absolute;
+  top: calc(var(--y) / 100 * var(--ridge) + 14px);
+}
+
+.bb-steps__step.is-sun .bb-steps__dot {
+  background: var(--wp--preset--color--sun);
+  box-shadow:
+    0 0 0 6px rgba(242, 168, 90, 0.22),
+    0 0 0 14px rgba(242, 168, 90, 0.08);
+  height: 20px;
+  width: 20px;
+}
+
+.bb-steps__figure {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--bb-figure);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.bb-steps__title {
+  font-size: var(--wp--preset--font-size--entry);
+  line-height: 1.1;
+  margin-top: 14px;
+}
+
+.bb-steps__text {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--interface);
+  margin-top: 10px;
+  max-width: 28ch;
+}
+
+.bb-steps__actions {
+  justify-content: center;
+  margin-top: var(--wp--preset--spacing--50);
+}
+
+/* Narrow: one stop under the other, joined by a straight line. */
+@media (max-width: 899px) {
+  .bb-steps__ridge {
+    display: none;
+  }
+
+  .bb-steps__list {
+    gap: 34px;
+    grid-template-columns: 1fr;
+  }
+
+  .bb-steps__step {
+    align-items: flex-start;
+    padding: 0 0 0 48px;
+    text-align: left;
+  }
+
+  .bb-steps__dot {
+    left: 9px;
+    top: 16px;
+  }
+
+  .bb-steps__step::before {
+    border-left: 1.5px solid var(--wp--preset--color--line);
+    height: calc(100% + 34px - 14px);
+    left: 9px;
+    top: 30px;
+  }
+
+  .bb-steps__step:last-child::before {
+    display: none;
+  }
+
+  .bb-steps__title {
+    margin-top: 8px;
+  }
+}

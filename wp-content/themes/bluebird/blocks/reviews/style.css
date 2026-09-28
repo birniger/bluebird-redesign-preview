@@ -1,0 +1,149 @@
+/**
+ * The reviews band: glacier teal, the sun setting slowly behind the words and the ridge ending in
+ * the bird as a faint watermark. One quote at a time.
+ */
+
+.bb-reviews {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--frame);
+  isolation: isolate;
+  overflow: hidden;
+  padding: 64px 48px 56px;
+  position: relative;
+}
+
+.bb-reviews__sun {
+  animation: bb-sunset 28s ease-in-out infinite alternate;
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 26px rgba(242, 168, 90, 0.16),
+    0 0 0 64px rgba(242, 168, 90, 0.07);
+  height: 210px;
+  position: absolute;
+  right: 7%;
+  top: 0;
+  width: 190px;
+  z-index: -1;
+}
+
+.bb-reviews.is-resting .bb-reviews__sun {
+  animation-play-state: paused;
+}
+
+@keyframes bb-sunset {
+  from {
+    transform: translate(0, -30px);
+  }
+
+  to {
+    transform: translate(70px, calc(var(--bb-band-height, 520px) - 60px));
+  }
+}
+
+.bb-reviews__ridge {
+  bottom: -6px;
+  height: auto;
+  left: 50%;
+  opacity: 0.16;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(820px, 90%);
+  z-index: -1;
+}
+
+.bb-reviews__intro {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.bb-reviews__intro > * {
+  margin: 0;
+}
+
+/* The quotes share one place; the band is as tall as the longest. */
+.bb-reviews__quotes {
+  display: grid;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.bb-reviews__quotes > .wp-block-quote {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--wp--preset--font-size--quote);
+  grid-area: 1 / 1;
+  justify-content: center;
+  margin: 0;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 0.7s ease;
+  visibility: hidden;
+}
+
+.bb-reviews__quotes > .wp-block-quote.is-current {
+  opacity: 1;
+  transition-delay: 0.7s;
+  visibility: visible;
+}
+
+.bb-reviews__quotes > .wp-block-quote:not(.is-current) {
+  transition:
+    opacity 0.7s ease,
+    visibility 0s linear 0.7s;
+}
+
+.bb-reviews__dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.bb-reviews__dots[hidden] {
+  display: none;
+}
+
+.bb-reviews__dots button {
+  border: 0;
+  border-radius: 99px;
+  cursor: pointer;
+  height: 8px;
+  padding: 0;
+  transition:
+    width 0.4s,
+    background-color 0.4s;
+  width: 8px;
+  background: var(--wp--custom--line--soft);
+}
+
+.bb-reviews__dots button[aria-pressed="true"] {
+  background: var(--wp--preset--color--sun);
+  width: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-reviews__sun {
+    animation: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-reviews {
+    border-radius: 26px;
+    padding: 48px 22px 40px;
+  }
+
+  .bb-reviews__sun {
+    height: 120px;
+    right: -44px;
+    top: -40px;
+    width: 110px;
+  }
+}

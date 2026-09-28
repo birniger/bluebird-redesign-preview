@@ -1,0 +1,156 @@
+/**
+ * The instructor's calendar of free days: the booking add-on's popup, in Hush's voice. The add-on
+ * draws it; this sets the faces, the shapes and the colours. Loaded only where the popup can open.
+ */
+
+.bluebird-availability-modal {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background: rgba(6, 62, 95, 0.45);
+}
+
+.bluebird-availability-modal-content {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--card);
+  box-shadow: var(--wp--preset--shadow--float);
+  color: var(--wp--preset--color--ink);
+  font-family: var(--wp--preset--font-family--figtree);
+  max-width: 520px;
+}
+
+.bluebird-availability-modal-header {
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  padding: 22px 24px 18px 28px;
+}
+
+.bluebird-availability-modal-header h3 {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.bluebird-availability-modal-close {
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  color: var(--wp--preset--color--contrast);
+  font-size: 22px;
+  height: 36px;
+  width: 36px;
+}
+
+.bluebird-availability-modal-close:hover {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bluebird-availability-modal-body {
+  padding: 20px 28px 26px;
+}
+
+.bluebird-availability-calendar {
+  font-family: var(--wp--preset--font-family--figtree);
+}
+
+.bluebird-availability-calendar .month-name {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.bluebird-availability-calendar .month-nav button {
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bluebird-availability-calendar .month-nav button:hover:not([disabled]) {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+  color: var(--wp--preset--color--white);
+}
+
+.bluebird-availability-calendar .weekday {
+  color: var(--wp--preset--color--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bluebird-availability-calendar .day {
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.bluebird-availability-calendar .day.available {
+  background: var(--wp--preset--color--teal);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bluebird-availability-calendar .day.unavailable {
+  background: var(--wp--preset--color--base);
+  color: var(--wp--preset--color--muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--wp--custom--line--soft);
+}
+
+.bluebird-availability-calendar .day.closed,
+.bluebird-availability-calendar .day.past {
+  background: transparent;
+  color: #a9bcc5;
+}
+
+.bluebird-availability-calendar .day .day-slots {
+  color: var(--wp--preset--color--plum);
+  letter-spacing: 0.04em;
+}
+
+.bluebird-availability-calendar .day.clickable:hover {
+  box-shadow: 0 8px 18px -10px rgba(6, 62, 95, 0.5);
+}
+
+.bluebird-availability-modal select {
+  background: var(--wp--preset--color--white);
+  border: 0;
+  border-radius: var(--wp--custom--radius--pill);
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  color: var(--wp--preset--color--contrast);
+  font: 500 14px var(--wp--preset--font-family--figtree);
+  padding: 9px 14px;
+}
+
+.bluebird-availability-legend {
+  border-top: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--ink);
+}
+
+.bluebird-availability-legend .legend-dot {
+  border: 0 !important;
+  border-radius: 50%;
+}
+
+.bluebird-availability-legend .legend-dot.available {
+  background: var(--wp--preset--color--teal);
+}
+
+.bluebird-availability-legend .legend-dot.unavailable {
+  background: var(--wp--preset--color--line);
+}
+
+.bluebird-availability-legend .legend-dot.closed {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px #a9bcc5;
+}
+
+.bluebird-day-slots h4,
+.bluebird-day-slots .slots-section h5 {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-weight: 400;
+}

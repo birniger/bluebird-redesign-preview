@@ -1,0 +1,289 @@
+/**
+ * The lesson panels: one open, the others slim photo strips. Opening one widens it over 0.8s;
+ * its photo gives up half the panel and the text follows 0.35s later. Above them, the sport
+ * switch: a pill whose navy thumb slides to the chosen sport while the photos cross-fade.
+ */
+
+.bb-lessons__panels {
+  display: flex;
+  gap: 14px;
+  height: 600px;
+}
+
+.bb-lesson[hidden] {
+  display: none;
+}
+
+/* The sport switch. */
+.bb-lessons__switch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.bb-lesson {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--panel);
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  transition: flex-grow 0.8s var(--bb-ease);
+}
+
+.bb-lesson.is-open {
+  flex-grow: 4.2;
+}
+
+.bb-lesson__photo {
+  inset: 0 auto 0 0;
+  position: absolute;
+  transition: width 0.8s var(--bb-ease);
+  width: 100%;
+}
+
+.bb-lesson.is-open .bb-lesson__photo {
+  width: 46%;
+}
+
+.bb-lesson__photo figure {
+  height: 100%;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 1.2s ease;
+  width: 100%;
+}
+
+.bb-lesson__photo figure.is-current {
+  opacity: 1;
+}
+
+.bb-lesson__photo img,
+.bb-lesson__photo .bb-wanted {
+  border-radius: 0;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.bb-lesson__photo::after {
+  background: linear-gradient(180deg, rgba(6, 62, 95, 0) 40%, rgba(6, 62, 95, 0.65));
+  content: "";
+  inset: 0;
+  position: absolute;
+  transition: opacity 0.5s;
+}
+
+.bb-lesson.is-open .bb-lesson__photo::after {
+  opacity: 0;
+}
+
+/* Closed: the whole strip is the button that opens it. */
+.bb-lesson__toggle {
+  align-items: flex-start;
+  background: none;
+  border: 0;
+  color: var(--wp--preset--color--white);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  gap: 4px;
+  inset: 0;
+  justify-content: flex-end;
+  padding: 24px;
+  position: absolute;
+  text-align: left;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.bb-lesson__toggle:focus-visible {
+  outline: 2px solid var(--wp--preset--color--white);
+  outline-offset: -8px;
+}
+
+.bb-lesson.is-open .bb-lesson__toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bb-lesson__name {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--title);
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+}
+
+.bb-lesson__summary {
+  font-size: var(--wp--preset--font-size--small);
+  line-height: 1.4;
+}
+
+.bb-lesson__toggle:hover .bb-lesson__name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+/* Open: the text half. */
+.bb-lesson__open {
+  display: flex;
+  flex-direction: column;
+  inset: 0 0 0 auto;
+  opacity: 0;
+  padding: 44px 44px 36px;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(16px);
+  transition:
+    opacity 0.4s,
+    transform 0.5s;
+  width: 54%;
+}
+
+.bb-lesson.is-open .bb-lesson__open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition-delay: 0.35s;
+}
+
+.bb-lesson__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bb-lesson__body > * {
+  margin: 0 !important;
+}
+
+.bb-lesson__body h3,
+.bb-lesson__body h2 {
+  font-size: var(--wp--preset--font-size--panel);
+}
+
+.bb-lesson__body h3 + p,
+.bb-lesson__body h2 + p {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--lead);
+}
+
+/* Under the facts: onward to the sport's own page, the chosen sport's link showing. */
+.bb-lesson__sport {
+  margin-top: 4px !important;
+}
+
+.bb-lesson__sport > [hidden] {
+  display: none;
+}
+
+/* Under the panels: the notes that settle a decision, and one link onward, on one quiet line. */
+.bb-lessons__foot {
+  align-items: center;
+  border-top: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 16px;
+}
+
+.bb-lessons__notes {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--small);
+  gap: 6px 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-lessons__notes li {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.bb-lessons__notes li::before {
+  background: var(--wp--preset--color--teal)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.6 2.5L12 5.5' fill='none' stroke='%23063e5f' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+  border-radius: 50%;
+  content: "";
+  flex-shrink: 0;
+  height: 18px;
+  width: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-lesson,
+  .bb-lesson__photo,
+  .bb-lesson__photo figure,
+  .bb-lesson__open {
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Narrower screens: panels stacked, the open one shows its photo above the text. */
+@media (max-width: 999px) {
+  .bb-lessons__panels {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .bb-lesson {
+    flex: none !important;
+    height: 132px;
+  }
+
+  .bb-lesson.is-open {
+    height: auto;
+  }
+
+  .bb-lesson.is-open .bb-lesson__photo {
+    height: 280px;
+    position: relative;
+    width: 100%;
+  }
+
+  .bb-lesson__open {
+    display: none;
+    padding: 26px 24px 26px;
+    position: relative;
+    transform: none;
+    width: 100%;
+  }
+
+  .bb-lesson.is-open .bb-lesson__open {
+    display: flex;
+    transition-delay: 0s;
+  }
+
+  .bb-lesson__toggle {
+    padding: 20px 22px;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-lesson.is-open .bb-lesson__photo {
+    height: 220px;
+  }
+
+  .bb-lessons__foot {
+    gap: 8px;
+  }
+
+  .bb-lessons__notes {
+    font-size: 13px;
+    gap: 4px 16px;
+  }
+}

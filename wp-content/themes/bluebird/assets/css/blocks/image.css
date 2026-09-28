@@ -1,0 +1,26 @@
+/**
+ * Photos. A photo window is a real lesson photo in a big rounded frame, filling its space.
+ */
+
+.wp-block-image img {
+  height: auto;
+}
+
+.wp-block-image.is-style-window {
+  border-radius: var(--wp--custom--radius--frame);
+  overflow: hidden;
+}
+
+.wp-block-image.is-style-window img {
+  border-radius: var(--wp--custom--radius--frame);
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.wp-block-image figcaption {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin-top: 10px;
+  text-align: center;
+}

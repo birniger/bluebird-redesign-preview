@@ -1,0 +1,87 @@
+/**
+ * The lesson panels. One panel is open at a time: a closed panel is a button; opening it widens
+ * the panel and lets its text follow. The text of closed panels is inert, so keyboards and screen
+ * readers only meet the open lesson and the buttons that open the others.
+ *
+ * The sport switch swaps every line, price and photo that differs by sport, and hides the formats
+ * a sport doesn't offer. Its navy thumb slides to the chosen sport.
+ */
+(function () {
+  document.querySelectorAll(".bb-lessons").forEach((block) => {
+    const panels = Array.from(block.querySelectorAll(".bb-lesson"));
+    const switcher = block.querySelector(".bb-switch");
+
+    function open(target) {
+      panels.forEach((panel) => {
+        const isOpen = panel === target;
+        const toggle = panel.querySelector(".bb-lesson__toggle");
+        const body = panel.querySelector(".bb-lesson__open");
+        panel.classList.toggle("is-open", isOpen);
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        toggle.tabIndex = isOpen ? -1 : 0;
+        body.inert = !isOpen;
+      });
+    }
+
+    panels.forEach((panel) => {
+      panel.querySelector(".bb-lesson__toggle").addEventListener("click", () => {
+        open(panel);
+        // Keyboard users land in the lesson they opened.
+        const heading = panel.querySelector(".bb-lesson__open h3");
+        if (heading) {
+          heading.tabIndex = -1;
+          heading.focus({ preventScroll: true });
+        }
+      });
+    });
+
+    if (!switcher) {
+      return;
+    }
+    const options = Array.from(switcher.querySelectorAll(".bb-switch__option"));
+    const thumb = switcher.querySelector(".bb-switch__thumb");
+
+    function placeThumb() {
+      const pressed = options.find((o) => o.getAttribute("aria-pressed") === "true");
+      if (!pressed) {
+        return;
+      }
+      thumb.style.setProperty("--x", pressed.offsetLeft + "px");
+      thumb.style.setProperty("--w", pressed.offsetWidth + "px");
+    }
+
+    function choose(sport) {
+      options.forEach((o) =>
+        o.setAttribute("aria-pressed", o.dataset.sport === sport ? "true" : "false"),
+      );
+      placeThumb();
+      block.querySelectorAll("[data-for]").forEach((el) => {
+        const mine = el.dataset.for === sport;
+        if (el.tagName === "FIGURE") {
+          el.classList.toggle("is-current", mine);
+        } else {
+          el.hidden = !mine;
+        }
+      });
+      panels.forEach((panel) => {
+        const offered = (panel.dataset.sports || "").split(" ");
+        panel.hidden = !offered.includes(sport);
+      });
+      const current = panels.find((p) => p.classList.contains("is-open"));
+      if (!current || current.hidden) {
+        const first = panels.find((p) => !p.hidden);
+        if (first) {
+          open(first);
+        }
+      }
+    }
+
+    options.forEach((option) =>
+      option.addEventListener("click", () => choose(option.dataset.sport)),
+    );
+    placeThumb();
+    // The thumb appears once it sits under the chosen sport, and slides from then on.
+    window.requestAnimationFrame(() => switcher.classList.add("is-ready"));
+    new ResizeObserver(placeThumb).observe(switcher);
+  });
+})();

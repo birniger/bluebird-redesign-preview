@@ -1,0 +1,138 @@
+/**
+ * Contact cards: words left, the cards right, stacked. The first (the quickest way) is mint; each
+ * card is one big target with its value in the serif and a round arrow that fills navy.
+ */
+
+.bb-contact {
+  align-items: start;
+  display: grid;
+  gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.bb-contact h1.bb-intro__title {
+  font-size: clamp(48px, 5.4vw, 84px);
+  line-height: 0.95;
+}
+
+.bb-contact__note {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 26px 0 0;
+  max-width: 44ch;
+}
+
+.bb-contact__cards {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-contact__cards > li {
+  margin: 0;
+}
+
+.bb-contact__card {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--card);
+  color: var(--wp--preset--color--contrast);
+  display: grid;
+  gap: 4px 20px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 22px 24px 22px 28px;
+  text-decoration: none;
+  transition: transform 0.3s var(--bb-ease);
+}
+
+.bb-contact__cards > li:first-child .bb-contact__card {
+  background: var(--wp--preset--color--teal);
+}
+
+.bb-contact__card:hover {
+  transform: translateY(-2px);
+}
+
+.bb-contact__label {
+  color: var(--wp--preset--color--plum);
+  font-size: 11px;
+  font-weight: 600;
+  grid-column: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bb-contact__value {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(26px, 2.4vw, 34px);
+  grid-column: 1;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.bb-contact__line {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  grid-column: 1;
+}
+
+.bb-contact__arrow {
+  align-self: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  height: 44px;
+  position: relative;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+  width: 44px;
+}
+
+.bb-contact__arrow::before {
+  content: "→";
+  font-size: 17px;
+  font-weight: 500;
+  inset: 0;
+  line-height: 44px;
+  position: absolute;
+  text-align: center;
+}
+
+.bb-contact__card:hover .bb-contact__arrow,
+.bb-contact__card:focus-visible .bb-contact__arrow {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+  color: var(--wp--preset--color--white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-contact__card {
+    transition: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .bb-contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 499px) {
+  .bb-contact__card {
+    grid-template-columns: 1fr;
+    padding: 18px 20px 18px 22px;
+  }
+
+  .bb-contact__arrow {
+    display: none;
+  }
+
+  .bb-contact__value {
+    font-size: 24px;
+    overflow-wrap: normal;
+  }
+}

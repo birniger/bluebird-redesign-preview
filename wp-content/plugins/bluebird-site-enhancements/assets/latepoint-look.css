@@ -1,0 +1,119 @@
+/*
+ * The site's look on LatePoint's customer screens: the customer area, its lesson and order windows,
+ * and the pages opened from an email (a lesson's manage page, an invoice and its pay page).
+ * Colours come from the theme's palette as CSS variables, printed with this file
+ * (Bluebird_SE_LatePoint_Look::variables()), so a palette change in the Site Editor reaches here.
+ */
+
+/* The site's text face instead of LatePoint's own. Its icons keep their icon font. */
+.latepoint-w,
+.latepoint-lightbox-w,
+.os-notifications {
+	font-family: var(--bluebird-font-body);
+}
+
+/* Headings in the site's heading face and navy, as on every other page. */
+.latepoint-w h1,
+.latepoint-w h2,
+.latepoint-w h3,
+.latepoint-w h4,
+.latepoint-w h5,
+.latepoint-w h6,
+.latepoint-lightbox-w h1,
+.latepoint-lightbox-w h2,
+.latepoint-lightbox-w h3,
+.latepoint-w .customer-order-confirmation,
+.latepoint-w .lc-conversations-header,
+.latepoint-w .lc-contents-header {
+	font-family: var(--bluebird-font-heading);
+	font-weight: 600;
+	color: var(--bluebird-navy);
+	letter-spacing: -0.1px;
+}
+
+/* Section labels ("Bevorstehend", "Storniert") and the booking add-on's "Storniert" badge on an
+   order stay small and quiet, in the text face. */
+.latepoint-w h5.latepoint-section-heading,
+.latepoint-w .customer-order-confirmation::after {
+	font-family: var(--bluebird-font-body);
+	font-weight: 700;
+}
+
+/* A lesson's and an order's tile: the site's pale border instead of LatePoint's grey. */
+.latepoint-w .customer-booking,
+.latepoint-w .customer-order {
+	border-color: var(--bluebird-border);
+}
+
+/* LatePoint's success notice in the site's colours. */
+.os-notifications .item.item-type-success {
+	background: var(--bluebird-navy);
+	color: #fff;
+}
+
+/* ---- The pages opened from an email (LatePoint's "clean" layout) ---- */
+
+body.latepoint-clean-body {
+	background: var(--bluebird-page) !important;
+	background-image: none !important;
+	color: #1f222b;
+}
+
+.bluebird-clean-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 28px 16px 0;
+}
+
+.bluebird-clean-header a {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--bluebird-navy);
+	text-decoration: none;
+	font-family: var(--bluebird-font-heading);
+	font-weight: 600;
+	font-size: 20px;
+}
+
+.bluebird-clean-header img {
+	width: 56px;
+	height: 56px;
+	object-fit: contain;
+}
+
+.bluebird-clean-header a:focus-visible {
+	outline: 2px solid var(--bluebird-navy);
+	outline-offset: 4px;
+}
+
+/*
+ * The dots between a lesson's details ("Snowboard · Fortgeschritten · Deutsch"). LatePoint draws each
+ * after its detail, so on a phone a detail that wraps leaves its dot at the end of the line above
+ * (website W-65). Drawn before the next detail instead, a wrapped line starts with its dot at the
+ * box's left edge, where the box clips it.
+ */
+.summary-attributes {
+	overflow: hidden;
+}
+
+.summary-attributes > span:not(:last-child):before {
+	content: none;
+}
+
+.summary-attributes > span {
+	margin-right: 15px;
+}
+
+.summary-attributes > span:not(:first-child):after {
+	content: "";
+	width: 3px;
+	height: 3px;
+	background-color: #bbb;
+	border-radius: 4px;
+	position: absolute;
+	top: 50%;
+	left: -9px;
+	transform: translateY(-50%);
+}

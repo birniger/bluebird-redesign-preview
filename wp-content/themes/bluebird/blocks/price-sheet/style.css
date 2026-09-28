@@ -1,0 +1,286 @@
+/**
+ * Prices as lift tickets: a white ticket, notched top and bottom where the stub tears off, the
+ * price on the stub. The most booked ticket carries the sun.
+ */
+
+.bb-prices__tickets {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  list-style: none;
+  margin: var(--wp--preset--spacing--50) 0 0;
+  padding: 0;
+}
+
+.bb-ticket {
+  --notch: 12px;
+  --tear: 58%;
+
+  background: var(--wp--preset--color--white);
+  border-radius: 22px;
+  display: grid;
+  grid-template-columns: var(--tear) 1fr;
+  margin: 0;
+  mask:
+    radial-gradient(circle var(--notch) at var(--tear) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--notch) at var(--tear) 100%, #0000 98%, #000) bottom / 100% 51%
+      no-repeat;
+  min-height: 200px;
+  position: relative;
+}
+
+.bb-ticket__main {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 22px 26px 28px;
+}
+
+.bb-ticket__main > * {
+  margin: 0;
+}
+
+.bb-ticket__label {
+  color: var(--wp--preset--color--plum);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bb-ticket__name {
+  align-items: center;
+  display: flex;
+  font-size: clamp(30px, 2.5vw, 36px);
+  gap: 10px;
+  margin-top: 8px !important;
+}
+
+.bb-ticket.is-sun .bb-ticket__name::after {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(242, 168, 90, 0.2);
+  content: "";
+  flex-shrink: 0;
+  height: 11px;
+  width: 11px;
+}
+
+.bb-ticket__lines {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  list-style: none;
+  margin-top: 14px !important;
+  padding: 0;
+}
+
+.bb-ticket__lines li + li {
+  margin-top: 4px;
+}
+
+.bb-ticket__main .bb-more {
+  margin-top: auto !important;
+  padding-top: 18px;
+}
+
+/* The stub: a dashed tear line, then the price. */
+.bb-ticket__stub {
+  align-items: center;
+  border-left: 2px dashed var(--wp--preset--color--line);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px 14px;
+  position: relative;
+  text-align: center;
+}
+
+.bb-ticket__price {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(30px, 2.6vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bb-ticket__unit {
+  color: var(--wp--preset--color--muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-top: 8px;
+}
+
+.bb-prices__footnote {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 22px auto 0;
+  max-width: 70ch;
+  text-align: center;
+}
+
+/* The table: one white board per group, rows between hairlines, the price in the serif. ------ */
+
+.bb-price-tables {
+  display: grid;
+  gap: 14px;
+  margin-top: var(--wp--preset--spacing--50);
+}
+
+.bb-price-table {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--panel);
+  padding: clamp(22px, 3vw, 40px) clamp(22px, 3.4vw, 48px) clamp(14px, 2vw, 26px);
+  scroll-margin-top: 24px;
+}
+
+.bb-price-table table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* The same columns in every table, so the groups line up. */
+.bb-price-table thead th:nth-child(1) {
+  width: 30%;
+}
+
+.bb-price-table thead th:nth-child(2) {
+  width: 36%;
+}
+
+.bb-price-table thead th:nth-child(3) {
+  width: 12%;
+}
+
+.bb-price-table caption {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--title);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  padding-bottom: 14px;
+  text-align: left;
+}
+
+.bb-price-table thead th {
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  padding: 0 16px 10px 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.bb-price-table thead th:last-child,
+.bb-price-table__price {
+  text-align: right;
+}
+
+.bb-price-table tbody th,
+.bb-price-table tbody td {
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 400;
+  padding: 18px 16px 18px 0;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.bb-price-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.bb-price-table__name {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(24px, 2vw, 28px);
+  line-height: 1.1;
+}
+
+.bb-price-table__label {
+  color: var(--wp--preset--color--muted);
+  display: block;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.bb-price-table tbody .bb-price-table__price {
+  padding-right: 0;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bb-price-table__amount {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(28px, 2.4vw, 34px);
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+
+.bb-price-table__note {
+  color: var(--wp--preset--color--muted);
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.bb-price-table__footnote {
+  border-top: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 0;
+  padding-top: 14px;
+}
+
+@media (max-width: 699px) {
+  .bb-price-table thead {
+    display: none;
+  }
+
+  .bb-price-table tbody tr {
+    border-bottom: 1px solid var(--wp--preset--color--line);
+    display: grid;
+    gap: 2px 16px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 14px 0;
+  }
+
+  .bb-price-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .bb-price-table tbody th,
+  .bb-price-table tbody td {
+    border: 0;
+    padding: 0;
+  }
+
+  .bb-price-table tbody th {
+    grid-column: 1;
+  }
+
+  .bb-price-table tbody .bb-price-table__price {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .bb-price-table tbody td[data-label] {
+    font-size: var(--wp--preset--font-size--small);
+    grid-column: 1;
+  }
+
+  .bb-price-table tbody td[data-label]::before {
+    color: var(--wp--preset--color--muted);
+    content: attr(data-label) " · ";
+  }
+}

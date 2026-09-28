@@ -1,0 +1,900 @@
+/**
+ * Bluebird: what theme.json cannot say. Colours, type and spacing come from theme.json's
+ * presets; everything here uses them.
+ *
+ * Contents: base · labels and small type · section rhythm · block styles · rating · header ·
+ * language switcher · footer · text pages · bird · phone and tablet.
+ */
+
+/* Base ------------------------------------------------------------------------------------ */
+
+:root {
+  --bb-ease: var(--wp--custom--motion--ease);
+  --bb-section: var(--wp--preset--spacing--70);
+  --bb-line-soft: var(--wp--custom--line--soft);
+  --bb-gutter: var(--wp--style--root--padding-left, 48px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+.is-style-intro > p {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+h1 em,
+h2 em,
+h3 em {
+  color: var(--wp--preset--color--plum);
+}
+
+.wp-element-button,
+.wp-block-button__link {
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
+  white-space: nowrap;
+}
+
+.wp-block-buttons {
+  gap: 10px;
+}
+
+.screen-reader-text {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--wp--preset--color--plum);
+  outline-offset: 3px;
+}
+
+/* Labels and small type ------------------------------------------------------------------- */
+
+.is-style-label,
+p.is-style-label {
+  color: var(--wp--preset--color--plum);
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: var(--wp--preset--font-size--label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.bb-stars {
+  color: var(--wp--preset--color--sun);
+  letter-spacing: 2px;
+}
+
+/* Section rhythm --------------------------------------------------------------------------- */
+
+/* Pages built from sections: one message per section, lots of air between. */
+.bb-main--sections > .bb-sections > * + * {
+  margin-block-start: var(--bb-section);
+}
+
+.bb-main--sections > .bb-sections > :first-child {
+  margin-block-start: 0;
+}
+
+/* Every page's first section begins the same distance under the header, whatever comes first in
+   it: a photo, a band or words. A section that is a window or a band itself (the hero, the
+   panorama, the bands) keeps the distance as a margin, the others as padding. */
+.bb-main--sections {
+  --bb-first: clamp(20px, 3.4vw, 48px);
+
+  margin-block-start: 0;
+}
+
+.bb-main--sections
+  > .bb-sections
+  > :first-child:not(
+    .bb-hero,
+    .bb-band,
+    .bb-route,
+    .bb-opening--chips,
+    .bb-opening--statement,
+    .bb-season-block
+  ) {
+  padding-block-start: var(--bb-first);
+}
+
+.bb-main--sections
+  > .bb-sections
+  > :is(
+    .bb-hero,
+    .bb-band,
+    .bb-route,
+    .bb-opening--chips,
+    .bb-opening--statement,
+    .bb-season-block
+  ):first-child {
+  margin-block-start: var(--bb-first);
+}
+
+.bb-main--text {
+  padding-block-start: clamp(36px, 5vw, 72px);
+}
+
+.bb-site-footer {
+  margin-block-start: var(--bb-section);
+}
+
+/* A section intro: label, headline, one line, centred. */
+.wp-block-group.is-style-intro {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-block-end: var(--wp--preset--spacing--50);
+  text-align: center;
+}
+
+.wp-block-group.is-style-intro > * {
+  margin: 0 !important;
+}
+
+.wp-block-group.is-style-intro > p:not(.is-style-label) {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--lead);
+  max-width: 600px;
+}
+
+.wp-block-group.is-style-intro > .wp-block-list.is-style-dots {
+  margin-block-start: 6px !important;
+}
+
+/* Block styles ----------------------------------------------------------------------------- */
+
+/* Cards on the page are flat: white, rounded, no shadow. */
+.wp-block-group.is-style-card {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--panel);
+  padding: clamp(26px, 3vw, 44px);
+}
+
+.wp-block-group.is-style-card > :first-child {
+  margin-block-start: 0;
+}
+
+/* Text that sits on a photo goes on frosted glass. */
+.wp-block-group.is-style-glass {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--card);
+  padding: 38px 40px 36px;
+}
+
+/* Cards side by side keep the panels' narrow gap. */
+.wp-block-group.is-layout-grid {
+  gap: 14px;
+}
+
+.wp-block-group.is-style-card > * + * {
+  margin-block-start: 14px;
+}
+
+.wp-block-group.is-style-card > .is-style-label + h2,
+.wp-block-group.is-style-card > .is-style-label + h3 {
+  margin-block-start: 8px;
+}
+
+.wp-block-group.is-style-card > h2 {
+  font-size: var(--wp--preset--font-size--title);
+}
+
+.wp-block-group.is-style-card > h3 {
+  font-size: var(--wp--preset--font-size--question);
+}
+
+.wp-block-group.is-style-card > .wp-block-image:first-child img {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--wp--custom--radius--tile);
+  object-fit: cover;
+  width: 100%;
+}
+
+.wp-block-group.is-style-card > .wp-block-image:first-child {
+  margin-block-end: 22px;
+}
+
+.wp-block-group.is-style-card p:not(.is-style-label) {
+  color: var(--wp--preset--color--ink);
+}
+
+/* A title beside its content: the title stays in view while the content scrolls past. */
+.wp-block-group.is-style-aside {
+  align-items: start;
+  display: grid;
+  gap: 24px var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.wp-block-group.is-style-aside > * {
+  margin: 0 !important;
+}
+
+.wp-block-group.is-style-aside > :first-child {
+  position: sticky;
+  top: 32px;
+}
+
+.wp-block-group.is-style-aside > h2 {
+  font-size: clamp(36px, 3.6vw, 52px);
+}
+
+.wp-block-group.is-style-aside + .wp-block-group.is-style-aside {
+  margin-block-start: var(--wp--preset--spacing--60);
+}
+
+/* Text beside a photo in a big rounded window. */
+.wp-block-group.is-style-split {
+  align-items: center;
+  display: grid;
+  gap: var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.wp-block-group.is-style-split > * {
+  margin: 0 !important;
+}
+
+.wp-block-group.is-style-split h2 {
+  font-size: clamp(44px, 5vw, 76px);
+  margin-block: 14px 36px;
+}
+
+.wp-block-group.is-style-split .wp-block-image.is-style-window img {
+  height: clamp(380px, 47vw, 680px);
+}
+
+/* Facts: small uppercase labels over plain values; prices in the serif. */
+
+.bb-facts {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--interface);
+  gap: 14px 28px;
+  margin-top: 4px !important;
+}
+
+.bb-facts > * {
+  margin: 0 !important;
+}
+
+.bb-facts strong {
+  color: var(--wp--preset--color--muted);
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bb-lesson__foot {
+  align-items: center;
+  border-top: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+  margin-top: auto !important;
+  padding-top: 22px;
+}
+
+.bb-lesson__foot > * {
+  margin: 0 !important;
+}
+
+.bb-price {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+
+.bb-price > * {
+  margin: 0 !important;
+}
+
+.bb-price__amount {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--price);
+  line-height: 1;
+}
+
+.bb-price__note {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+}
+
+/* Rating ----------------------------------------------------------------------------------- */
+
+.bb-rating--badge {
+  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--tile);
+  box-shadow: var(--wp--preset--shadow--badge);
+  color: var(--wp--preset--color--contrast);
+  display: inline-flex;
+  gap: 10px;
+  padding: 8px 14px 8px 13px;
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.bb-rating--badge:hover {
+  box-shadow: 0 18px 38px -18px rgba(6, 62, 95, 0.55);
+  color: var(--wp--preset--color--contrast);
+  transform: translateY(-2px);
+}
+
+.bb-rating__score {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.bb-rating__meta {
+  border-left: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 10px;
+}
+
+.bb-rating__meta .bb-stars {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.bb-rating__source {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--label);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.bb-rating--line {
+  align-items: center;
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--interface);
+  gap: 10px;
+  justify-content: center;
+}
+
+.bb-rating--line a {
+  color: inherit;
+}
+
+/* Header ----------------------------------------------------------------------------------- */
+
+.bb-site-header {
+  position: relative;
+  z-index: 50;
+}
+
+.bb-header {
+  align-items: start;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr auto 1fr;
+  padding-inline: var(--bb-gutter);
+}
+
+.bb-header > * {
+  margin: 0 !important;
+}
+
+/* The logo hangs from the top edge on a white tab. */
+.bb-logo-tab {
+  background: var(--wp--preset--color--white);
+  border-radius: 0 0 22px 22px;
+  padding: 2px 20px 14px;
+}
+
+.bb-logo-tab .wp-block-site-logo img {
+  margin: -14px 0 -16px;
+}
+
+.bb-logo-tab .wp-block-site-logo a {
+  display: block;
+}
+
+.bb-header__end {
+  gap: 14px;
+  justify-self: end;
+  margin-top: 42px !important;
+}
+
+.bb-header__end .wp-block-buttons {
+  margin: 0;
+}
+
+/* Language switcher ------------------------------------------------------------------------ */
+
+.bb-lang {
+  position: relative;
+}
+
+.bb-lang__toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--wp--custom--radius--pill);
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font: 600 14px var(--wp--preset--font-family--figtree);
+  gap: 8px;
+  height: 46px;
+  padding: 0 16px;
+  transition: box-shadow 0.2s;
+}
+
+.bb-lang__toggle:hover,
+.bb-lang.is-open .bb-lang__toggle {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--contrast);
+}
+
+.bb-chevron {
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  display: inline-block;
+  height: 6px;
+  margin-bottom: 3px;
+  transform: rotate(45deg);
+  transition: transform 0.25s;
+  width: 6px;
+}
+
+.bb-lang.is-open .bb-chevron {
+  transform: translateY(3px) rotate(-135deg);
+}
+
+.bb-lang__list {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: var(--wp--custom--radius--tile);
+  box-shadow: 0 24px 50px -28px rgba(6, 62, 95, 0.4);
+  list-style: none;
+  margin: 0;
+  min-width: 170px;
+  opacity: 0;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  transform: translateY(-6px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    visibility 0.2s;
+  visibility: hidden;
+  z-index: 60;
+}
+
+.bb-lang.is-open .bb-lang__list {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+.bb-lang__list a {
+  border-radius: var(--wp--custom--radius--small);
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 500;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 9px 12px;
+  text-decoration: none;
+}
+
+.bb-lang__list a span {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.bb-lang__list a:hover {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-lang__list a.is-current {
+  background: var(--wp--preset--color--teal);
+}
+
+.bb-lang__list a.is-current span {
+  color: var(--wp--preset--color--plum);
+}
+
+/* Footer: mirrors the header — contact, the logo with the Book button, links. -------------- */
+
+.bb-footer {
+  padding-inline: var(--bb-gutter);
+}
+
+.bb-footer__main,
+.bb-footer__legal {
+  margin-inline: auto;
+  max-width: var(--wp--style--global--wide-size);
+}
+
+.bb-footer__main {
+  align-items: start;
+  border-top: 1px solid var(--bb-line-soft);
+  display: grid;
+  font-size: var(--wp--preset--font-size--interface);
+  gap: 40px;
+  grid-template-columns: 1fr auto 1fr;
+  padding-block: 48px;
+}
+
+.bb-footer__main > * {
+  margin: 0 !important;
+}
+
+.bb-footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bb-footer__column > * {
+  margin: 0 !important;
+}
+
+.bb-footer__column--end {
+  text-align: right;
+}
+
+.bb-footer .bb-footer__heading {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.55;
+  margin-bottom: 6px !important;
+}
+
+.bb-footer a {
+  text-decoration: none;
+}
+
+.bb-footer__brand {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+
+.bb-footer__brand > * {
+  margin: 0 !important;
+}
+
+.bb-footer__brand .wp-block-site-logo img {
+  margin: -18px 0 -12px;
+}
+
+.bb-footer__brand .wp-block-site-tagline {
+  color: var(--wp--preset--color--ink);
+}
+
+.bb-footer__brand .wp-block-button__link {
+  color: var(--wp--preset--color--white);
+}
+
+.bb-footer__legal {
+  border-top: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  gap: 8px 24px;
+  padding-block: 20px 40px;
+}
+
+.bb-footer__legal > * {
+  margin: 0 !important;
+}
+
+.bb-legal-menu {
+  gap: 8px 20px;
+}
+
+.bb-legal-menu a,
+.bb-legal-menu .wp-block-navigation-item__content {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+}
+
+.bb-legal-menu a:hover {
+  color: var(--wp--preset--color--plum);
+}
+
+/* Notices: Popup Maker's popups with its "content only" theme hold a glass card, which floats
+   and so casts the soft navy shadow. The close button matches the accordion's round buttons. -- */
+
+.pum-theme-content-only .bb-notice {
+  box-shadow: var(--wp--preset--shadow--float);
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--interface);
+  line-height: 1.55;
+  padding: 34px 36px 32px;
+}
+
+.pum-theme-content-only .bb-notice > * {
+  margin-block: 0;
+}
+
+.pum-theme-content-only .bb-notice > * + * {
+  margin-block-start: 12px;
+}
+
+.pum-theme-content-only .bb-notice > h2 {
+  margin-block-start: 8px;
+  padding-right: 36px;
+}
+
+.pum-theme-content-only .bb-notice > .wp-block-buttons {
+  margin-block-start: 22px;
+}
+
+.pum-theme-content-only .pum-close.popmake-close {
+  align-items: center;
+  background: transparent !important;
+  border-radius: 50% !important;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft) !important;
+  color: var(--wp--preset--color--contrast) !important;
+  display: flex;
+  font-family: var(--wp--preset--font-family--figtree) !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  height: 32px !important;
+  justify-content: center;
+  line-height: 1 !important;
+  right: 18px !important;
+  top: 18px !important;
+  width: 32px !important;
+}
+
+.pum-theme-content-only .pum-close.popmake-close:hover {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--contrast) !important;
+}
+
+@media (max-width: 599px) {
+  /* On phones the cookie banner holds the bottom of the screen; notices keep to the top. */
+  .pum-theme-content-only .pum-container {
+    bottom: auto !important;
+    left: 10px !important;
+    right: 10px !important;
+    top: 10px !important;
+    width: auto !important;
+  }
+
+  .pum-theme-content-only .bb-notice {
+    padding: 26px 24px 24px;
+  }
+}
+
+/* Cookie consent: the button to change one's choice stays, small and quiet, bottom left. ----- */
+
+#cmplz-manage-consent .cmplz-manage-consent {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 0 !important;
+  border-radius: var(--wp--custom--radius--pill) !important;
+  bottom: 14px !important;
+  box-shadow: var(--wp--preset--shadow--badge) !important;
+  color: var(--wp--preset--color--contrast) !important;
+  font: 600 12px / 1 var(--wp--preset--font-family--figtree) !important;
+  height: auto !important;
+  left: 14px !important;
+  min-width: 0 !important;
+  padding: 9px 14px !important;
+  right: auto !important;
+  width: auto !important;
+}
+
+/* Text pages ------------------------------------------------------------------------------- */
+
+.bb-page-intro {
+  margin-block-end: var(--wp--preset--spacing--50);
+}
+
+.bb-page-intro .wp-block-post-title {
+  margin: 0;
+}
+
+.bb-prose > h2 {
+  font-size: clamp(34px, 3.4vw, 52px);
+  margin-block-start: var(--wp--preset--spacing--60);
+}
+
+.bb-prose > h3 {
+  font-size: var(--wp--preset--font-size--question);
+  margin-block-start: var(--wp--preset--spacing--50);
+}
+
+.bb-prose > h2 + *,
+.bb-prose > h3 + * {
+  margin-block-start: 14px;
+}
+
+.bb-prose p,
+.bb-prose li {
+  line-height: 1.65;
+}
+
+/* Running text keeps its paragraphs close; headings keep their air. */
+.bb-prose > :is(p, ul, ol) + :is(p, ul, ol) {
+  margin-block-start: 0.85em;
+}
+
+.bb-prose .wp-block-separator {
+  border: 0;
+  border-top: 1px solid var(--wp--preset--color--line);
+  margin-block: var(--wp--preset--spacing--50);
+}
+
+.bb-prose strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 600;
+}
+
+/* The bird --------------------------------------------------------------------------------- */
+
+.bb-bird {
+  cursor: grab;
+  height: 43px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  touch-action: none;
+  width: 52px;
+  will-change: transform;
+  z-index: 55;
+}
+
+.bb-bird.is-held {
+  cursor: grabbing;
+}
+
+.bb-bird img {
+  -webkit-user-drag: none;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+.bb-bird__body {
+  clip-path: polygon(0 45%, 45% 62%, 62% 55%, 72% 38%, 70% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.bb-bird__wing,
+.bb-bird__far-wing {
+  clip-path: polygon(0 0, 70% 0, 72% 38%, 62% 55%, 45% 62%, 0 45%);
+  transform-origin: 62% 55%;
+}
+
+.bb-bird__far-wing {
+  filter: brightness(0.8);
+  opacity: 0.4;
+}
+
+/* Tablet and phone ------------------------------------------------------------------------- */
+
+/* With the menu behind its round button, the header's three parts line up on one axis. */
+@media (max-width: 1119px) {
+  .bb-header {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bb-header__end {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 999px) {
+  .bb-footer__main {
+    gap: 32px;
+    grid-template-columns: 1fr;
+  }
+
+  .bb-footer__column--end {
+    text-align: left;
+  }
+
+  .bb-footer__brand {
+    align-items: flex-start;
+    grid-row: 1;
+    text-align: left;
+  }
+
+  .wp-block-group.is-style-split,
+  .wp-block-group.is-style-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .wp-block-group.is-style-aside > :first-child {
+    position: static;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-footer__legal {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .bb-legal-menu .wp-block-navigation__container {
+    justify-content: flex-start;
+  }
+
+  .bb-logo-tab {
+    padding: 2px 14px 10px;
+  }
+
+  .bb-logo-tab .wp-block-site-logo img {
+    margin: -10px 0 -12px;
+    width: 84px;
+  }
+
+  .bb-header__book {
+    display: none !important;
+  }
+
+  .bb-lang__toggle {
+    height: 44px;
+    padding: 0 14px;
+  }
+
+  .wp-block-group.is-style-glass {
+    padding: 26px 24px 24px;
+  }
+}

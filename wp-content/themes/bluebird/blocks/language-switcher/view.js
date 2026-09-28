@@ -1,0 +1,35 @@
+/**
+ * Opens and closes the language list: on click, and closes on Escape or a click elsewhere.
+ */
+(function () {
+  document.querySelectorAll(".bb-lang").forEach((root) => {
+    const toggle = root.querySelector(".bb-lang__toggle");
+    if (!toggle) {
+      return;
+    }
+    const set = (open) => {
+      root.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      set(!root.classList.contains("is-open"));
+    });
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target)) {
+        set(false);
+      }
+    });
+    root.addEventListener("keydown", (event) => {
+      if ("Escape" === event.key && root.classList.contains("is-open")) {
+        set(false);
+        toggle.focus();
+      }
+    });
+    root.addEventListener("focusout", (event) => {
+      if (!root.contains(event.relatedTarget)) {
+        set(false);
+      }
+    });
+  });
+})();

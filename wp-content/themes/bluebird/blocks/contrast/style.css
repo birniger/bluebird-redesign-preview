@@ -1,0 +1,107 @@
+/**
+ * Two sides. The left: plain on the ground, outlined, points with a dash. The right: a white card,
+ * points ticked in a mint circle.
+ */
+
+.bb-contrast__pair {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--wp--preset--spacing--50);
+}
+
+.bb-contrast__side {
+  border-radius: var(--wp--custom--radius--panel);
+  padding: clamp(26px, 3vw, 42px);
+}
+
+.bb-contrast__side > * {
+  margin: 0;
+}
+
+.bb-contrast__side--plain {
+  box-shadow: inset 0 0 0 1px var(--wp--preset--color--line);
+}
+
+.bb-contrast__side--card {
+  background: var(--wp--preset--color--white);
+}
+
+.bb-contrast__side .is-style-label {
+  margin-bottom: 10px;
+}
+
+.bb-contrast__side h3 {
+  font-size: clamp(30px, 2.6vw, 40px);
+}
+
+.bb-contrast__text {
+  color: var(--wp--preset--color--ink);
+  margin-top: 14px !important;
+  max-width: 46ch;
+}
+
+.bb-contrast__points {
+  list-style: none;
+  margin-top: 26px !important;
+  padding: 0;
+}
+
+.bb-contrast__points li {
+  border-top: 1px solid var(--wp--preset--color--line);
+  color: var(--wp--preset--color--ink);
+  padding: 14px 0 14px 40px;
+  position: relative;
+}
+
+.bb-contrast__points li::before {
+  border-radius: 50%;
+  content: "";
+  height: 24px;
+  left: 0;
+  position: absolute;
+  top: 13px;
+  width: 24px;
+}
+
+/* A dash in an outlined circle. */
+.bb-contrast__side--plain .bb-contrast__points li {
+  color: var(--wp--preset--color--muted);
+}
+
+.bb-contrast__side--plain .bb-contrast__points li::before {
+  background: linear-gradient(var(--wp--preset--color--muted), var(--wp--preset--color--muted))
+    center / 9px 1.5px no-repeat;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+}
+
+/* A tick in a mint circle. */
+.bb-contrast__side--card .bb-contrast__points li::before {
+  background: var(--wp--preset--color--teal);
+}
+
+.bb-contrast__side--card .bb-contrast__points li::after {
+  border-bottom: 2px solid var(--wp--preset--color--contrast);
+  border-right: 2px solid var(--wp--preset--color--contrast);
+  content: "";
+  height: 10px;
+  left: 9px;
+  position: absolute;
+  top: 18px;
+  transform: rotate(45deg);
+  width: 5px;
+}
+
+.bb-contrast__notes {
+  margin-top: 36px;
+}
+
+@media (max-width: 799px) {
+  .bb-contrast__pair {
+    grid-template-columns: 1fr;
+  }
+
+  .bb-contrast__side--card {
+    order: -1;
+  }
+}

@@ -1,0 +1,189 @@
+/**
+ * Instructors in a row: portraits in rounded windows, the name in the serif, sports as chips, and
+ * where asked, the ways to reach them. A stand-in holds the place of an instructor still to come.
+ */
+
+.bb-people__head {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  justify-content: space-between;
+}
+
+.bb-people__head .bb-intro__title {
+  max-width: 14ch;
+}
+
+.bb-people__list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: var(--wp--preset--spacing--50) 0 0;
+  padding: 0;
+}
+
+.bb-people__list > li {
+  margin: 0;
+}
+
+.bb-person {
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.bb-person__photo {
+  aspect-ratio: 1;
+  border-radius: var(--wp--custom--radius--card);
+  display: block;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.bb-person__photo > * {
+  transition: transform 1.2s var(--bb-ease);
+}
+
+a.bb-person:hover .bb-person__photo > * {
+  transform: scale(1.04);
+}
+
+.bb-person__name {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(24px, 2vw, 30px);
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  transition: color 0.2s;
+}
+
+a.bb-person:hover .bb-person__name {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-person__sports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bb-person__sports .bb-chip {
+  font-size: 12px;
+  padding: 5px 11px;
+}
+
+.bb-person__line {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  line-height: 1.45;
+}
+
+.bb-person.is-standin .bb-person__name {
+  color: var(--wp--preset--color--muted);
+}
+
+/* With the ways to reach them: the portrait and the name lead to the page, WhatsApp and email
+   follow as small pills. */
+.bb-person__link {
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.bb-person__link:hover .bb-person__photo > * {
+  transform: scale(1.04);
+}
+
+.bb-person__link:hover .bb-person__name {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-person__contact {
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.bb-person__contact .wp-block-button__link {
+  font-size: 14px;
+  padding: 9px 16px;
+}
+
+/* One or two instructors: the words beside them rather than above a half-empty row. */
+.bb-people--few {
+  align-items: center;
+  display: grid;
+  gap: var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.bb-people--few .bb-people__head {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.bb-people--few .bb-people__list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+@media (max-width: 999px) {
+  .bb-people--few {
+    grid-template-columns: 1fr;
+  }
+
+  .bb-people__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 499px) {
+  .bb-people__list {
+    gap: 28px 12px;
+  }
+
+  .bb-person__name {
+    font-size: 25px;
+  }
+}
+
+/* The Instructors page: portraits a little taller, and the sport filter. */
+.bb-people--page .bb-person__photo {
+  aspect-ratio: 4 / 5;
+}
+
+.bb-people--page h1.bb-intro__title {
+  font-size: clamp(48px, 5.4vw, 84px);
+  line-height: 0.95;
+  max-width: 12ch;
+}
+
+.bb-people__filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bb-people__filter .bb-chip {
+  border: 0;
+  cursor: pointer;
+  font: 500 var(--wp--preset--font-size--interface) / 1.2 var(--wp--preset--font-family--figtree);
+  padding: 10px 18px;
+}
+
+.bb-people__filter .bb-chip:hover {
+  background: var(--wp--preset--color--line);
+}
+
+.bb-people__filter .bb-chip[aria-pressed="true"] {
+  background: var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--white);
+}
+
+.bb-people__list > li[hidden] {
+  display: none;
+}

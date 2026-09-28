@@ -1,0 +1,23 @@
+/**
+ * Quotes speak in the italic serif; who said it follows in the sans.
+ */
+
+.wp-block-quote {
+  margin-inline: 0;
+}
+
+.wp-block-quote > p {
+  margin: 0;
+}
+
+.wp-block-quote cite {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: var(--wp--preset--font-size--interface);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin-top: 22px;
+}

@@ -1,0 +1,429 @@
+/**
+ * Ask us: the words and the ways to reach us on the left, one line each; the request form on mint
+ * on the right, with a sun in its corner. The form's topics are chips that turn navy when chosen;
+ * its fields are white on mint and draw a plum ring while in use. Contact Form 7's own stylesheet
+ * is off (inc/forms.php), so the few rules the form needs to work are here too.
+ */
+
+.bb-ask {
+  align-items: start;
+  display: grid;
+  gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.bb-ask--ways-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.bb-ask h1.bb-intro__title {
+  font-size: clamp(48px, 5.4vw, 84px);
+  line-height: 0.95;
+}
+
+/* The ways to reach us: one line each between thin rules, a round arrow that fills navy. */
+.bb-ask__ways {
+  border-top: 1px solid var(--wp--preset--color--line);
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+}
+
+.bb-ask__ways > li {
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  margin: 0;
+}
+
+.bb-ask__way {
+  color: var(--wp--preset--color--contrast);
+  display: grid;
+  gap: 2px 18px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 16px 2px 16px 0;
+  text-decoration: none;
+}
+
+.bb-ask__way-label {
+  color: var(--wp--preset--color--plum);
+  font-size: 11px;
+  font-weight: 600;
+  grid-column: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bb-ask__way-value {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(24px, 2.1vw, 30px);
+  grid-column: 1;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.bb-ask__way-note {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  grid-column: 1;
+}
+
+.bb-ask__way-arrow {
+  align-self: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  height: 40px;
+  position: relative;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s,
+    color 0.3s;
+  width: 40px;
+}
+
+.bb-ask__way-arrow::before {
+  content: "→";
+  font-size: 16px;
+  font-weight: 500;
+  inset: 0;
+  line-height: 40px;
+  position: absolute;
+  text-align: center;
+}
+
+.bb-ask__way:hover .bb-ask__way-arrow,
+.bb-ask__way:focus-visible .bb-ask__way-arrow {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+  color: var(--wp--preset--color--white);
+}
+
+.bb-ask__note {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 22px 0 0;
+  max-width: 44ch;
+}
+
+/* The form, on mint, the sun rising in its corner. */
+.bb-ask__form {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--frame);
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(28px, 3.4vw, 48px);
+  position: relative;
+  scroll-margin-top: 20px;
+}
+
+.bb-ask__sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 18px rgba(242, 168, 90, 0.18),
+    0 0 0 44px rgba(242, 168, 90, 0.08);
+  height: 112px;
+  pointer-events: none;
+  position: absolute;
+  right: -34px;
+  top: -42px;
+  width: 112px;
+  z-index: -1;
+}
+
+.bb-ask__head .bb-intro__title {
+  font-size: clamp(34px, 3.2vw, 46px);
+  max-width: 16ch;
+}
+
+.bb-ask__head .bb-intro__text {
+  max-width: 46ch;
+}
+
+/* The fields. */
+.bb-ask__fields {
+  display: grid;
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.bb-ask__fields > * {
+  margin: 0;
+}
+
+.bb-ask__topics {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.bb-ask__topics > legend,
+.bb-field__label {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.bb-field__label em {
+  color: var(--wp--preset--color--muted);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* The topics: chips; the chosen one navy. The radio itself stays, invisible, over its chip. */
+.bb-ask .wpcf7-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bb-ask .wpcf7-list-item {
+  display: block;
+  margin: 0;
+}
+
+.bb-ask .wpcf7-list-item > label {
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.bb-ask .wpcf7-list-item input {
+  appearance: none;
+  cursor: pointer;
+  height: 100%;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.bb-ask .wpcf7-list-item-label {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
+}
+
+.bb-ask .wpcf7-list-item input:hover + .wpcf7-list-item-label {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+}
+
+.bb-ask .wpcf7-list-item input:checked + .wpcf7-list-item-label {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+  color: var(--wp--preset--color--white);
+}
+
+.bb-ask .wpcf7-list-item input:focus-visible + .wpcf7-list-item-label {
+  outline: 2px solid var(--wp--preset--color--plum);
+  outline-offset: 2px;
+}
+
+.bb-ask__pair {
+  display: grid;
+  gap: 18px 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.bb-field {
+  display: block;
+  margin: 0;
+}
+
+.bb-ask .wpcf7-form-control-wrap {
+  display: block;
+  position: relative;
+}
+
+.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea) {
+  appearance: none;
+  background-color: var(--wp--preset--color--white);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 13px 16px;
+  transition: box-shadow 0.2s;
+  width: 100%;
+}
+
+.bb-ask .wpcf7-form-control-wrap select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2386507c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 16px center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  cursor: pointer;
+  padding-right: 42px;
+}
+
+.bb-ask textarea {
+  min-height: 116px;
+  resize: vertical;
+}
+
+.bb-ask :is(input, select, textarea)::placeholder {
+  color: var(--wp--preset--color--muted);
+  opacity: 1;
+}
+
+.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea):hover {
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+}
+
+.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea):focus {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  outline: none;
+}
+
+.bb-ask :is(input, select, textarea).wpcf7-not-valid {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+}
+
+/* A field's note sits on its label's line, right-aligned, so notes coming and going never move
+   the fields or the button under the pointer. */
+.bb-ask .wpcf7-not-valid-tip {
+  bottom: 100%;
+  color: var(--wp--preset--color--plum);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+/* Sending: the button, a word on what happens next, the answer when it comes. */
+.bb-ask__send {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 4px;
+}
+
+.bb-ask__send > p {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 0;
+}
+
+.bb-ask .wpcf7-submit {
+  border: 0;
+  cursor: pointer;
+  padding: 16px 28px;
+}
+
+.bb-ask .wpcf7-spinner {
+  display: none;
+}
+
+.bb-ask form.submitting .wpcf7-spinner {
+  animation: bb-ask-spin 0.8s linear infinite;
+  border: 2px solid rgba(6, 62, 95, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--wp--preset--color--contrast);
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+
+@keyframes bb-ask-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bb-ask .wpcf7-response-output {
+  background: var(--wp--preset--color--white);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  color: var(--wp--preset--color--contrast);
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+  margin: 0;
+  padding: 14px 18px;
+}
+
+.bb-ask form:is(.init, .resetting, .submitting) .wpcf7-response-output {
+  display: none;
+}
+
+.bb-ask form.sent .wpcf7-response-output {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+  color: var(--wp--preset--color--white);
+  font-size: var(--wp--preset--font-size--interface);
+  padding: 18px 22px;
+}
+
+.bb-ask .screen-reader-response {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.bb-ask .hidden-fields-container {
+  display: none;
+}
+
+.bb-ask [inert] {
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-ask form.submitting .wpcf7-spinner {
+    animation-duration: 2.4s;
+  }
+}
+
+@media (max-width: 999px) {
+  .bb-ask {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-ask__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bb-ask__form {
+    border-radius: var(--wp--custom--radius--card);
+    margin-inline: -6px;
+    padding: 26px 20px 24px;
+  }
+
+  .bb-ask__sun {
+    height: 84px;
+    right: -30px;
+    top: -34px;
+    width: 84px;
+  }
+}

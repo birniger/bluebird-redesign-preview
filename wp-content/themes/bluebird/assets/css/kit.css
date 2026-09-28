@@ -1,0 +1,1321 @@
+/**
+ * The kit: the parts every page is made of, beyond the home page's own sections.
+ *
+ * Contents: ground · section intro · buttons and links · chips · switch · dotted line · big
+ * figures · photos and the photo-wanted placeholder · collage · page openings · bands · closing ·
+ * photo frame · quote.
+ *
+ * How the kit extends Hush: mint is the second ground, carried by rounded bands; the ridge from
+ * the logo becomes a drawn line between steps; the sun marks what matters most; times, prices and
+ * counts are set large in the serif; photos overlap in collages; every page opens differently and
+ * ends with an invitation.
+ */
+
+/* Ground ----------------------------------------------------------------------------------- */
+
+/* The colour a thing sits on, so rings around overlapping photos match it. */
+:root {
+  --bb-ground: var(--wp--preset--color--base);
+  --bb-figure: clamp(34px, 3.3vw, 50px);
+}
+
+/* Section intro ------------------------------------------------------------------------------ */
+
+.bb-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bb-intro > * {
+  margin: 0;
+}
+
+.bb-intro--center {
+  align-items: center;
+  margin-inline: auto;
+  max-width: 920px;
+  text-align: center;
+}
+
+.bb-intro--start {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.bb-intro__title {
+  font-size: var(--wp--preset--font-size--section);
+}
+
+.bb-intro__text {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--lead);
+  max-width: 600px;
+}
+
+.bb-intro__text + .bb-intro__text {
+  margin-top: -4px;
+}
+
+/* Buttons and links -------------------------------------------------------------------------- */
+
+.bb-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+
+.bb-actions > .bb-more {
+  margin-inline-start: 8px;
+}
+
+/* The second choice: an outlined pill. Core styles only the buttons it renders itself, so the
+   sections' buttons carry the same look here. */
+.bb-actions .wp-block-button.is-style-outline > .wp-block-button__link {
+  background: transparent;
+  border: 0;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bb-actions .wp-block-button.is-style-outline > .wp-block-button__link:hover {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--contrast);
+}
+
+/* A quiet link that points onward. */
+.bb-more {
+  align-items: center;
+  color: var(--wp--preset--color--contrast);
+  display: inline-flex;
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 600;
+  gap: 8px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.bb-more::after {
+  content: "→";
+  transition: transform 0.3s var(--bb-ease);
+}
+
+.bb-more:hover {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-more:hover::after {
+  transform: translateX(4px);
+}
+
+/* Chips -------------------------------------------------------------------------------------- */
+
+.bb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-chips > li {
+  margin: 0;
+}
+
+.bb-chip {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  display: inline-block;
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+  line-height: 1.3;
+  padding: 7px 14px;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+a.bb-chip:hover {
+  background: var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--white);
+}
+
+/* Switch: a white pill of choices whose navy thumb slides to the chosen one: the sport switch
+   over the lesson panels, half or full day on the lesson day. -------------------------------- */
+
+.bb-switch {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  display: inline-flex;
+  padding: 5px;
+  position: relative;
+}
+
+.bb-switch__thumb {
+  background: var(--wp--preset--color--contrast);
+  border-radius: var(--wp--custom--radius--pill);
+  bottom: 5px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  transform: translateX(var(--x, 0));
+  transition:
+    transform 0.5s var(--bb-ease),
+    width 0.5s var(--bb-ease);
+  width: var(--w, 0);
+}
+
+.bb-switch.is-ready .bb-switch__thumb {
+  opacity: 1;
+}
+
+.bb-switch:not(.is-ready) .bb-switch__thumb {
+  transition: none;
+}
+
+.bb-switch__option {
+  background: none;
+  border: 0;
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  font: 600 var(--wp--preset--font-size--interface) / 1.2 var(--wp--preset--font-family--figtree);
+  padding: 12px 24px;
+  position: relative;
+  transition: color 0.35s;
+}
+
+.bb-switch__option:hover {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-switch__option[aria-pressed="true"] {
+  color: var(--wp--preset--color--white);
+}
+
+/* Before the script has placed the thumb, the chosen sport is simply navy. */
+.bb-switch:not(.is-ready) .bb-switch__option[aria-pressed="true"] {
+  background: var(--wp--preset--color--contrast);
+}
+
+.bb-switch__option:focus-visible {
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-switch__thumb {
+    transition-duration: 0.01s !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-switch__option {
+    font-size: 14px;
+    padding: 10px 13px;
+  }
+}
+
+/* Dotted line: short terms side by side, each after a small sun-orange dot. ------------------ */
+
+.bb-dots {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--small);
+  gap: 10px 26px;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-dots li {
+  align-items: baseline;
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.bb-dots li::before {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  content: "";
+  flex-shrink: 0;
+  height: 5px;
+  transform: translateY(-2px);
+  width: 5px;
+}
+
+/* Big figures: a time, price or count in the serif over a small label. ---------------------- */
+
+.bb-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 0;
+  margin: 0;
+}
+
+.bb-figures__item {
+  border-left: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  padding: 2px 28px;
+}
+
+.bb-figures__item:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.bb-figures dd {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--bb-figure);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.bb-figures dt {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-top: 8px;
+  max-width: 16ch;
+}
+
+/* Photos, and the placeholder for a photo still wanted --------------------------------------- */
+
+img.bb-photo {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.bb-wanted {
+  align-items: center;
+  background:
+    radial-gradient(120% 90% at 88% 0%, rgba(242, 168, 90, 0.16), transparent 55%),
+    linear-gradient(180deg, #fbfdfd 0%, #e2efef 100%);
+  border-radius: inherit;
+  display: flex;
+  height: 100%;
+  isolation: isolate;
+  justify-content: center;
+  min-height: 140px;
+  overflow: hidden;
+  padding: 28px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.bb-wanted::after {
+  background: url("../images/ridge.png") center bottom 8% / min(78%, 460px) auto no-repeat;
+  content: "";
+  inset: 0;
+  opacity: 0.13;
+  position: absolute;
+  z-index: -1;
+}
+
+.bb-wanted__sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 8px rgba(242, 168, 90, 0.18),
+    0 0 0 20px rgba(242, 168, 90, 0.07);
+  height: 20px;
+  position: absolute;
+  right: 26px;
+  top: 26px;
+  width: 20px;
+}
+
+.bb-wanted__text {
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(18px, 1.5vw, 23px);
+  gap: 8px;
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  max-width: 28ch;
+}
+
+.bb-wanted__label {
+  color: var(--wp--preset--color--plum);
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* Collage: photo windows that overlap, each ringed in the ground colour. ---------------------- */
+
+.bb-collage {
+  position: relative;
+}
+
+.bb-collage figure {
+  margin-block: 0;
+  overflow: hidden;
+}
+
+.bb-collage__main {
+  aspect-ratio: 5 / 6;
+  border-radius: var(--wp--custom--radius--frame);
+  margin-inline: auto 0;
+  width: 78%;
+}
+
+.bb-collage--1 .bb-collage__main {
+  width: 100%;
+}
+
+.bb-collage__second {
+  aspect-ratio: 1;
+  border-radius: var(--wp--custom--radius--card);
+  bottom: 8%;
+  box-shadow: 0 0 0 10px var(--bb-ground);
+  left: 0;
+  position: absolute;
+  width: 42%;
+}
+
+.bb-collage__third {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--wp--custom--radius--tile);
+  box-shadow: 0 0 0 8px var(--bb-ground);
+  left: 5%;
+  position: absolute;
+  top: 6%;
+  width: 24%;
+}
+
+.bb-collage__caption {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  padding: 8px 14px;
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+.bb-collage__quote {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--card);
+  bottom: -28px;
+  box-shadow: var(--wp--preset--shadow--float);
+  margin: 0;
+  padding: 22px 26px 20px;
+  position: absolute;
+  right: -18px;
+  width: min(340px, 64%);
+}
+
+.bb-collage__quote .bb-stars {
+  font-size: 12px;
+}
+
+.bb-collage__quote blockquote {
+  margin: 8px 0 0;
+}
+
+.bb-collage__quote blockquote p {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.bb-collage__quote figcaption {
+  color: var(--wp--preset--color--ink);
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* Page openings ------------------------------------------------------------------------------ */
+
+.bb-opening {
+  position: relative;
+}
+
+.bb-opening h1 {
+  margin: 0;
+}
+
+.bb-opening__lead {
+  color: var(--wp--preset--color--ink);
+  font-size: 18px;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 540px;
+}
+
+.bb-opening__lead + .bb-opening__lead {
+  margin-top: 12px;
+}
+
+/* Split: the words beside a collage. */
+.bb-opening--split {
+  align-items: start;
+  display: grid;
+  gap: var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.bb-opening__text {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-opening__text > .is-style-label {
+  margin: 0 0 18px;
+}
+
+.bb-opening--split h1 {
+  font-size: clamp(48px, 5.4vw, 84px);
+  line-height: 0.95;
+  margin-bottom: 26px;
+}
+
+.bb-opening__text .bb-figures {
+  border-top: 1px solid var(--wp--preset--color--line);
+  margin-top: 34px;
+  padding-top: 26px;
+  width: 100%;
+}
+
+.bb-opening__text .bb-actions {
+  margin-top: 34px;
+}
+
+.bb-opening--split .bb-collage {
+  margin-left: auto;
+  max-width: 600px;
+  padding-bottom: 28px;
+  width: 100%;
+}
+
+/* Giant: one word set very large beside a photo window that starts right under the header. The
+   photo's top corner carries the rating, just below the Book button, so the bird never has far to
+   go; a long word reaches into the photo. The word's size follows its length (--bb-letters, set by
+   the block), so "Ski" and "Snowboard" both fill the column. */
+.bb-opening--giant {
+  --bb-giant: clamp(84px, calc(158cqi / var(--bb-letters, 6)), 216px);
+
+  align-items: start;
+  column-gap: var(--wp--preset--spacing--60);
+  container-type: inline-size;
+  display: grid;
+  grid-template-areas:
+    "label window"
+    "giant window"
+    "below window";
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: auto auto 1fr;
+}
+
+.bb-opening--giant > .is-style-label {
+  grid-area: label;
+  margin: clamp(10px, 1.4vw, 20px) 0 clamp(12px, 1.6vw, 22px);
+}
+
+.bb-opening__giant {
+  font-size: var(--bb-giant);
+  grid-area: giant;
+  letter-spacing: -0.035em;
+  line-height: 0.8;
+  margin: 0 0 0 calc(var(--bb-giant) * -0.035) !important;
+  position: relative;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.bb-opening__window {
+  border-radius: var(--wp--custom--radius--frame);
+  grid-area: window;
+  height: clamp(460px, 44vw, 640px);
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-opening__window > .bb-rating--badge {
+  position: absolute;
+  right: 22px;
+  top: 22px;
+}
+
+.bb-opening__below {
+  align-items: start;
+  display: grid;
+  gap: 30px;
+  grid-area: below;
+  margin-top: clamp(26px, 3vw, 40px);
+}
+
+.bb-opening__below > * {
+  margin: 0;
+}
+
+.bb-opening__side {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.bb-opening__note {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+  margin: 0;
+}
+
+.bb-opening--giant .bb-opening__lead {
+  font-size: clamp(18px, 1.5vw, 21px);
+  max-width: 640px;
+}
+
+/* Giant beside a portrait (an instructor's page): a tall photo, the name reaching into it. */
+.bb-opening--portrait {
+  --bb-giant: clamp(96px, min(15vw, calc(150cqi / var(--bb-letters, 5))), 270px);
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+}
+
+.bb-opening--portrait .bb-opening__window {
+  aspect-ratio: 4 / 5;
+  height: auto;
+}
+
+/* An instructor's page: the name at a headline's size, the same for everyone whatever its length,
+   a few paragraphs about them, then the ways to book and to reach them. */
+.bb-opening.bb-opening--person {
+  --bb-giant: clamp(56px, 6.4vw, 96px);
+}
+
+.bb-opening--person .bb-opening__giant {
+  line-height: 0.95;
+  margin: 0 !important;
+  white-space: normal;
+}
+
+.bb-opening--person .bb-opening__words {
+  display: grid;
+  gap: 14px;
+}
+
+.bb-opening--person .bb-opening__lead {
+  font-size: clamp(17px, 1.3vw, 19px);
+  max-width: 62ch;
+}
+
+/* The quieter links under the buttons: free days, email. */
+.bb-opening__links {
+  gap: 10px 26px;
+  margin-top: -8px;
+}
+
+.bb-opening__links > .bb-more {
+  margin: 0;
+}
+
+/* Statement: a panorama in a window, the words on glass. */
+.bb-opening--statement {
+  align-items: flex-end;
+  border-radius: var(--wp--custom--radius--frame);
+  display: flex;
+  isolation: isolate;
+  min-height: min(86vh, 860px);
+  overflow: hidden;
+  padding: 32px;
+}
+
+.bb-opening__backdrop {
+  inset: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+/* A photo still wanted behind glass: its note moves to the top right, clear of the card. */
+.bb-opening--statement .bb-wanted {
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 44px 88px 44px 44px;
+  text-align: right;
+}
+
+.bb-opening__glass {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--card);
+  max-width: 640px;
+  padding: 40px 42px 38px;
+}
+
+.bb-opening__glass > .is-style-label {
+  margin: 0 0 14px;
+}
+
+.bb-opening--statement h1 {
+  font-size: var(--wp--preset--font-size--hero);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.bb-opening__glass .bb-actions {
+  margin-top: 26px;
+}
+
+/* Chips: a mint band with the headline and topics to jump to. */
+.bb-opening--chips {
+  align-items: center;
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--frame);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(56px, 6.4vw, 96px) clamp(24px, 5vw, 72px) clamp(48px, 5.4vw, 80px);
+  text-align: center;
+
+  --bb-ground: var(--wp--preset--color--teal);
+}
+
+.bb-opening--chips > * {
+  margin: 0;
+}
+
+.bb-opening--chips > .is-style-label {
+  margin-bottom: 16px;
+}
+
+.bb-opening--chips h1 {
+  font-size: var(--wp--preset--font-size--section);
+  margin-bottom: 20px;
+}
+
+.bb-opening--chips .bb-opening__lead {
+  margin-inline: auto;
+}
+
+.bb-opening--chips .bb-chips {
+  justify-content: center;
+  margin-top: 30px;
+  max-width: 760px;
+}
+
+.bb-opening--chips .bb-chip {
+  background: var(--wp--preset--color--white);
+  font-size: var(--wp--preset--font-size--interface);
+  padding: 10px 18px;
+}
+
+.bb-opening--chips a.bb-chip:hover {
+  background: var(--wp--preset--color--contrast);
+}
+
+.bb-opening--chips .bb-actions {
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* The motifs a band may carry: the sun and the ridge. */
+.bb-sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 22px rgba(242, 168, 90, 0.16),
+    0 0 0 54px rgba(242, 168, 90, 0.07);
+  height: 150px;
+  pointer-events: none;
+  position: absolute;
+  right: 8%;
+  top: -56px;
+  width: 150px;
+  z-index: -1;
+}
+
+.bb-ridge-mark {
+  bottom: -6px;
+  height: auto;
+  left: 50%;
+  opacity: 0.15;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(820px, 92%);
+  z-index: -1;
+}
+
+/* Bands: mint as the second ground ------------------------------------------------------------ */
+
+.bb-band {
+  border-radius: var(--wp--custom--radius--frame);
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(44px, 5vw, 76px) clamp(24px, 4.6vw, 64px);
+  position: relative;
+}
+
+.bb-band--mint {
+  background: var(--wp--preset--color--teal);
+
+  --bb-ground: var(--wp--preset--color--teal);
+}
+
+.bb-band--white {
+  background: var(--wp--preset--color--white);
+
+  --bb-ground: var(--wp--preset--color--white);
+}
+
+.bb-band__inner > * {
+  margin-block: 0;
+}
+
+.bb-band__inner > * + * {
+  margin-block-start: var(--wp--preset--spacing--50);
+}
+
+.bb-band--mint .bb-chip {
+  background: var(--wp--preset--color--white);
+}
+
+.bb-band--mint .wp-block-list.is-style-chips li {
+  background: var(--wp--preset--color--white);
+}
+
+.bb-band--mint .wp-block-button.is-style-outline .wp-block-button__link {
+  box-shadow: inset 0 0 0 1.5px rgba(6, 62, 95, 0.4);
+}
+
+/* Ordinary blocks in a split section: chips start where the words start, and stacked guests'
+   words step aside from each other. */
+.is-style-split .wp-block-list.is-style-chips {
+  justify-content: flex-start;
+}
+
+.bb-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bb-quotes > * {
+  margin: 0 !important;
+}
+
+.bb-quotes > :nth-child(odd) {
+  margin-right: 10% !important;
+}
+
+.bb-quotes > :nth-child(even) {
+  margin-left: 10% !important;
+}
+
+.bb-photo-quote {
+  position: relative;
+}
+
+.bb-photo-quote > .bb-quote {
+  bottom: -28px;
+  box-shadow: var(--wp--preset--shadow--float);
+  left: -28px;
+  margin: 0 !important;
+  max-width: min(360px, 72%);
+  position: absolute;
+}
+
+@media (max-width: 999px) {
+  .bb-photo-quote > .bb-quote {
+    bottom: auto;
+    left: auto;
+    margin: -48px 16px 0 !important;
+    max-width: none;
+    position: relative;
+  }
+}
+
+p.bb-small {
+  color: var(--wp--preset--color--muted);
+  font-size: var(--wp--preset--font-size--small);
+}
+
+/* Closing: the end of every page, one invitation on navy, the sun in front of the ridge's bird. */
+
+.bb-closing {
+  align-items: center;
+  background: var(--wp--preset--color--contrast);
+  color: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--frame);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(60px, 6vw, 92px) clamp(24px, 5vw, 72px) clamp(128px, 12vw, 176px);
+  position: relative;
+  text-align: center;
+
+  --bb-ground: var(--wp--preset--color--contrast);
+}
+
+.bb-closing > * {
+  margin: 0;
+}
+
+.bb-closing > .is-style-label {
+  color: var(--wp--preset--color--teal);
+  margin-bottom: 16px;
+}
+
+.bb-closing h2 {
+  color: var(--wp--preset--color--white);
+  font-size: clamp(40px, 4.6vw, 68px);
+  max-width: 900px;
+}
+
+.bb-closing h2 em {
+  color: var(--wp--preset--color--teal);
+}
+
+.bb-closing .bb-intro__text,
+.bb-closing > p:not(.is-style-label) {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: var(--wp--preset--font-size--lead);
+  margin-top: 18px;
+  max-width: 560px;
+}
+
+.bb-closing .bb-actions {
+  justify-content: center;
+  margin-top: 34px;
+}
+
+/* On navy, the first choice is white and the second an outline of light. */
+.bb-closing .wp-block-button:not(.is-style-outline) > .wp-block-button__link {
+  background: var(--wp--preset--color--white);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bb-closing .wp-block-button:not(.is-style-outline) > .wp-block-button__link:hover {
+  background: var(--wp--preset--color--teal);
+}
+
+.bb-closing .bb-actions .wp-block-button.is-style-outline > .wp-block-button__link {
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+  color: var(--wp--preset--color--white);
+}
+
+.bb-closing .bb-actions .wp-block-button.is-style-outline > .wp-block-button__link:hover {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--white);
+  color: var(--wp--preset--color--white);
+}
+
+.bb-closing :focus-visible {
+  outline-color: var(--wp--preset--color--white);
+}
+
+.bb-closing__sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  bottom: clamp(-120px, -7.5vw, -76px);
+  box-shadow:
+    0 0 0 24px rgba(242, 168, 90, 0.16),
+    0 0 0 60px rgba(242, 168, 90, 0.07);
+  height: clamp(140px, 13vw, 196px);
+  left: 50%;
+  /* Ahead of the bird at the ridge's end, where it flies; on narrow screens, where the band ends
+     sooner, it looks in from the corner. */
+  margin-left: min(350px, calc(50% - 80px));
+  position: absolute;
+  width: clamp(140px, 13vw, 196px);
+  z-index: -2;
+}
+
+.bb-closing__ridge {
+  bottom: -4px;
+  filter: brightness(0) invert(1);
+  height: auto;
+  left: 50%;
+  opacity: 0.12;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: min(640px, 96%);
+  z-index: -1;
+}
+
+/* The sun is alive, like the one in the reviews band: it rises ahead of the bird, then sets slowly
+   towards the corner, and again. It rests while the band is off screen (view.js) and keeps still
+   for visitors who ask for less motion. */
+.bb-closing__sun {
+  animation: bb-closing-sun 22s ease-in-out infinite alternate;
+}
+
+.bb-closing.is-resting .bb-closing__sun {
+  animation-play-state: paused;
+}
+
+/* Risen, it stands clear of the bird; set, only its top shows above the band's edge. */
+@keyframes bb-closing-sun {
+  from {
+    transform: translate(-6px, -96px);
+  }
+
+  to {
+    transform: translate(40px, 64px);
+  }
+}
+
+/* Narrower, in the corner and nearer the buttons: a lower arc. */
+@keyframes bb-closing-sun-low {
+  from {
+    transform: translate(-4px, -44px);
+  }
+
+  to {
+    transform: translate(24px, 56px);
+  }
+}
+
+@media (max-width: 999px) {
+  .bb-closing__sun {
+    animation-name: bb-closing-sun-low;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-closing__sun {
+    animation: none;
+    transform: translate(-6px, -60px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 999px) {
+  .bb-closing__sun {
+    transform: translate(-4px, -30px);
+  }
+}
+
+/* A photo frame: one photo, or the placeholder, in a window of a set shape. ------------------ */
+
+.bb-frame {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-frame--window {
+  border-radius: var(--wp--custom--radius--frame);
+}
+
+.bb-frame--tile {
+  border-radius: var(--wp--custom--radius--tile);
+}
+
+.bb-frame > figcaption {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  bottom: 14px;
+  color: var(--wp--preset--color--contrast);
+  font-size: 13px;
+  font-weight: 500;
+  left: 14px;
+  padding: 8px 12px;
+  position: absolute;
+}
+
+/* Quote: a guest's words where they fit. ----------------------------------------------------- */
+
+.bb-quote {
+  margin: 0;
+}
+
+.bb-quote blockquote {
+  margin: 0;
+}
+
+.bb-quote blockquote p {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.bb-quote figcaption {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--wp--preset--font-size--interface);
+  gap: 2px;
+}
+
+.bb-quote figcaption strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 600;
+}
+
+.bb-quote figcaption span {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+}
+
+.bb-quote--big {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  max-width: 940px;
+  text-align: center;
+}
+
+.bb-quote--big blockquote p {
+  font-size: var(--wp--preset--font-size--quote);
+  line-height: 1.12;
+  margin-top: 18px;
+}
+
+.bb-quote--big figcaption {
+  margin-top: 24px;
+}
+
+.bb-quote--card {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 28px 22px;
+}
+
+.bb-quote--card blockquote p {
+  font-size: clamp(20px, 1.6vw, 24px);
+  line-height: 1.18;
+}
+
+.bb-band--white .bb-quote--card {
+  background: var(--wp--preset--color--base);
+}
+
+/* Tablet and phone ------------------------------------------------------------------------- */
+
+@media (max-width: 999px) {
+  .bb-opening--split {
+    gap: 48px;
+    grid-template-columns: 1fr;
+  }
+
+  /* Stacked, a photo window turns landscape and a collage keeps a readable size. */
+  .is-style-split > .bb-frame {
+    aspect-ratio: 3 / 2 !important;
+  }
+
+  .bb-collage-block .bb-collage {
+    margin-inline: auto;
+    max-width: 560px;
+  }
+
+  .bb-opening--split .bb-collage {
+    margin-inline: auto;
+    max-width: 560px;
+    width: 100%;
+  }
+
+  .bb-opening--split .bb-collage--1 {
+    max-width: none;
+    padding-bottom: 0;
+  }
+
+  .bb-collage--1 .bb-collage__main {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Stacked, the photo comes first, with the rating in its top corner; the word and the rest
+     follow on the ground. */
+  .bb-opening--giant {
+    --bb-giant: clamp(64px, calc(180cqi / var(--bb-letters, 6)), 150px);
+
+    grid-template-areas:
+      "window"
+      "label"
+      "giant"
+      "below";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+
+  .bb-opening--giant:not(.bb-opening--portrait) .bb-opening__window {
+    height: clamp(300px, 54vw, 460px);
+  }
+
+  .bb-opening--giant > .is-style-label {
+    margin-top: clamp(22px, 4vw, 32px);
+  }
+
+  .bb-opening__below {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .bb-opening--statement {
+    border-radius: 0;
+    display: block;
+    isolation: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .bb-opening--statement .bb-opening__backdrop {
+    border-radius: var(--wp--custom--radius--frame);
+    height: max(320px, 52svh);
+    overflow: hidden;
+    position: relative;
+    z-index: auto;
+  }
+
+  /* A photo still wanted behind glass: its note moves to the top right, clear of the card. */
+  .bb-opening--statement .bb-wanted {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 44px 88px 44px 44px;
+    text-align: right;
+  }
+
+  .bb-opening__glass {
+    box-shadow: var(--wp--preset--shadow--float);
+    margin: -64px 14px 0;
+    max-width: none;
+    position: relative;
+  }
+
+  .bb-opening--portrait .bb-opening__window {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+
+  .bb-opening.bb-opening--person {
+    --bb-giant: clamp(52px, 8vw, 72px);
+  }
+
+  /* A portrait stays a portrait: square, so the face keeps its place in the window. */
+  .bb-opening--person .bb-opening__window {
+    aspect-ratio: 1;
+  }
+
+  .bb-collage__quote {
+    right: 0;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-figures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  }
+
+  .bb-figures__item {
+    padding: 2px 14px;
+  }
+
+  .bb-figures dd {
+    font-size: 30px;
+  }
+
+  .bb-opening--giant {
+    --bb-giant: clamp(56px, calc(190cqi / var(--bb-letters, 6)), 132px);
+  }
+
+  .bb-opening.bb-opening--person {
+    --bb-giant: clamp(44px, 12vw, 56px);
+  }
+
+  .bb-opening__window {
+    border-radius: var(--wp--custom--radius--card);
+  }
+
+  .bb-opening--giant:not(.bb-opening--portrait) .bb-opening__window {
+    height: min(380px, 50svh);
+  }
+
+  .bb-opening__below {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bb-opening--statement .bb-opening__backdrop {
+    border-radius: var(--wp--custom--radius--card);
+  }
+
+  .bb-opening__glass {
+    margin: -64px 10px 0;
+  }
+
+  /* A photo still wanted behind glass: its note moves to the top right, clear of the card. */
+  .bb-opening--statement .bb-wanted {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 44px 88px 44px 44px;
+    text-align: right;
+  }
+
+  .bb-opening__glass {
+    padding: 26px 24px 24px;
+  }
+
+  .bb-opening--chips,
+  .bb-band,
+  .bb-closing {
+    border-radius: var(--wp--custom--radius--card);
+  }
+
+  .bb-collage__second {
+    box-shadow: 0 0 0 6px var(--bb-ground);
+  }
+
+  .bb-collage__third {
+    box-shadow: 0 0 0 5px var(--bb-ground);
+  }
+
+  .bb-collage__quote {
+    bottom: -40px;
+    padding: 18px 20px 16px;
+    width: 78%;
+  }
+
+  .bb-collage__quote blockquote p {
+    font-size: 19px;
+  }
+
+  .bb-quote--card {
+    padding: 24px 22px 22px;
+  }
+}

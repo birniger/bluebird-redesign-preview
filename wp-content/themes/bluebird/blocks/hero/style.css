@@ -1,0 +1,211 @@
+/**
+ * The hero: one big rounded window in the page's column, like every photo on the site (or, set to
+ * full width, 16px from the page's edges), photos cross-fading while they settle from a slight
+ * zoom, the rating badge top right, the glass card bottom left.
+ */
+
+.bb-hero {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--frame);
+  height: max(640px, 88vh);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.has-global-padding > .bb-hero.alignfull,
+.bb-hero.alignfull {
+  margin-left: calc(var(--wp--style--root--padding-left, 0px) * -1 + 16px) !important;
+  margin-right: calc(var(--wp--style--root--padding-right, 0px) * -1 + 16px) !important;
+  max-width: none;
+  width: auto;
+}
+
+.bb-hero__slides,
+.bb-hero__slides > figure {
+  inset: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.bb-hero__slides > figure {
+  opacity: 0;
+  transform: scale(1.05);
+  transition:
+    opacity 1.6s ease,
+    transform 9s ease;
+}
+
+.bb-hero__slides > figure.is-current {
+  opacity: 1;
+  transform: none;
+}
+
+.bb-hero__slides img {
+  border-radius: 0;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.bb-hero > .bb-rating--badge {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  z-index: 2;
+}
+
+.bb-hero__card {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--card);
+  bottom: 32px;
+  left: 32px;
+  padding: 38px 40px 36px;
+  position: absolute;
+  width: min(560px, calc(100% - 64px));
+  z-index: 2;
+}
+
+.bb-hero__card > * {
+  margin: 0;
+}
+
+.bb-hero__card .bb-hero__kicker {
+  color: var(--wp--preset--color--plum);
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 500;
+}
+
+.bb-hero__card h1 {
+  font-size: var(--wp--preset--font-size--hero);
+  line-height: 1;
+  margin-top: 12px;
+}
+
+.bb-hero__card h1 + p {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--lead);
+  margin-top: 16px;
+}
+
+.bb-hero__card .wp-block-buttons {
+  margin-top: 26px;
+}
+
+.bb-hero__dots {
+  bottom: 32px;
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  right: 32px;
+  z-index: 2;
+}
+
+.bb-hero__dots[hidden],
+.bb-reviews__dots[hidden] {
+  display: none;
+}
+
+.bb-hero__dots button,
+.bb-reviews__dots button {
+  border: 0;
+  border-radius: 99px;
+  cursor: pointer;
+  height: 8px;
+  padding: 0;
+  transition:
+    width 0.4s,
+    background-color 0.4s;
+  width: 8px;
+}
+
+.bb-hero__dots button {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.bb-hero__dots button[aria-pressed="true"] {
+  background: var(--wp--preset--color--white);
+  width: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-hero__slides > figure {
+    transform: none;
+    transition: opacity 0.6s ease;
+  }
+}
+
+/* Tablet and phone: the photo keeps its window and the riders stay in view; the glass card sits
+   under it, overlapping only the photo's lower edge. */
+@media (max-width: 999px) {
+  .bb-hero {
+    background: none;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .bb-hero__slides {
+    background: var(--wp--preset--color--teal);
+    border-radius: var(--wp--custom--radius--frame);
+    height: max(380px, 62svh);
+    inset: auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bb-hero__card {
+    bottom: auto;
+    box-shadow: var(--wp--preset--shadow--float);
+    left: auto;
+    margin: -64px 14px 0;
+    padding: 30px 28px 28px;
+    position: relative;
+    width: auto;
+  }
+
+  .bb-hero > .bb-rating--badge {
+    right: 16px;
+    top: 16px;
+  }
+
+  .bb-hero__dots {
+    bottom: auto;
+    left: 20px;
+    right: auto;
+    top: 30px;
+  }
+}
+
+@media (max-width: 599px) {
+  .has-global-padding > .bb-hero.alignfull,
+  .bb-hero.alignfull {
+    margin-left: calc(var(--wp--style--root--padding-left, 0px) * -1 + 10px) !important;
+    margin-right: calc(var(--wp--style--root--padding-right, 0px) * -1 + 10px) !important;
+  }
+
+  .bb-hero__slides {
+    border-radius: 26px;
+  }
+
+  .bb-hero__card {
+    margin: -64px 10px 0;
+    padding: 26px 22px 24px;
+  }
+
+  .bb-hero__card h1 {
+    font-size: clamp(40px, 11vw, 48px);
+  }
+
+  .bb-hero__card h1 + p {
+    font-size: var(--wp--preset--font-size--body);
+  }
+
+  .bb-hero__card .wp-block-buttons {
+    margin-top: 20px;
+  }
+}

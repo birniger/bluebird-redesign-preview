@@ -1,0 +1,186 @@
+/**
+ * The season's dates: a white card for each, the date on a mint tile, the next one with the sun.
+ * When nothing is posted, one quiet card says so and points to what can always be asked for.
+ */
+
+.bb-season-block > .bb-intro {
+  margin-bottom: var(--wp--preset--spacing--40);
+}
+
+.bb-season__group + .bb-season__group {
+  margin-top: var(--wp--preset--spacing--40);
+}
+
+.bb-season__group {
+  scroll-margin-top: 24px;
+}
+
+.bb-season__group-title {
+  font-size: var(--wp--preset--font-size--title);
+  margin: 0 0 14px;
+}
+
+.bb-events {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-event {
+  align-items: start;
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--card);
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 88px minmax(0, 1fr);
+  margin: 0;
+  padding: 20px 24px 22px 20px;
+  scroll-margin-top: 24px;
+}
+
+.bb-event__date {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--tile);
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.bb-event__day {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 40px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.bb-event__month {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.bb-event.is-next .bb-event__date::after {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(242, 168, 90, 0.25);
+  content: "";
+  height: 12px;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 12px;
+}
+
+.bb-event__body > * {
+  margin: 0;
+}
+
+.bb-event__kind {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.bb-event__body h3 {
+  font-size: clamp(26px, 2.2vw, 32px);
+  margin-top: 6px;
+}
+
+.bb-event__text {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--interface);
+  margin-top: 10px !important;
+  max-width: 60ch;
+}
+
+.bb-event__facts {
+  margin-top: 14px !important;
+}
+
+.bb-event__status {
+  align-items: center;
+  color: var(--wp--preset--color--contrast);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 8px;
+  margin-top: 14px !important;
+}
+
+.bb-event__status::before {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  content: "";
+  height: 7px;
+  width: 7px;
+}
+
+.bb-event .bb-more {
+  display: inline-flex;
+  margin-top: 16px;
+}
+
+/* Nothing posted: one card, the sun, what can always be asked for. */
+.bb-season__empty {
+  align-items: center;
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--card);
+  display: grid;
+  gap: 16px 22px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 24px 28px;
+}
+
+.bb-season__empty-sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px rgba(242, 168, 90, 0.2);
+  height: 18px;
+  width: 18px;
+}
+
+.bb-season__empty > div > * {
+  margin: 0;
+}
+
+.bb-season__empty-title {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--question);
+  line-height: 1.1;
+}
+
+.bb-season__empty-text {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--interface);
+  margin-top: 6px !important;
+}
+
+@media (max-width: 699px) {
+  .bb-event {
+    gap: 16px;
+    grid-template-columns: 68px minmax(0, 1fr);
+    padding: 16px 18px 18px 16px;
+  }
+
+  .bb-event__day {
+    font-size: 32px;
+  }
+
+  .bb-season__empty {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .bb-season__empty > .bb-actions {
+    grid-column: 1 / -1;
+  }
+}

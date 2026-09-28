@@ -1,0 +1,144 @@
+/**
+ * Photo doors: tall windows, the photo settling closer when pointed at, the name on glass with a
+ * round arrow that fills navy.
+ */
+
+.bb-doors__list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(var(--doors), minmax(0, 1fr));
+  list-style: none;
+  margin: var(--wp--preset--spacing--50) 0 0;
+  padding: 0;
+}
+
+.bb-door {
+  border-radius: var(--wp--custom--radius--panel);
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  height: clamp(360px, 31vw, 450px);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+}
+
+.bb-door__photo {
+  inset: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.bb-door__photo > * {
+  transition: transform 1.2s var(--bb-ease);
+}
+
+.bb-door:hover .bb-door__photo > * {
+  transform: scale(1.04);
+}
+
+.bb-door__glass {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: 20px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  left: 12px;
+  padding: 20px 76px 22px 22px;
+  position: absolute;
+  right: 12px;
+}
+
+.bb-door__label {
+  color: var(--wp--preset--color--plum);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bb-door__title {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: clamp(32px, 2.8vw, 42px);
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+}
+
+.bb-door__text {
+  color: var(--wp--preset--color--ink);
+  font-size: var(--wp--preset--font-size--small);
+  line-height: 1.4;
+}
+
+.bb-door__arrow {
+  border-radius: 50%;
+  bottom: 22px;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+  height: 42px;
+  position: absolute;
+  right: 20px;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+  width: 42px;
+}
+
+.bb-door__arrow::before {
+  content: "→";
+  font-size: 17px;
+  font-weight: 500;
+  inset: 0;
+  line-height: 42px;
+  position: absolute;
+  text-align: center;
+  transition:
+    color 0.3s,
+    transform 0.3s var(--bb-ease);
+}
+
+.bb-door:hover .bb-door__arrow,
+.bb-door:focus-visible .bb-door__arrow {
+  background: var(--wp--preset--color--contrast);
+  box-shadow: none;
+}
+
+.bb-door:hover .bb-door__arrow::before,
+.bb-door:focus-visible .bb-door__arrow::before {
+  color: var(--wp--preset--color--white);
+  transform: translateX(2px);
+}
+
+.bb-door:focus-visible {
+  outline-offset: 4px;
+}
+
+/* A photo still wanted keeps its words above the glass. */
+.bb-door .bb-wanted {
+  align-items: flex-start;
+  padding-top: clamp(56px, 7vw, 96px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-door__photo > * {
+    transition: none;
+  }
+}
+
+@media (max-width: 999px) {
+  .bb-doors__list {
+    grid-template-columns: repeat(min(var(--doors), 2), minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-doors__list {
+    grid-template-columns: 1fr;
+  }
+
+  .bb-door {
+    height: 230px;
+  }
+}

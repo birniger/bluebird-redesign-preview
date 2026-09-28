@@ -1,0 +1,151 @@
+/**
+ * Lists. Ordinary bullets are small suns. Three styles for facts: a dotted line of short terms,
+ * chips, and a price list with dotted leaders; and numbered points, counted in the serif.
+ */
+
+.wp-block-list li::marker {
+  color: var(--wp--preset--color--sun);
+}
+
+.wp-block-list li + li {
+  margin-top: 0.35em;
+}
+
+/* Dotted line: short terms side by side, each after a small orange dot. */
+.wp-block-list.is-style-dots {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--small);
+  gap: 10px 26px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.wp-block-list.is-style-dots li {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+}
+
+.wp-block-list.is-style-dots li::before {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  content: "";
+  flex-shrink: 0;
+  height: 5px;
+  width: 5px;
+}
+
+@media (max-width: 599px) {
+  .wp-block-list.is-style-dots {
+    display: grid;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .wp-block-list.is-style-dots li {
+    align-items: baseline;
+  }
+
+  .wp-block-list.is-style-dots li::before {
+    transform: translateY(-2px);
+  }
+}
+
+/* Chips: a fact and its price on the glacier teal. */
+.wp-block-list.is-style-chips {
+  color: var(--wp--preset--color--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--wp--preset--font-size--interface);
+  gap: 10px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.wp-block-list.is-style-chips li {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--pill);
+  margin: 0;
+  padding: 9px 16px;
+}
+
+.wp-block-list.is-style-chips strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+/* Price list: the item, a dotted leader, the price. Type the price in bold. */
+.wp-block-list.is-style-prices {
+  list-style: none;
+  padding: 0;
+}
+
+.wp-block-list.is-style-prices li {
+  align-items: baseline;
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  gap: 0;
+  margin: 0;
+  padding: 11px 0;
+}
+
+.wp-block-list.is-style-prices li::after {
+  border-bottom: 1.5px dotted var(--wp--custom--line--soft);
+  content: "";
+  flex: 1 1 24px;
+  margin: 0 10px;
+  order: 2;
+  transform: translateY(-4px);
+}
+
+.wp-block-list.is-style-prices li strong {
+  color: var(--wp--preset--color--contrast);
+  font-weight: 600;
+  order: 3;
+  white-space: nowrap;
+}
+
+/* Numbered points: each counted in the serif; start a point with its name in bold. */
+.wp-block-list.is-style-numbers {
+  counter-reset: bb-number;
+  display: grid;
+  gap: 24px 40px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  list-style: none;
+  padding: 0;
+}
+
+.wp-block-list.is-style-numbers li {
+  color: var(--wp--preset--color--ink);
+  counter-increment: bb-number;
+  margin: 0;
+  padding-left: 52px;
+  position: relative;
+}
+
+.wp-block-list.is-style-numbers li::before {
+  color: var(--wp--preset--color--plum);
+  content: counter(bb-number, decimal-leading-zero);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 30px;
+  left: 0;
+  line-height: 1;
+  position: absolute;
+  top: -2px;
+}
+
+.wp-block-list.is-style-numbers li strong {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--entry);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
