@@ -507,7 +507,7 @@ p.is-style-label {
    a tall, quiet place to click, marked by a small round disc of frosted glass with a thin arrow,
    faint until the pointer comes near. Each place sets the disc's colours:
    --bb-turn-fill and --bb-turn-rim at rest, --bb-turn-hover and --bb-turn-arrow-hover under the
-   pointer. */
+   pointer; --bb-turn-y moves the disc up or down from the middle. */
 .bb-turn {
   --bb-turn-size: 34px;
   --bb-turn-edge: 22px;
@@ -559,7 +559,7 @@ p.is-style-label {
   height: var(--bb-turn-size);
   margin-top: calc(var(--bb-turn-size) / -2);
   position: absolute;
-  top: 50%;
+  top: var(--bb-turn-y, 50%);
   transition:
     background-color 0.4s ease,
     box-shadow 0.4s ease,
@@ -575,7 +575,7 @@ p.is-style-label {
   height: var(--bb-turn-arrow);
   margin-top: calc(var(--bb-turn-arrow) / -2);
   position: absolute;
-  top: 50%;
+  top: var(--bb-turn-y, 50%);
   transition:
     color 0.4s ease,
     transform 0.4s ease;

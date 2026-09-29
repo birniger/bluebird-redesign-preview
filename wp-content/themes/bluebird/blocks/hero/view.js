@@ -34,7 +34,7 @@
 
     dots.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
     window.bluebirdSwipe(hero.querySelector(".bb-hero__slides"), (step) => show(current + step));
-    // The arrows keep to the photo above the glass card, so neither ever sits on it.
+    // The arrows keep clear of the glass card where it lies on the photo.
     const card = hero.querySelector(".bb-hero__card");
     if (card) {
       const clear = () => hero.style.setProperty("--bb-hero-card", card.offsetHeight + "px");

@@ -48,8 +48,11 @@
   width: 100%;
 }
 
+/* Each half of the photo turns it back or on; the arrows sit at its middle, or as far above it as
+   keeps them clear of the glass card. */
 .bb-hero__slides > .bb-turn {
-  bottom: calc(var(--bb-hero-card, 0px) + 32px);
+  --bb-turn-y: min(50%, calc(100% - var(--bb-hero-card, 0px) - 32px - 40px));
+  width: 50%;
 }
 
 .bb-hero > .bb-rating--badge {
@@ -163,6 +166,7 @@
   }
 
   .bb-hero__slides > .bb-turn {
+    --bb-turn-y: 50%;
     bottom: 64px;
   }
 
