@@ -295,6 +295,179 @@
   outline: none;
 }
 
+/* The days asked about: a row per day, the date from the calendar and the time from and until,
+   in the same white fields; a quiet button adds another day. */
+.bb-days {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bb-days > .bb-field__label {
+  margin: 0;
+}
+
+.bb-days__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bb-days__row {
+  align-items: end;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+}
+
+.bb-days label {
+  display: block;
+  margin: 0;
+}
+
+.bb-days__time span {
+  color: var(--wp--preset--color--muted);
+  display: block;
+  font-size: 13px;
+  margin: 0 0 4px 4px;
+}
+
+.bb-days input {
+  appearance: none;
+  background-color: var(--wp--preset--color--white);
+  border: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  min-height: 50px;
+  padding: 12px 14px;
+  transition: box-shadow 0.2s;
+  width: 100%;
+}
+
+.bb-days input:hover {
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+}
+
+.bb-days input:focus {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  outline: none;
+}
+
+.bb-days input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.bb-days__remove {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 20px;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  margin-bottom: 5px;
+  padding: 0;
+  width: 40px;
+}
+
+.bb-days__remove:hover {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-days__add {
+  align-self: flex-start;
+  background: transparent;
+  border: 0;
+  color: var(--wp--preset--color--plum);
+  cursor: pointer;
+  font: 600 var(--wp--preset--font-size--small) / 1.3 var(--wp--preset--font-family--figtree);
+  padding: 4px 2px;
+}
+
+.bb-days__add:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* On top, every day picked so far as a chip, its time once it has one; and a day a link brought
+   along. Each can be taken away. */
+.bb-days__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-days__summary[hidden] {
+  display: none;
+}
+
+.bb-days__summary li {
+  align-items: center;
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  display: inline-flex;
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 4px 4px 14px;
+}
+
+.bb-days__summary .bb-days__remove {
+  font-size: 17px;
+  height: 28px;
+  margin: 0;
+  width: 28px;
+}
+
+.bb-days__hint {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  margin: -6px 0 0;
+}
+
+/* The typed field the picker stands in for. */
+.bb-ask .bb-field[hidden] {
+  display: none;
+}
+
+/* A day's times wait until the day is picked. */
+.bb-days__row:not(.has-day) {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.bb-days__row:not(.has-day) .bb-days__time {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .bb-days__row.has-day {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .bb-days__row.has-day .bb-days__date {
+    grid-column: 1 / -1;
+  }
+}
+
 .bb-ask :is(input, select, textarea).wpcf7-not-valid {
   box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
 }
@@ -426,4 +599,93 @@
     top: -34px;
     width: 84px;
   }
+}
+
+/* The form in a popup (an instructor's "Write to …", inc/forms.php): the same mint card, floating
+   over a navy haze, scrolling within itself; on phones a full-height sheet. */
+.bb-ask-popup {
+  background: transparent;
+  border: 0;
+  display: block;
+  margin: auto;
+  max-height: calc(100vh - 40px);
+  max-width: min(680px, calc(100vw - 32px));
+  overflow: visible;
+  padding: 0;
+  width: 100%;
+}
+
+.bb-ask-popup:not([open]) {
+  display: none;
+}
+
+.bb-ask-popup::backdrop {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background: rgba(6, 62, 95, 0.55);
+}
+
+.bb-ask-popup .bb-ask__form {
+  box-shadow: var(--wp--preset--shadow--float);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.bb-ask-popup__close {
+  align-items: center;
+  background: var(--wp--preset--color--white);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--wp--preset--shadow--float);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  float: right;
+  font-size: 24px;
+  height: 44px;
+  justify-content: center;
+  line-height: 1;
+  margin: -8px -8px 0 12px;
+  padding: 0;
+  position: relative;
+  width: 44px;
+  z-index: 1;
+}
+
+.bb-ask-popup__close:hover {
+  color: var(--wp--preset--color--plum);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bb-ask-popup[open] {
+    animation: bb-ask-popup-in 0.3s ease both;
+  }
+}
+
+@keyframes bb-ask-popup-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-ask-popup {
+    max-height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
+  }
+
+  .bb-ask-popup .bb-ask__form {
+    border-radius: 0;
+    margin: 0;
+    max-height: 100vh;
+    min-height: 100vh;
+  }
+}
+
+/* In the popup for one instructor, the pair whose other half is hidden takes the full width. */
+.bb-ask__pair.has-one {
+  grid-template-columns: minmax(0, 1fr);
 }

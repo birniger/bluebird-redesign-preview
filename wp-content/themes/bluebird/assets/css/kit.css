@@ -293,6 +293,26 @@ a.bb-chip:hover {
   max-width: 16ch;
 }
 
+/* The line under the figures that says what they mean: for one person, plus each extra. */
+p.bb-figures__line {
+  color: var(--wp--preset--color--plum);
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+  margin: 12px 0 0;
+}
+
+/* A figure's small print, under its label. */
+.bb-figures dd.bb-figures__note {
+  color: var(--wp--preset--color--plum);
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.35;
+  margin-top: 2px;
+  white-space: normal;
+}
+
 /* Photos, and the placeholder for a photo still wanted --------------------------------------- */
 
 img.bb-photo {

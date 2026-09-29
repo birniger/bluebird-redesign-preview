@@ -39,7 +39,688 @@
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
 </style>
-<link rel='stylesheet' id='bluebird-menu-style-css' href='../wp-content/themes/bluebird/blocks/menu/style.css?ver=0.2.0.1790638779' media='all' />
+<style id="bluebird-menu-style-inline-css">
+/**
+ * The header menu. Wide screens: entries in a row, each in a soft plum pill that is always there,
+ * with a plum ring drawn on hover, each opening a floating panel of columns and a photo tile whose
+ * slides may take turns; a little smaller below 1280px. Below 1120px: a round button in the same
+ * soft plum, opening a full-screen sheet.
+ */
+
+.bb-nav {
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 500;
+
+  /* The pill's fill: plum, mostly see-through, the same at rest and on hover. */
+  --bb-nav-fill: rgba(134, 80, 124, 0.09);
+}
+
+:where(.bb-nav) ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bb-nav a {
+  text-decoration: none;
+}
+
+/* The row ----------------------------------------------------------------------------------- */
+
+/* Level with the language switch and the Book button on the right. */
+.bb-nav__list {
+  display: flex;
+  gap: 6px;
+  padding-top: 42px;
+}
+
+.bb-nav__item {
+  position: relative;
+}
+
+/* Each entry a soft plum pill without a ring; pointing at it draws the ring in plum. */
+.bb-nav__top {
+  align-items: center;
+  background: var(--bb-nav-fill);
+  border: 0;
+  border-radius: var(--wp--custom--radius--pill);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 7px;
+  height: 46px;
+  padding: 0 18px;
+  position: relative;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s,
+    color 0.2s;
+  white-space: nowrap;
+}
+
+.bb-nav__top:hover,
+.bb-nav__top:focus-visible,
+.bb-nav__item.is-open > .bb-nav__top {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  color: var(--wp--preset--color--plum);
+}
+
+/* The section the visitor is in: its name in plum. */
+.bb-nav__item.is-current > .bb-nav__top {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-nav__item.is-open .bb-chevron {
+  transform: translateY(3px) rotate(-135deg);
+}
+
+/* The chevrons carry the plum too. */
+.bb-nav__top .bb-chevron {
+  color: var(--wp--preset--color--plum);
+}
+
+/* A panel: white glass, floating below its entry. */
+.bb-nav__panel {
+  -webkit-backdrop-filter: blur(14px);
+  align-items: stretch;
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: var(--wp--custom--radius--card);
+  box-shadow: var(--wp--preset--shadow--float);
+  display: grid;
+  gap: 0 32px;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  left: 0;
+  opacity: 0;
+  padding: 26px 30px 24px;
+  position: absolute;
+  top: calc(100% + 12px);
+  transform: translateY(-6px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s,
+    visibility 0.25s;
+  visibility: hidden;
+  width: max-content;
+  z-index: 60;
+}
+
+/* A bridge over the gap, so the pointer can travel down into the panel. */
+.bb-nav__panel::before {
+  content: "";
+  height: 14px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: -14px;
+}
+
+.bb-nav__item.is-open > .bb-nav__panel,
+.bb-nav:not(.is-enhanced) .bb-nav__item:hover > .bb-nav__panel,
+.bb-nav:not(.is-enhanced) .bb-nav__item:focus-within > .bb-nav__panel {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+}
+
+/* The panel's parts arrive one after another. */
+.bb-nav__panel > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
+}
+
+.bb-nav__item.is-open > .bb-nav__panel > *,
+.bb-nav:not(.is-enhanced) .bb-nav__item:hover > .bb-nav__panel > * {
+  opacity: 1;
+  transform: none;
+}
+
+.bb-nav__item.is-open > .bb-nav__panel > :nth-child(2) {
+  transition-delay: 0.06s;
+}
+
+.bb-nav__item.is-open > .bb-nav__panel > :nth-child(3) {
+  transition-delay: 0.12s;
+}
+
+.bb-nav__column {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 150px;
+}
+
+.bb-nav__column + .bb-nav__column {
+  border-left: 1px solid var(--wp--preset--color--line);
+  padding-left: 32px;
+}
+
+.bb-nav__heading,
+.bb-sheet__heading {
+  color: var(--wp--preset--color--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.bb-nav__entries {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* A big entry: its name in the serif, a line under it. */
+.bb-nav__entry {
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+  white-space: nowrap;
+}
+
+.bb-nav__entry-title {
+  align-items: center;
+  display: inline-flex;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: var(--wp--preset--font-size--entry);
+  font-weight: 400;
+  gap: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  transition:
+    color 0.2s,
+    transform 0.3s ease;
+}
+
+.bb-nav__entry-title::after {
+  color: var(--wp--preset--color--plum);
+  content: "→";
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.25s,
+    transform 0.3s ease;
+}
+
+.bb-nav__entry:hover .bb-nav__entry-title,
+.bb-nav__entry:focus-visible .bb-nav__entry-title {
+  color: var(--wp--preset--color--plum);
+  transform: translateX(4px);
+}
+
+.bb-nav__entry:hover .bb-nav__entry-title::after,
+.bb-nav__entry:focus-visible .bb-nav__entry-title::after {
+  opacity: 1;
+  transform: none;
+}
+
+.bb-nav__entry-text,
+.bb-sheet__entry-text {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* A small link. */
+.bb-nav__link {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-weight: 500;
+  padding: 5px 0;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.bb-nav__link:hover,
+.bb-nav__link:focus-visible,
+.bb-nav__link[aria-current] {
+  color: var(--wp--preset--color--plum);
+}
+
+/* The photo tile, with the little sun. */
+.bb-nav__feature,
+.bb-sheet__feature {
+  border-radius: var(--wp--custom--radius--tile);
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-nav__feature {
+  min-height: 230px;
+  width: 210px;
+}
+
+.bb-nav__feature-image,
+.bb-sheet__feature-image {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  transition: transform 1.2s ease;
+  width: 100%;
+}
+
+.bb-nav__feature:hover .bb-nav__feature-image {
+  transform: scale(1.05);
+}
+
+.bb-nav__sun,
+.bb-sheet__sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(242, 168, 90, 0.25);
+  height: 14px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 14px;
+}
+
+.bb-nav__caption,
+.bb-sheet__caption {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  left: 10px;
+  padding: 10px 14px 11px;
+  position: absolute;
+  right: 10px;
+}
+
+.bb-nav__kicker,
+.bb-sheet__kicker {
+  color: var(--wp--preset--color--plum);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bb-nav__feature-title,
+.bb-sheet__feature-title {
+  color: var(--wp--preset--color--contrast);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.bb-nav__feature-text,
+.bb-sheet__feature-text {
+  color: var(--wp--preset--color--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* A tile's slides lie on top of each other; the one showing fades in over the last. A portrait
+   still wanted fills the tile as the placeholder, its words giving way to the caption. */
+.bb-nav__slide,
+.bb-sheet__slide {
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.9s ease;
+}
+
+.bb-nav__slide.is-current,
+.bb-sheet__slide.is-current {
+  opacity: 1;
+}
+
+.bb-nav__slide :is(.bb-wanted__text, .bb-wanted__sun),
+.bb-sheet__slide :is(.bb-wanted__text, .bb-wanted__sun) {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-nav__slide,
+  .bb-sheet__slide {
+    transition-duration: 0.01s;
+  }
+}
+
+/* The round button that opens the sheet: two calm lines in the same soft plum as the pills. */
+.bb-nav__open {
+  align-items: center;
+  background: var(--bb-nav-fill);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: none;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  transition: box-shadow 0.2s;
+  width: 44px;
+}
+
+.bb-nav__open:hover,
+.bb-nav__open:focus-visible {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+}
+
+.bb-nav__open-icon,
+.bb-nav__open-icon::after {
+  background: currentColor;
+  border-radius: 2px;
+  display: block;
+  height: 1.5px;
+  width: 18px;
+}
+
+.bb-nav__open-icon {
+  position: relative;
+  transform: translateY(-3px);
+}
+
+.bb-nav__open-icon::after {
+  background: var(--wp--preset--color--plum);
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 6px;
+  width: 12px;
+}
+
+/* Narrower desktops: the pills a little smaller, so the row keeps clear of the logo. */
+@media (max-width: 1279px) {
+  .bb-nav {
+    font-size: var(--wp--preset--font-size--small);
+  }
+
+  .bb-nav__list {
+    gap: 2px;
+  }
+
+  .bb-nav__top {
+    padding: 0 11px;
+  }
+}
+
+@media (max-width: 1119px) {
+  .bb-nav__list {
+    display: none;
+  }
+
+  .bb-nav__open {
+    display: inline-flex;
+  }
+}
+
+/* The sheet --------------------------------------------------------------------------------- */
+
+.bb-sheet {
+  background: var(--wp--preset--color--base);
+  border: 0;
+  color: var(--wp--preset--color--contrast);
+  height: 100%;
+  inset: 0;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.bb-sheet[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-sheet::backdrop {
+  background: transparent;
+}
+
+html.has-bb-sheet {
+  overflow: hidden;
+}
+
+.bb-sheet__bar {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr auto 1fr;
+  padding-inline: var(--bb-gutter, 20px);
+}
+
+.bb-sheet__close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  justify-self: start;
+  padding: 0;
+  width: 44px;
+}
+
+.bb-sheet__close-icon {
+  height: 16px;
+  position: relative;
+  width: 16px;
+}
+
+.bb-sheet__close-icon::before,
+.bb-sheet__close-icon::after {
+  background: currentColor;
+  border-radius: 2px;
+  content: "";
+  height: 1.5px;
+  left: 0;
+  position: absolute;
+  top: 7px;
+  transform: rotate(45deg);
+  width: 16px;
+}
+
+.bb-sheet__close-icon::after {
+  transform: rotate(-45deg);
+}
+
+.bb-sheet__logo {
+  background: var(--wp--preset--color--white);
+  border-radius: 0 0 22px 22px;
+  display: block;
+  padding: 2px 14px 10px;
+}
+
+.bb-sheet__logo img {
+  display: block;
+  height: auto;
+  margin: -10px 0 -12px;
+  width: 84px;
+}
+
+.bb-sheet__bar > .bb-lang {
+  justify-self: end;
+}
+
+/* Short and ordered: each entry's name, its big entries two to a row, the small links as pills. */
+.bb-sheet__body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 26px var(--bb-gutter, 20px) 28px;
+}
+
+.bb-sheet__group + .bb-sheet__group {
+  border-top: 1px solid var(--wp--preset--color--line);
+  margin-top: 22px;
+  padding-top: 20px;
+}
+
+.bb-sheet__title {
+  color: var(--wp--preset--color--contrast);
+  display: block;
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1;
+  margin: 0 0 14px;
+}
+
+a.bb-sheet__title {
+  margin: 0;
+}
+
+.bb-sheet__column + .bb-sheet__column {
+  margin-top: 16px;
+}
+
+.bb-sheet__heading {
+  margin-bottom: 8px;
+}
+
+.bb-sheet__entries {
+  display: grid;
+  gap: 14px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Small links under big entries take a line of their own. */
+.bb-sheet__entries > li:has(> .bb-sheet__link) {
+  grid-column: 1 / -1;
+}
+
+.bb-sheet__entries > li:has(> .bb-sheet__entry) + li:has(> .bb-sheet__link) {
+  margin-top: 4px;
+}
+
+/* A column of small links only: pills in a row. */
+.bb-sheet__column:not(:has(.bb-sheet__entry)) .bb-sheet__entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bb-sheet__entry {
+  color: var(--wp--preset--color--contrast);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bb-sheet__entry-title {
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.bb-sheet__link {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  display: inline-block;
+  font-size: var(--wp--preset--font-size--small);
+  padding: 7px 12px;
+}
+
+.bb-sheet__entry[aria-current] .bb-sheet__entry-title,
+.bb-sheet__link[aria-current] {
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-sheet__foot {
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  background: rgba(243, 246, 246, 0.92);
+  border-top: 1px solid var(--wp--preset--color--line);
+  padding: 14px var(--bb-gutter, 20px) calc(14px + env(safe-area-inset-bottom));
+}
+
+.bb-sheet__book {
+  background: var(--wp--preset--color--contrast);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--white);
+  display: block;
+  font-size: var(--wp--preset--font-size--interface);
+  font-weight: 600;
+  padding: 15px 22px;
+  text-align: center;
+}
+
+.bb-sheet__book:hover {
+  color: var(--wp--preset--color--white);
+}
+
+/* The sheet comes in like the panels: the ground first, its parts one after another. */
+@media (prefers-reduced-motion: no-preference) {
+  .bb-sheet[open] {
+    animation: bb-sheet-in 0.3s ease both;
+  }
+
+  .bb-sheet[open] .bb-sheet__group {
+    animation: bb-sheet-rise 0.45s ease both;
+  }
+
+  .bb-sheet[open] .bb-sheet__group:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+
+  .bb-sheet[open] .bb-sheet__group:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+
+  .bb-sheet[open] .bb-sheet__group:nth-child(n + 4) {
+    animation-delay: 0.18s;
+  }
+
+  .bb-sheet.is-closing {
+    animation: bb-sheet-out 0.22s ease both;
+  }
+}
+
+@keyframes bb-sheet-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes bb-sheet-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes bb-sheet-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/*# sourceURL=../wp-content/themes/bluebird/blocks/menu/style.css */
+</style>
 <style id="wp-block-site-logo-inline-css">
 .wp-block-site-logo{box-sizing:border-box;line-height:0}.wp-block-site-logo a{display:inline-block;line-height:0}.wp-block-site-logo.is-default-size img{height:auto;width:120px}.wp-block-site-logo img{height:auto;max-width:100%}.wp-block-site-logo a,.wp-block-site-logo img{border-radius:inherit}.wp-block-site-logo.aligncenter{margin-left:auto;margin-right:auto;text-align:center}:root :where(.wp-block-site-logo.is-style-rounded){border-radius:9999px}
 /*# sourceURL=../wp-includes/blocks/site-logo/style.min.css */
@@ -56,6 +737,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 .wp-block-buttons{box-sizing:border-box}.wp-block-buttons.is-vertical{flex-direction:column}.wp-block-buttons.is-vertical>.wp-block-button:last-child{margin-bottom:0}.wp-block-buttons>.wp-block-button{display:inline-block;margin:0}.wp-block-buttons.is-content-justification-left{justify-content:flex-start}.wp-block-buttons.is-content-justification-left.is-vertical{align-items:flex-start}.wp-block-buttons.is-content-justification-center{justify-content:center}.wp-block-buttons.is-content-justification-center.is-vertical{align-items:center}.wp-block-buttons.is-content-justification-right{justify-content:flex-end}.wp-block-buttons.is-content-justification-right.is-vertical{align-items:flex-end}.wp-block-buttons.is-content-justification-space-between{justify-content:space-between}.wp-block-buttons.aligncenter{text-align:center}.wp-block-buttons:not(.is-content-justification-space-between,.is-content-justification-right,.is-content-justification-left,.is-content-justification-center) .wp-block-button.aligncenter{margin-left:auto;margin-right:auto;width:100%}.wp-block-buttons[style*=text-decoration] .wp-block-button,.wp-block-buttons[style*=text-decoration] .wp-block-button__link{text-decoration:inherit}.wp-block-buttons.has-custom-font-size .wp-block-button__link{font-size:inherit}.wp-block-buttons .wp-block-button__link{width:100%}.wp-block-button.aligncenter{text-align:center}
 /*# sourceURL=../wp-includes/blocks/buttons/style.min.css */
 </style>
+<link rel='stylesheet' id='bluebird-ask-style-css' href='../wp-content/themes/bluebird/blocks/ask/style.css?ver=0.2.0.1790647177' media='all' />
 <style id="bluebird-instructors-style-inline-css">
 /**
  * Instructors in a row: portraits in rounded windows, the name in the serif, sports as chips, and
@@ -368,439 +1050,6 @@ a.bb-person:hover .bb-person__name {
 
 /*# sourceURL=../wp-content/themes/bluebird/blocks/instructors/style.css */
 </style>
-<style id="bluebird-ask-style-inline-css">
-/**
- * Ask us: the words and the ways to reach us on the left, one line each; the request form on mint
- * on the right, with a sun in its corner. The form's topics are chips that turn navy when chosen;
- * its fields are white on mint and draw a plum ring while in use. Contact Form 7's own stylesheet
- * is off (inc/forms.php), so the few rules the form needs to work are here too.
- */
-
-.bb-ask {
-  align-items: start;
-  display: grid;
-  gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-}
-
-.bb-ask--ways-only {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.bb-ask h1.bb-intro__title {
-  font-size: clamp(48px, 5.4vw, 84px);
-  line-height: 0.95;
-}
-
-/* The ways to reach us: one line each between thin rules, a round arrow that fills navy. */
-.bb-ask__ways {
-  border-top: 1px solid var(--wp--preset--color--line);
-  list-style: none;
-  margin: 30px 0 0;
-  padding: 0;
-}
-
-.bb-ask__ways > li {
-  border-bottom: 1px solid var(--wp--preset--color--line);
-  margin: 0;
-}
-
-.bb-ask__way {
-  color: var(--wp--preset--color--contrast);
-  display: grid;
-  gap: 2px 18px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  padding: 16px 2px 16px 0;
-  text-decoration: none;
-}
-
-.bb-ask__way-label {
-  color: var(--wp--preset--color--plum);
-  font-size: 11px;
-  font-weight: 600;
-  grid-column: 1;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.bb-ask__way-value {
-  font-family: var(--wp--preset--font-family--instrument-serif);
-  font-size: clamp(24px, 2.1vw, 30px);
-  grid-column: 1;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
-  overflow-wrap: anywhere;
-}
-
-.bb-ask__way-note {
-  color: var(--wp--preset--color--ink);
-  font-size: var(--wp--preset--font-size--small);
-  grid-column: 1;
-}
-
-.bb-ask__way-arrow {
-  align-self: center;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  height: 40px;
-  position: relative;
-  transition:
-    background-color 0.3s,
-    box-shadow 0.3s,
-    color 0.3s;
-  width: 40px;
-}
-
-.bb-ask__way-arrow::before {
-  content: "→";
-  font-size: 16px;
-  font-weight: 500;
-  inset: 0;
-  line-height: 40px;
-  position: absolute;
-  text-align: center;
-}
-
-.bb-ask__way:hover .bb-ask__way-arrow,
-.bb-ask__way:focus-visible .bb-ask__way-arrow {
-  background: var(--wp--preset--color--contrast);
-  box-shadow: none;
-  color: var(--wp--preset--color--white);
-}
-
-.bb-ask__note {
-  color: var(--wp--preset--color--muted);
-  font-size: var(--wp--preset--font-size--small);
-  margin: 22px 0 0;
-  max-width: 44ch;
-}
-
-/* The form, on mint, the sun rising in its corner. */
-.bb-ask__form {
-  background: var(--wp--preset--color--teal);
-  border-radius: var(--wp--custom--radius--frame);
-  isolation: isolate;
-  overflow: hidden;
-  padding: clamp(28px, 3.4vw, 48px);
-  position: relative;
-  scroll-margin-top: 20px;
-}
-
-.bb-ask__sun {
-  background: var(--wp--preset--color--sun);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 18px rgba(242, 168, 90, 0.18),
-    0 0 0 44px rgba(242, 168, 90, 0.08);
-  height: 112px;
-  pointer-events: none;
-  position: absolute;
-  right: -34px;
-  top: -42px;
-  width: 112px;
-  z-index: -1;
-}
-
-.bb-ask__head .bb-intro__title {
-  font-size: clamp(34px, 3.2vw, 46px);
-  max-width: 16ch;
-}
-
-.bb-ask__head .bb-intro__text {
-  max-width: 46ch;
-}
-
-/* The fields. */
-.bb-ask__fields {
-  display: grid;
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.bb-ask__fields > * {
-  margin: 0;
-}
-
-.bb-ask__topics {
-  border: 0;
-  margin: 0;
-  min-width: 0;
-  padding: 0;
-}
-
-.bb-ask__topics > legend,
-.bb-field__label {
-  color: var(--wp--preset--color--contrast);
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  padding: 0;
-}
-
-.bb-field__label em {
-  color: var(--wp--preset--color--muted);
-  font-style: normal;
-  font-weight: 500;
-}
-
-/* The topics: chips; the chosen one navy. The radio itself stays, invisible, over its chip. */
-.bb-ask .wpcf7-radio {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.bb-ask .wpcf7-list-item {
-  display: block;
-  margin: 0;
-}
-
-.bb-ask .wpcf7-list-item > label {
-  cursor: pointer;
-  display: block;
-  position: relative;
-}
-
-.bb-ask .wpcf7-list-item input {
-  appearance: none;
-  cursor: pointer;
-  height: 100%;
-  inset: 0;
-  margin: 0;
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-}
-
-.bb-ask .wpcf7-list-item-label {
-  background: var(--wp--preset--color--white);
-  border-radius: var(--wp--custom--radius--pill);
-  box-shadow: inset 0 0 0 1.5px transparent;
-  color: var(--wp--preset--color--contrast);
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 10px 16px;
-  transition:
-    background-color 0.2s,
-    box-shadow 0.2s,
-    color 0.2s;
-}
-
-.bb-ask .wpcf7-list-item input:hover + .wpcf7-list-item-label {
-  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
-}
-
-.bb-ask .wpcf7-list-item input:checked + .wpcf7-list-item-label {
-  background: var(--wp--preset--color--contrast);
-  box-shadow: none;
-  color: var(--wp--preset--color--white);
-}
-
-.bb-ask .wpcf7-list-item input:focus-visible + .wpcf7-list-item-label {
-  outline: 2px solid var(--wp--preset--color--plum);
-  outline-offset: 2px;
-}
-
-.bb-ask__pair {
-  display: grid;
-  gap: 18px 14px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.bb-field {
-  display: block;
-  margin: 0;
-}
-
-.bb-ask .wpcf7-form-control-wrap {
-  display: block;
-  position: relative;
-}
-
-.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea) {
-  appearance: none;
-  background-color: var(--wp--preset--color--white);
-  border: 0;
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 1.5px transparent;
-  color: var(--wp--preset--color--contrast);
-  display: block;
-  font: inherit;
-  font-size: 16px;
-  line-height: 1.4;
-  margin: 0;
-  padding: 13px 16px;
-  transition: box-shadow 0.2s;
-  width: 100%;
-}
-
-.bb-ask .wpcf7-form-control-wrap select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2386507c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-position: right 16px center;
-  background-repeat: no-repeat;
-  background-size: 14px;
-  cursor: pointer;
-  padding-right: 42px;
-}
-
-.bb-ask textarea {
-  min-height: 116px;
-  resize: vertical;
-}
-
-.bb-ask :is(input, select, textarea)::placeholder {
-  color: var(--wp--preset--color--muted);
-  opacity: 1;
-}
-
-.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea):hover {
-  box-shadow: inset 0 0 0 1.5px var(--wp--custom--line--soft);
-}
-
-.bb-ask :is(input[type="text"], input[type="email"], input[type="tel"], select, textarea):focus {
-  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
-  outline: none;
-}
-
-.bb-ask :is(input, select, textarea).wpcf7-not-valid {
-  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
-}
-
-/* A field's note sits on its label's line, right-aligned, so notes coming and going never move
-   the fields or the button under the pointer. */
-.bb-ask .wpcf7-not-valid-tip {
-  bottom: 100%;
-  color: var(--wp--preset--color--plum);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 8px;
-  position: absolute;
-  right: 0;
-  text-align: right;
-}
-
-/* Sending: the button, a word on what happens next, the answer when it comes. */
-.bb-ask__send {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 18px;
-  margin-top: 4px;
-}
-
-.bb-ask__send > p {
-  color: var(--wp--preset--color--ink);
-  font-size: var(--wp--preset--font-size--small);
-  margin: 0;
-}
-
-.bb-ask .wpcf7-submit {
-  border: 0;
-  cursor: pointer;
-  padding: 16px 28px;
-}
-
-.bb-ask .wpcf7-spinner {
-  display: none;
-}
-
-.bb-ask form.submitting .wpcf7-spinner {
-  animation: bb-ask-spin 0.8s linear infinite;
-  border: 2px solid rgba(6, 62, 95, 0.2);
-  border-radius: 50%;
-  border-top-color: var(--wp--preset--color--contrast);
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-}
-
-@keyframes bb-ask-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.bb-ask .wpcf7-response-output {
-  background: var(--wp--preset--color--white);
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
-  color: var(--wp--preset--color--contrast);
-  font-size: var(--wp--preset--font-size--small);
-  font-weight: 500;
-  margin: 0;
-  padding: 14px 18px;
-}
-
-.bb-ask form:is(.init, .resetting, .submitting) .wpcf7-response-output {
-  display: none;
-}
-
-.bb-ask form.sent .wpcf7-response-output {
-  background: var(--wp--preset--color--contrast);
-  box-shadow: none;
-  color: var(--wp--preset--color--white);
-  font-size: var(--wp--preset--font-size--interface);
-  padding: 18px 22px;
-}
-
-.bb-ask .screen-reader-response {
-  border: 0;
-  clip-path: inset(50%);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  word-wrap: normal !important;
-}
-
-.bb-ask .hidden-fields-container {
-  display: none;
-}
-
-.bb-ask [inert] {
-  opacity: 0.5;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bb-ask form.submitting .wpcf7-spinner {
-    animation-duration: 2.4s;
-  }
-}
-
-@media (max-width: 999px) {
-  .bb-ask {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 599px) {
-  .bb-ask__pair {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .bb-ask__form {
-    border-radius: var(--wp--custom--radius--card);
-    margin-inline: -6px;
-    padding: 26px 20px 24px;
-  }
-
-  .bb-ask__sun {
-    height: 84px;
-    right: -30px;
-    top: -34px;
-    width: 84px;
-  }
-}
-
-/*# sourceURL=../wp-content/themes/bluebird/blocks/ask/style.css */
-</style>
 <style id="wp-block-post-content-inline-css">
 .wp-block-post-content{display:flow-root}
 /*# sourceURL=../wp-includes/blocks/post-content/style.min.css */
@@ -857,7 +1106,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 </style>
 <link rel='stylesheet' id='cmplz-general-css' href='../wp-content/plugins/complianz-gdpr/assets/css/cookieblocker.min.css?ver=1789006564' media='all' />
 <link rel='stylesheet' id='bluebird-css' href='../wp-content/themes/bluebird/assets/css/theme.css?ver=1790644123' media='all' />
-<link rel='stylesheet' id='bluebird-kit-css' href='../wp-content/themes/bluebird/assets/css/kit.css?ver=1790641236' media='all' />
+<link rel='stylesheet' id='bluebird-kit-css' href='../wp-content/themes/bluebird/assets/css/kit.css?ver=1790647288' media='all' />
 <link rel='stylesheet' id='popup-maker-site-css' href='../wp-content/plugins/popup-maker/dist/assets/site.css?ver=1.25.0' media='all' />
 <style id="popup-maker-site-inline-css">
 /* Popup Theme 168: Enterprise Blue */
@@ -925,8 +1174,8 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 <link rel='stylesheet' id='cmplz-banner-1-optin-css' href='../wp-content/uploads/complianz/css/banner-1-optin.css?ver=1790616954' media='all' />
 <script data-wp-strategy="defer" defer id="bluebird-language-switcher-view-script-js" src="../wp-content/themes/bluebird/blocks/language-switcher/view.js?ver=1790556424"></script>
 <script data-wp-strategy="defer" defer id="bluebird-menu-view-script-js" src="../wp-content/themes/bluebird/blocks/menu/view.js?ver=1790625456"></script>
+<script data-wp-strategy="defer" defer id="bluebird-ask-view-script-js" src="../wp-content/themes/bluebird/blocks/ask/view.js?ver=1790646236"></script>
 <script data-wp-strategy="defer" defer id="bluebird-instructors-view-script-js" src="../wp-content/themes/bluebird/blocks/instructors/view.js?ver=1790644361"></script>
-<script data-wp-strategy="defer" defer id="bluebird-ask-view-script-js" src="../wp-content/themes/bluebird/blocks/ask/view.js?ver=1790616122"></script>
 <script data-wp-strategy="defer" defer id="bluebird-sun-js" src="../wp-content/themes/bluebird/assets/js/sun.js?ver=1790640213"></script>
 <script data-wp-strategy="defer" defer id="bluebird-closing-view-script-js" src="../wp-content/themes/bluebird/blocks/closing/view.js?ver=1790638426"></script>
 <script id="jquery-core-js" src="../wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
@@ -1098,7 +1347,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 	<div class="bb-people__head">
 		<header class="bb-intro bb-intro--start"><p class="is-style-label">Contact</p><h1 class="bb-intro__title">Talk to <em>us</em></h1><p class="bb-intro__text">The quickest answer comes straight from your instructor, on WhatsApp or by email. For anything else, write to the school below; we answer the same day.</p></header>			</div>
 	<ul class="bb-people__list">
-		<li data-sports="snowboard" data-group="snowboard"><div class="bb-person has-contact"><a class="bb-person__link" href="../instructors/basil/"><span class="bb-person__photo"><img width="683" height="1024" src="../wp-content/uploads/2025/12/edit-5-683x1024.jpg" class="bb-photo" alt="Portrait of a snowboard instructor smiling in the sun in Engelberg" sizes="auto, (max-width: 799px) 50vw, 24vw" decoding="async" loading="lazy" style="object-position:50% 22%" srcset="../wp-content/uploads/2025/12/edit-5-683x1024.jpg 683w, ../wp-content/uploads/2025/12/edit-5-200x300.jpg 200w, ../wp-content/uploads/2025/12/edit-5-768x1152.jpg 768w, ../wp-content/uploads/2025/12/edit-5-1024x1536.jpg 1024w, ../wp-content/uploads/2025/12/edit-5-1365x2048.jpg 1365w, ../wp-content/uploads/2025/12/edit-5-scaled.jpg 1707w" /></span><span class="bb-person__name">Basil</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Snowboard</li></ul><span class="bb-person__line">Teaches in German, English and French</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="snowboard" data-group="snowboard"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/snowboard-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a snowboard instructor, board on the shoulder"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a snowboard instructor, board on the shoulder</span></span></span><span class="bb-person__name">Snowboard instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Snowboard</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="ski" data-group="ski"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/ski-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a ski instructor in the sun"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a ski instructor in the sun</span></span></span><span class="bb-person__name">Ski instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Ski</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="freeride ski touring" data-group="freeride"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/freeride-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a freeride instructor with an avalanche pack"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a freeride instructor with an avalanche pack</span></span></span><span class="bb-person__name">Freeride instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Freeride</li><li class="bb-chip">Ski</li><li class="bb-chip">Touring</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li>	</ul>
+		<li data-sports="snowboard" data-group="snowboard"><div class="bb-person has-contact"><a class="bb-person__link" href="../instructors/basil/"><span class="bb-person__photo"><img width="683" height="1024" src="../wp-content/uploads/2025/12/edit-5-683x1024.jpg" class="bb-photo" alt="Portrait of a snowboard instructor smiling in the sun in Engelberg" sizes="auto, (max-width: 799px) 50vw, 24vw" decoding="async" loading="lazy" style="object-position:50% 22%" srcset="../wp-content/uploads/2025/12/edit-5-683x1024.jpg 683w, ../wp-content/uploads/2025/12/edit-5-200x300.jpg 200w, ../wp-content/uploads/2025/12/edit-5-768x1152.jpg 768w, ../wp-content/uploads/2025/12/edit-5-1024x1536.jpg 1024w, ../wp-content/uploads/2025/12/edit-5-1365x2048.jpg 1365w, ../wp-content/uploads/2025/12/edit-5-scaled.jpg 1707w" /></span><span class="bb-person__name">Basil</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Snowboard</li></ul><span class="bb-person__line">Teaches in German, English and French</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="./#ask" data-bb-ask="Basil" aria-haspopup="dialog">Contact Basil</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="snowboard" data-group="snowboard"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/snowboard-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a snowboard instructor, board on the shoulder"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a snowboard instructor, board on the shoulder</span></span></span><span class="bb-person__name">Snowboard instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Snowboard</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="./#ask" data-bb-ask="" aria-haspopup="dialog">Contact us</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="ski" data-group="ski"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/ski-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a ski instructor in the sun"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a ski instructor in the sun</span></span></span><span class="bb-person__name">Ski instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Ski</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="./#ask" data-bb-ask="" aria-haspopup="dialog">Contact us</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li><li data-sports="freeride ski touring" data-group="freeride"><div class="bb-person is-standin has-contact"><a class="bb-person__link" href="../instructors/freeride-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a freeride instructor with an avalanche pack"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a freeride instructor with an avalanche pack</span></span></span><span class="bb-person__name">Freeride instructor</span></a><ul class="bb-chips bb-person__sports"><li class="bb-chip">Freeride</li><li class="bb-chip">Ski</li><li class="bb-chip">Touring</li></ul><span class="bb-person__line">Joining this season</span><div class="wp-block-buttons bb-actions bb-person__contact"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="./#ask" data-bb-ask="" aria-haspopup="dialog">Contact us</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact" target="_blank" rel="noopener">WhatsApp</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#preview-contact">Email</a></div></div></div></li>	</ul>
 			<div class="bb-people__arrows" hidden>
 			<span class="bb-people__track" aria-hidden="true"><span class="bb-people__thumb"></span></span>
 			<button type="button" class="bb-people__arrow" data-step="-1" aria-label="Previous instructors"><span aria-hidden="true">←</span></button>
@@ -1157,7 +1406,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 	<legend>What would you like to ask about?</legend>
 	<span class="wpcf7-form-control-wrap" data-name="topic"><span class="wpcf7-form-control wpcf7-radio"><span class="wpcf7-list-item first"><label><input type="radio" name="topic" value="Custom lesson" /><span class="wpcf7-list-item-label">Custom lesson</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Touring" /><span class="wpcf7-list-item-label">Touring</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="A posted date" /><span class="wpcf7-list-item-label">A posted date</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Other resorts" /><span class="wpcf7-list-item-label">Other resorts</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Rentals &amp; tickets" /><span class="wpcf7-list-item-label">Rentals &amp; tickets</span></label></span><span class="wpcf7-list-item last"><label><input type="radio" name="topic" value="Something else" /><span class="wpcf7-list-item-label">Something else</span></label></span></span></span>
 </fieldset>
-<label class="bb-field"><span class="bb-field__label">Which day or dates?</span><span class="wpcf7-form-control-wrap" data-name="when"><input size="40" maxlength="160" class="wpcf7-form-control wpcf7-text" aria-invalid="false" placeholder="e.g. 14 Feb, or any day that week" value="" type="text" name="when" /></span></label>
+<label class="bb-field"><span class="bb-field__label">Which day or dates?</span><span class="wpcf7-form-control-wrap" data-name="when"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" aria-invalid="false" placeholder="e.g. 14 Feb, or any day that week" value="" type="text" name="when" /></span></label>
 <div class="bb-ask__pair">
 	<label class="bb-field"><span class="bb-field__label">How many of you?</span><span class="wpcf7-form-control-wrap" data-name="people"><select class="wpcf7-form-control wpcf7-select" aria-invalid="false" name="people"><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="More than 5">More than 5</option></select></span></label>
 	<label class="bb-field"><span class="bb-field__label">Who should answer?</span><span class="wpcf7-form-control-wrap" data-name="instructor"><select class="wpcf7-form-control wpcf7-select" aria-invalid="false" name="instructor"><option value="">Any of us</option><option value="Basil">Basil</option></select></span></label>
@@ -1265,7 +1514,46 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
 </footer>
 </div>
-<script type="speculationrules">
+	<dialog class="bb-ask-popup bb-ask" aria-labelledby="bb-ask-popup-title">
+		<div class="bb-ask__form">
+			<span class="bb-ask__sun" aria-hidden="true"></span>
+			<button type="button" class="bb-ask-popup__close"><span aria-hidden="true">×</span><span class="screen-reader-text">Close</span></button>
+			<header class="bb-intro bb-intro--start bb-ask__head">
+				<p class="is-style-label">Send a request</p>
+				<h2 class="bb-intro__title" id="bb-ask-popup-title" data-title-any="Contact us" data-title-one="Contact %s">Contact us</h2>
+				<p class="bb-intro__text">Tell us a little; we reply with a plan and a price, usually the same day.</p>
+			</header>
+			
+<div class="wpcf7 no-js" id="wpcf7-f1145-o2" lang="en-US" dir="ltr" data-wpcf7-id="1145">
+<div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
+<form action="./#wpcf7-f1145-o2" method="post" class="wpcf7-form init bb-ask__fields" aria-label="Contact form" novalidate="novalidate" data-status="init">
+<fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="1145" /><input type="hidden" name="_wpcf7_version" value="6.1.7" /><input type="hidden" name="_wpcf7_locale" value="en_US" /><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1145-o2" /><input type="hidden" name="_wpcf7_container_post" value="0" /><input type="hidden" name="_wpcf7_posted_data_hash" value="" />
+</fieldset>
+<fieldset class="bb-ask__topics">
+	<legend>What would you like to ask about?</legend>
+	<span class="wpcf7-form-control-wrap" data-name="topic"><span class="wpcf7-form-control wpcf7-radio"><span class="wpcf7-list-item first"><label><input type="radio" name="topic" value="Custom lesson" /><span class="wpcf7-list-item-label">Custom lesson</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Touring" /><span class="wpcf7-list-item-label">Touring</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="A posted date" /><span class="wpcf7-list-item-label">A posted date</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Other resorts" /><span class="wpcf7-list-item-label">Other resorts</span></label></span><span class="wpcf7-list-item"><label><input type="radio" name="topic" value="Rentals &amp; tickets" /><span class="wpcf7-list-item-label">Rentals &amp; tickets</span></label></span><span class="wpcf7-list-item last"><label><input type="radio" name="topic" value="Something else" /><span class="wpcf7-list-item-label">Something else</span></label></span></span></span>
+</fieldset>
+<label class="bb-field"><span class="bb-field__label">Which day or dates?</span><span class="wpcf7-form-control-wrap" data-name="when"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text" aria-invalid="false" placeholder="e.g. 14 Feb, or any day that week" value="" type="text" name="when" /></span></label>
+<div class="bb-ask__pair">
+	<label class="bb-field"><span class="bb-field__label">How many of you?</span><span class="wpcf7-form-control-wrap" data-name="people"><select class="wpcf7-form-control wpcf7-select" aria-invalid="false" name="people"><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="More than 5">More than 5</option></select></span></label>
+	<label class="bb-field"><span class="bb-field__label">Who should answer?</span><span class="wpcf7-form-control-wrap" data-name="instructor"><select class="wpcf7-form-control wpcf7-select" aria-invalid="false" name="instructor"><option value="">Any of us</option><option value="Basil">Basil</option></select></span></label>
+</div>
+<label class="bb-field"><span class="bb-field__label">Tell us more</span><span class="wpcf7-form-control-wrap" data-name="message"><textarea cols="40" rows="4" maxlength="3000" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Who’s coming, your level, and what you’d like to do" name="message"></textarea></span></label>
+<div class="bb-ask__pair">
+	<label class="bb-field"><span class="bb-field__label">Your name</span><span class="wpcf7-form-control-wrap" data-name="your-name"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" autocomplete="name" aria-required="true" aria-invalid="false" value="" type="text" name="your-name" /></span></label>
+	<label class="bb-field"><span class="bb-field__label">Email</span><span class="wpcf7-form-control-wrap" data-name="your-email"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email" autocomplete="email" aria-required="true" aria-invalid="false" value="" type="email" name="your-email" /></span></label>
+</div>
+<label class="bb-field"><span class="bb-field__label">Phone or WhatsApp <em>optional</em></span><span class="wpcf7-form-control-wrap" data-name="your-phone"><input size="40" maxlength="400" class="wpcf7-form-control wpcf7-tel wpcf7-text wpcf7-validates-as-tel" autocomplete="tel" aria-invalid="false" value="" type="tel" name="your-phone" /></span></label>
+<div class="bb-ask__send">
+	<input class="wpcf7-form-control wpcf7-submit has-spinner wp-element-button" type="submit" value="Send your request" />
+	<p>We answer the same day, usually within a few hours.</p>
+</div>
+<div class="wpcf7-response-output" aria-hidden="true"></div><input type='hidden' class='wpcf7-pum' value='{"closepopup":false,"closedelay":0,"openpopup":false,"openpopup_id":0}' />
+</form>
+</div>
+		</div>
+	</dialog>
+	<script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/bluebird/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
 
@@ -1473,6 +1761,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 	</div>
 
 </div>
+<script data-wp-strategy="defer" defer id="bluebird-ask-popup-js" src="../wp-content/themes/bluebird/assets/js/ask-popup.js?ver=1790647227"></script>
 <script id="pll_cookie_script-js-after">
 (function() {
 				var expirationDate = new Date();

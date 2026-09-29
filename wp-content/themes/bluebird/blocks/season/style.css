@@ -124,9 +124,22 @@
   width: 7px;
 }
 
+/* Signing up first, a small navy pill; asking about the date beside it, quieter. */
+.bb-event__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 16px !important;
+}
+
+.bb-event__signup.wp-block-button__link {
+  font-size: var(--wp--preset--font-size--small);
+  padding: 10px 18px;
+}
+
 .bb-event .bb-more {
   display: inline-flex;
-  margin-top: 16px;
 }
 
 /* Nothing posted: one card, the sun, what can always be asked for. */
