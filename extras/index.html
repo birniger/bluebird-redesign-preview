@@ -530,12 +530,18 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
   line-height: 1;
 }
 
+/* Under the price, its parts one under the other (table.php), wrapping rather than running out of
+   the card; the price itself keeps to one line. */
 .bb-price-table__note {
   color: var(--wp--preset--color--muted);
   display: block;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.4;
+  margin-left: auto;
   margin-top: 4px;
+  max-width: 24ch;
+  white-space: normal;
 }
 
 .bb-price-table__footnote {

@@ -966,12 +966,18 @@ a.bb-sheet__title {
   line-height: 1;
 }
 
+/* Under the price, its parts one under the other (table.php), wrapping rather than running out of
+   the card; the price itself keeps to one line. */
 .bb-price-table__note {
   color: var(--wp--preset--color--muted);
   display: block;
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.4;
+  margin-left: auto;
   margin-top: 4px;
+  max-width: 24ch;
+  white-space: normal;
 }
 
 .bb-price-table__footnote {
@@ -1460,7 +1466,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–5</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 250</span>
-																			<span class="bb-price-table__note">for 1 person · +30 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+30 for each extra person</span>
 																	</td>
 							</tr>
 													<tr>
@@ -1472,7 +1478,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–5</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 420</span>
-																			<span class="bb-price-table__note">for 1 person · +30 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+30 for each extra person</span>
 																	</td>
 							</tr>
 													<tr>
@@ -1484,7 +1490,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–5</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 95</span>
-																			<span class="bb-price-table__note">per hour</span>
+																													<span class="bb-price-table__note">per hour</span>
 																	</td>
 							</tr>
 											</tbody>
@@ -1512,7 +1518,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–4</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 320</span>
-																			<span class="bb-price-table__note">for 1 person · +40 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+40 for each extra person</span>
 																	</td>
 							</tr>
 													<tr>
@@ -1524,7 +1530,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–4</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 520</span>
-																			<span class="bb-price-table__note">for 1 person · +40 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+40 for each extra person</span>
 																	</td>
 							</tr>
 											</tbody>
@@ -1552,7 +1558,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–4</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 380</span>
-																			<span class="bb-price-table__note">for 1 person · +60 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+60 for each extra person</span>
 																	</td>
 							</tr>
 													<tr>
@@ -1564,7 +1570,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 								<td data-label="Group">1–4</td>
 								<td class="bb-price-table__price">
 									<span class="bb-price-table__amount">CHF 580</span>
-																			<span class="bb-price-table__note">for 1 person · +60 for each extra person</span>
+																													<span class="bb-price-table__note">for 1 person<br>+60 for each extra person</span>
 																	</td>
 							</tr>
 											</tbody>
