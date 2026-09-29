@@ -12,8 +12,9 @@
  * Photo tiles with several slides show one at a time: while their panel or the sheet is open they
  * take turns, and the tile links to the slide showing. The instructors come in a new random order
  * each time, so no one is always first; pointing at one of their groups shows only that group's
- * portraits, in turn if there are several. For visitors who ask for less motion they change only
- * when a group is pointed at.
+ * portraits, in turn if there are several. The arrows on its sides or a swipe skip ahead or
+ * back, and the next turn waits its full time again. For visitors who ask for less motion they
+ * change only when a group is pointed at or skipped by hand.
  */
 (function () {
   const wide = window.matchMedia("(min-width: 1000px)");
@@ -70,10 +71,30 @@
         tile.setAttribute("href", slide.dataset.url);
       }
 
-      function next() {
+      function next(step = 1) {
         const list = pool();
-        show(list[(list.indexOf(current) + 1) % list.length]);
+        show(list[(list.indexOf(current) + step + list.length) % list.length]);
       }
+
+      function run() {
+        window.clearInterval(timer);
+        if (!still.matches) {
+          timer = window.setInterval(() => held || next(), TURN);
+        }
+      }
+
+      const skip = (step) => {
+        next(step);
+        run();
+      };
+      const frame = tile.closest(".bb-nav__tile") || tile;
+      frame.querySelectorAll(".bb-turn").forEach((turn) => {
+        turn.addEventListener("click", () =>
+          skip(turn.classList.contains("bb-turn--back") ? -1 : 1),
+        );
+        turn.hidden = false;
+      });
+      window.bluebirdSwipe(tile, skip);
 
       part.querySelectorAll("a[data-group]").forEach((entry) => {
         const pick = () => {
@@ -90,10 +111,10 @@
         entry.addEventListener("pointerleave", free);
         entry.addEventListener("blur", free);
       });
-      tile.addEventListener("pointerenter", () => {
+      frame.addEventListener("pointerenter", () => {
         held = true;
       });
-      tile.addEventListener("pointerleave", () => {
+      frame.addEventListener("pointerleave", () => {
         held = false;
       });
 
@@ -103,9 +124,7 @@
           only = "";
           order = team ? shuffle(slides) : slides;
           show(order[0]);
-          if (!still.matches) {
-            timer = window.setInterval(() => held || next(), TURN);
-          }
+          run();
         },
         stop() {
           window.clearInterval(timer);

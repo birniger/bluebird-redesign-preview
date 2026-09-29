@@ -248,7 +248,22 @@
   color: var(--wp--preset--color--plum);
 }
 
-/* The photo tile, with the little sun. */
+/* The photo tile, with the little sun. With several slides it shares a frame with its two quiet
+   arrows, which keep to the photo above the caption. */
+.bb-nav__tile {
+  display: flex;
+  position: relative;
+}
+
+.bb-nav__tile > .bb-turn {
+  --bb-turn-size: 24px;
+  --bb-turn-edge: 8px;
+  --bb-turn-arrow: 5px;
+  bottom: auto;
+  height: 55%;
+  width: 40px;
+}
+
 .bb-nav__feature,
 .bb-sheet__feature {
   border-radius: var(--wp--custom--radius--tile);

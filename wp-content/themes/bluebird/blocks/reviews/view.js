@@ -1,7 +1,8 @@
 /**
  * One quote at a time: the current one fades out before the next fades in, so two never overlap.
  * The sun sets across the band's full height, a slightly different way each time (assets/js/sun.js). Both rest while the band is off screen, and neither
- * moves for visitors who ask for reduced motion.
+ * moves for visitors who ask for reduced motion. A swipe, a click on either side or a dot shows another quote at once, and
+ * the next waits its full time again (assets/js/swipe.js).
  */
 (function () {
   const still = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -61,6 +62,17 @@
     }
 
     dots.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
+    window.bluebirdSwipe(band.querySelector(".bb-reviews__quotes"), (step) => show(current + step));
+    band.querySelectorAll(".bb-turn").forEach((turn) => {
+      turn.addEventListener("click", () =>
+        show(current + (turn.classList.contains("bb-turn--back") ? -1 : 1)),
+      );
+      turn.hidden = false;
+    });
+    window.bluebirdSwipe.keys(dotsBar, (step) => {
+      show(current + step);
+      dots[current].focus();
+    });
     dotsBar.hidden = false;
     quotes.forEach((quote, i) =>
       quote.setAttribute("aria-hidden", i === current ? "false" : "true"),

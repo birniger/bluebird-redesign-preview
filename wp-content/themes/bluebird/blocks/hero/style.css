@@ -48,6 +48,10 @@
   width: 100%;
 }
 
+.bb-hero__slides > .bb-turn {
+  bottom: calc(var(--bb-hero-card, 0px) + 32px);
+}
+
 .bb-hero > .bb-rating--badge {
   position: absolute;
   right: 28px;
@@ -156,6 +160,10 @@
     inset: auto;
     overflow: hidden;
     position: relative;
+  }
+
+  .bb-hero__slides > .bb-turn {
+    bottom: 64px;
   }
 
   .bb-hero__card {

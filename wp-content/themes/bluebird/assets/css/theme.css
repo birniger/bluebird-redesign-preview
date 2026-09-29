@@ -503,6 +503,141 @@ p.is-style-label {
   width: 6px;
 }
 
+/* The two sides of what moves on its own (the hero's photos, the reviews, the menu's tiles): each
+   a tall, quiet place to click, marked by a small round disc of frosted glass with a thin arrow,
+   faint until the pointer comes near. Each place sets the disc's colours:
+   --bb-turn-fill and --bb-turn-rim at rest, --bb-turn-hover and --bb-turn-arrow-hover under the
+   pointer. */
+.bb-turn {
+  --bb-turn-size: 34px;
+  --bb-turn-edge: 22px;
+  --bb-turn-arrow: 7px;
+  --bb-turn-fill: rgba(255, 255, 255, 0.07);
+  --bb-turn-rim: rgba(255, 255, 255, 0.32);
+  --bb-turn-hover: var(--wp--custom--glass--background);
+  --bb-turn-arrow-hover: var(--wp--preset--color--contrast);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  bottom: 0;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: clamp(72px, 12%, 140px);
+  z-index: 1;
+}
+
+.bb-turn[hidden] {
+  display: none;
+}
+
+/* Phones and other touch screens swipe instead. */
+@media (max-width: 599px), (hover: none) {
+  .bb-turn {
+    display: none;
+  }
+}
+
+.bb-turn--back {
+  left: 0;
+}
+
+.bb-turn--on {
+  right: 0;
+}
+
+/* The disc. */
+.bb-turn::before {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: var(--bb-turn-fill);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--bb-turn-rim);
+  content: "";
+  height: var(--bb-turn-size);
+  margin-top: calc(var(--bb-turn-size) / -2);
+  position: absolute;
+  top: 50%;
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+  width: var(--bb-turn-size);
+}
+
+/* The arrow, a little off the disc's middle towards its open side so it looks centred. */
+.bb-turn::after {
+  border-left: 1.5px solid currentColor;
+  border-top: 1.5px solid currentColor;
+  content: "";
+  height: var(--bb-turn-arrow);
+  margin-top: calc(var(--bb-turn-arrow) / -2);
+  position: absolute;
+  top: 50%;
+  transition:
+    color 0.4s ease,
+    transform 0.4s ease;
+  width: var(--bb-turn-arrow);
+}
+
+.bb-turn--back::before {
+  left: var(--bb-turn-edge);
+}
+
+.bb-turn--on::before {
+  right: var(--bb-turn-edge);
+}
+
+.bb-turn--back::after {
+  left: calc(var(--bb-turn-edge) + var(--bb-turn-size) / 2 - var(--bb-turn-arrow) / 2 + 1.5px);
+  transform: rotate(-45deg);
+}
+
+.bb-turn--on::after {
+  right: calc(var(--bb-turn-edge) + var(--bb-turn-size) / 2 - var(--bb-turn-arrow) / 2 + 1.5px);
+  transform: rotate(135deg);
+}
+
+.bb-turn:hover,
+.bb-turn:focus-visible {
+  color: var(--bb-turn-arrow-hover);
+}
+
+.bb-turn:hover::before,
+.bb-turn:focus-visible::before {
+  background: var(--bb-turn-hover);
+  box-shadow:
+    inset 0 0 0 1px transparent,
+    0 6px 18px rgba(6, 62, 95, 0.12);
+  transform: scale(1.06);
+}
+
+.bb-turn--back:hover::after {
+  transform: translateX(-2px) rotate(-45deg);
+}
+
+.bb-turn--on:hover::after {
+  transform: translateX(2px) rotate(135deg);
+}
+
+.bb-turn:focus-visible {
+  outline: none;
+}
+
+.bb-turn:focus-visible::before {
+  outline: 1.5px solid var(--wp--preset--color--contrast);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb-turn::before,
+  .bb-turn::after {
+    transition: none;
+  }
+}
+
 .bb-lang.is-open .bb-chevron {
   transform: translateY(3px) rotate(-135deg);
 }
