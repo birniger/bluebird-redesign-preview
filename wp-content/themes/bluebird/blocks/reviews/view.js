@@ -62,7 +62,7 @@
     }
 
     dots.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
-    window.bluebirdSwipe(band.querySelector(".bb-reviews__quotes"), (step) => show(current + step));
+    window.bluebirdSwipe(band, (step) => show(current + step));
     band.querySelectorAll(".bb-turn").forEach((turn) => {
       turn.addEventListener("click", () =>
         show(current + (turn.classList.contains("bb-turn--back") ? -1 : 1)),
