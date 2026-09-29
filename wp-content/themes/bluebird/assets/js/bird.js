@@ -38,13 +38,90 @@
   let HALF = 26;
   let LIFT = 17;
   let TALL = 22;
-  // How it flies: its top speed, the most its course may change in one frame (small: wide, calm
-  // curves), and how far its centre may dip over a photo's top edge.
-  const SPEED = 0.52;
-  // Each flight has its own pace, a little slower or faster than the last; the wingbeat follows.
-  const PACE = [0.9, 1.06];
-  const TURN = 0.016;
+  // How far its centre may dip over a photo's top edge.
   const DIP = 2;
+
+  /*
+   * How it flies, in one place: top speed (on wide screens and on phones), how much each flight's
+   * pace may differ, the most its course may change in one frame (small: wide, calm curves), how
+   * fast and how wide its wings beat, its size, how long it rests on the Book button and elsewhere
+   * (seconds, the least and how much more at most), and how often an outing ends on the rating
+   * badge rather than a photo's edge. The site's values are set in the Site Editor, on the Bird
+   * block in the header (blocks/bird). Adding ?bird=tune to a page's address opens a panel to try
+   * others, kept only in this browser (?bird=off closes it and forgets them).
+   */
+  const DEFAULTS = {
+    speed: 0.68,
+    phoneSpeed: 0.52,
+    paceMin: 0.9,
+    paceMax: 1.06,
+    turn: 0.016,
+    flapRate: 1,
+    flapWidth: 1,
+    size: 1,
+    homeRest: 14,
+    homeRestMore: 10,
+    awayRest: 7,
+    awayRestMore: 5,
+    badge: 0.33,
+    phoneBadge: 0.4,
+  };
+  // The site's own values, set in the Site Editor on the Bird block in the header, replace these.
+  const set = document.querySelector(".bb-bird-settings");
+  if (set) {
+    try {
+      Object.keys(DEFAULTS).forEach((key) => {
+        const value = Number(JSON.parse(set.dataset.bird || "{}")[key]);
+        if (Number.isFinite(value)) {
+          DEFAULTS[key] = value;
+        }
+      });
+    } catch (e) {
+      // Unreadable values: the ones above stand.
+    }
+  }
+  const T = Object.assign({}, DEFAULTS);
+  const stored = (key, value) => {
+    try {
+      if (undefined === value) {
+        return window.localStorage.getItem(key);
+      }
+      if (null === value) {
+        window.localStorage.removeItem(key);
+      } else {
+        window.localStorage.setItem(key, value);
+      }
+    } catch (e) {
+      // Private windows may refuse storage; the defaults then stand.
+    }
+    return null;
+  };
+  const asked = new URLSearchParams(window.location.search).get("bird");
+  if ("off" === asked) {
+    stored("bb-bird-tune", null);
+  } else if ("tune" === asked) {
+    stored("bb-bird-panel", "1");
+  }
+  if ("off" !== asked) {
+    try {
+      Object.assign(T, JSON.parse(stored("bb-bird-tune") || "{}"));
+    } catch (e) {
+      // Unreadable values: the defaults stand.
+    }
+  } else {
+    stored("bb-bird-panel", null);
+  }
+  const phone = () => document.documentElement.clientWidth < 600;
+  // Its speed follows the screen: the phone speed at 390px, the wide one at 1440px, in proportion
+  // between and a little beyond (at most 30% more), so it crosses a wide page as calmly as a
+  // narrow one. Its turning follows the speed, so its curves keep their shape at any size.
+  const SPEEDNOW = () => {
+    const width = document.documentElement.clientWidth;
+    const along = (width - 390) / (1440 - 390);
+    const speed = T.phoneSpeed + (T.speed - T.phoneSpeed) * along;
+    return Math.min(T.speed * 1.3, Math.max(T.phoneSpeed, speed));
+  };
+  const TURNNOW = () => T.turn * (SPEEDNOW() / 0.52);
 
   const whenShown = (fn) => {
     const idle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 300));
@@ -101,6 +178,7 @@
     });
     document.body.appendChild(bird);
     const size = () => {
+      bird.style.setProperty("--bb-bird-scale", String(T.size));
       const w = bird.offsetWidth || 52;
       HALF = w / 2;
       LIFT = w * 0.33;
@@ -143,6 +221,11 @@
       let land = shown(strip) ? box(strip) : null;
       if (!land || land.t > cap) {
         land = firstLine();
+        // On wide screens a line of words lends itself only where it reaches the bird's own
+        // space near the button; one far off on the left would draw it across the page.
+        if (land && width >= 600 && land.r < left + 20) {
+          land = null;
+        }
       }
       if (land && land.t > cap) {
         land = null;
@@ -327,16 +410,17 @@
       if ("home" === lastSpot || !home()) {
         const g = measure();
         const free = stretches(g);
-        // The edge twice as often as the badge; on phones, where the badge is nearer, three to two.
-        const phone = document.documentElement.clientWidth < 600;
-        const away = [];
-        if (free.length) {
-          away.push(...(phone ? ["edge", "edge", "edge"] : ["edge", "edge"]));
+        // The badge on a share of outings (a little more on phones, where it is nearer), the
+        // photo's edge on the rest; whichever there is when only one is.
+        const share = phone() ? T.phoneBadge : T.badge;
+        let spot = "";
+        if (free.length && g.rating) {
+          spot = Math.random() < share ? "badge" : "edge";
+        } else if (free.length) {
+          spot = "edge";
+        } else if (g.rating) {
+          spot = "badge";
         }
-        if (g.rating) {
-          away.push(...(phone ? ["badge", "badge"] : ["badge"]));
-        }
-        const spot = away[Math.floor(Math.random() * away.length)];
         if ("edge" === spot) {
           const total = free.reduce((sum, f) => sum + f.e - f.s, 0);
           for (let i = 0; i < 12; i++) {
@@ -405,7 +489,7 @@
       }
       mode = "fly";
       since = now;
-      pace = PACE[0] + Math.random() * (PACE[1] - PACE[0]);
+      pace = T.paceMin + Math.random() * Math.max(0, T.paceMax - T.paceMin);
     }
 
     bird.addEventListener("pointerdown", (event) => {
@@ -475,7 +559,10 @@
           mode = "perch";
           until =
             now +
-            ("home" === lastSpot ? 14000 + Math.random() * 10000 : 7000 + Math.random() * 5000);
+            1000 *
+              ("home" === lastSpot
+                ? T.homeRest + Math.random() * T.homeRestMore
+                : T.awayRest + Math.random() * T.awayRestMore);
         } else if ("perch" === mode && now > until) {
           // A soft push off; the steering does the rest.
           vy = -0.15;
@@ -506,12 +593,12 @@
           const dist = Math.hypot(dx, dy) || 1;
           const landing = "toPerch" === mode && target.x === tx && target.y === ty;
           cruise += (pace - cruise) * 0.01;
-          const topSpeed = SPEED * cruise;
+          const topSpeed = SPEEDNOW() * cruise;
           const want = landing ? Math.min(topSpeed, 0.1 + dist / 160) : topSpeed;
           let fx = (dx / dist) * want - vx;
           let fy = (dy / dist) * want - vy;
           const force = Math.hypot(fx, fy);
-          const most = TURN * (landing ? 1.6 : 1);
+          const most = TURNNOW() * (landing ? 1.6 : 1);
           if (force > most) {
             fx *= most / force;
             fy *= most / force;
@@ -522,13 +609,13 @@
           const floor = landing ? Math.max(floorAt(z, bx), ty + 20) : floorAt(z, bx);
           const top = landing ? Math.min(z.t, ty) : z.t + 20;
           const pad = landing ? 0 : 30;
-          const edge = (over, room) => Math.min(2, Math.max(0, over) / room) * TURN;
+          const edge = (over, room) => Math.min(2, Math.max(0, over) / room) * TURNNOW();
           fx += edge(leftAt(z, by) + pad - bx, 30) - edge(bx - (z.r - pad), 30);
           fy += edge(top - by, 20) - edge(by - (floor - 14), 14);
           if (!("badge" === lastSpot && landing)) {
             g.areas.forEach((a) => {
               if (inside(bx, by, a)) {
-                fy -= TURN;
+                fy -= TURNNOW();
               }
             });
           }
@@ -563,11 +650,12 @@
           const sink = Math.max(0, vy) / topSpeed;
           const gliding = energy < 0.14 && burst <= 0;
           phase +=
+            T.flapRate *
             Math.max(0.035, 0.06 + 0.14 * energy + 0.06 * climb - 0.03 * sink) *
             (0.7 + 0.3 * cruise);
           const goal = gliding
             ? -24 + Math.sin(now / 1100) * 2.5
-            : -28 + (14 + 20 * energy + 4 * climb - 3 * sink) * Math.sin(phase);
+            : -28 + T.flapWidth * (14 + 20 * energy + 4 * climb - 3 * sink) * Math.sin(phase);
           wingAngle += (goal - wingAngle) * 0.18;
           const fold = 1 - 0.35 * Math.max(0, Math.sin(phase)) * energy;
           wing.style.transform = "rotate(" + wingAngle + "deg) scaleY(" + fold + ")";
@@ -612,8 +700,98 @@
       rootMargin: "160px 0px",
     }).observe(header);
 
+    if ("1" === stored("bb-bird-panel")) {
+      tunePanel();
+    }
+
     // It arrives from the right and settles on the Book button first.
     goHome(performance.now());
     resume();
+
+    // The tuning panel: a slider for each value, applied as it moves and kept in this browser.
+    function tunePanel() {
+      const ROWS = [
+        ["speed", "Speed at 1440px", 0.3, 1.2, 0.01],
+        ["phoneSpeed", "Speed at 390px", 0.3, 1, 0.01],
+        ["paceMin", "Pace, slowest", 0.6, 1, 0.01],
+        ["paceMax", "Pace, fastest", 1, 1.4, 0.01],
+        ["turn", "Turning (higher: tighter)", 0.006, 0.04, 0.001],
+        ["flapRate", "Wingbeat speed", 0.5, 2, 0.05],
+        ["flapWidth", "Wingbeat width", 0.5, 1.6, 0.05],
+        ["size", "Size", 0.7, 1.4, 0.05],
+        ["homeRest", "Rest on Book, s", 2, 40, 1],
+        ["homeRestMore", "… up to s more", 0, 30, 1],
+        ["awayRest", "Rest elsewhere, s", 2, 30, 1],
+        ["awayRestMore", "… up to s more", 0, 20, 1],
+        ["badge", "Badge share, wide", 0, 1, 0.05],
+        ["phoneBadge", "Badge share, phones", 0, 1, 0.05],
+      ];
+      const panel = document.createElement("div");
+      panel.className = "bb-bird-tune";
+      panel.innerHTML =
+        '<p class="bb-bird-tune__title">Bird <button type="button" data-do="hide">–</button></p>' +
+        ROWS.map(
+          ([key, label, min, max, step]) =>
+            "<label><span>" +
+            label +
+            ' <output data-for="' +
+            key +
+            '"></output></span>' +
+            '<input type="range" data-key="' +
+            key +
+            '" min="' +
+            min +
+            '" max="' +
+            max +
+            '" step="' +
+            step +
+            '"></label>',
+        ).join("") +
+        '<p class="bb-bird-tune__actions"><button type="button" data-do="copy">Copy values</button>' +
+        '<button type="button" data-do="reset">Reset</button></p>';
+      document.body.appendChild(panel);
+      const show = () =>
+        panel.querySelectorAll("input").forEach((input) => {
+          input.value = T[input.dataset.key];
+          panel.querySelector('output[data-for="' + input.dataset.key + '"]').textContent =
+            T[input.dataset.key];
+        });
+      const save = () => {
+        const changed = {};
+        Object.keys(DEFAULTS).forEach((key) => {
+          if (T[key] !== DEFAULTS[key]) {
+            changed[key] = T[key];
+          }
+        });
+        stored("bb-bird-tune", JSON.stringify(changed));
+      };
+      panel.addEventListener("input", (event) => {
+        const key = event.target.dataset.key;
+        if (key) {
+          T[key] = Number(event.target.value);
+          show();
+          save();
+          size();
+        }
+      });
+      panel.addEventListener("click", (event) => {
+        const action = event.target.dataset.do;
+        if ("reset" === action) {
+          Object.assign(T, DEFAULTS);
+          stored("bb-bird-tune", null);
+          show();
+          size();
+        } else if ("copy" === action) {
+          const text = JSON.stringify(T, null, 2);
+          (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+            .then(() => (event.target.textContent = "Copied"))
+            .catch(() => window.prompt("The bird's values", text));
+          window.setTimeout(() => (event.target.textContent = "Copy values"), 2000);
+        } else if ("hide" === action) {
+          panel.classList.toggle("is-small");
+        }
+      });
+      show();
+    }
   });
 })();

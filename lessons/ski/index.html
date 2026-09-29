@@ -1064,17 +1064,94 @@ a.bb-sheet__title {
   max-width: 14ch;
 }
 
+/* One row: four across on wide screens; more than fit scroll sideways, a card at a time. */
 .bb-people__list {
+  --bb-people-across: 4;
+
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-columns: calc((100% - (var(--bb-people-across) - 1) * 14px) / var(--bb-people-across));
+  grid-auto-flow: column;
   list-style: none;
   margin: var(--wp--preset--spacing--50) 0 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
   padding: 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.bb-people__list::-webkit-scrollbar {
+  display: none;
 }
 
 .bb-people__list > li {
   margin: 0;
+  scroll-snap-align: start;
+}
+
+/* Under the row, only while it scrolls: a thin track whose plum thumb shows how much of the row is
+   in view and where, and on wider screens the arrows beside it. */
+.bb-people__arrows {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.bb-people__arrows[hidden] {
+  display: none;
+}
+
+.bb-people__track {
+  background: var(--wp--preset--color--line);
+  border-radius: 2px;
+  flex: 1;
+  height: 3px;
+  margin-right: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-people__thumb {
+  background: var(--wp--preset--color--plum);
+  border-radius: 2px;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translateX(var(--x, 0));
+  width: var(--w, 30%);
+}
+
+.bb-people__arrow {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--bb-line-soft);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font: 500 18px/1 var(--wp--preset--font-family--figtree);
+  height: 46px;
+  justify-content: center;
+  padding: 0;
+  transition:
+    box-shadow 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+  width: 46px;
+}
+
+.bb-people__arrow:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--plum);
+  color: var(--wp--preset--color--plum);
+}
+
+.bb-people__arrow:disabled {
+  cursor: default;
+  opacity: 0.35;
 }
 
 .bb-person {
@@ -1176,27 +1253,69 @@ a.bb-person:hover .bb-person__name {
 }
 
 .bb-people--few .bb-people__list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  --bb-people-across: 2;
+
   margin-top: 0;
 }
 
+/* Tablets: two and a bit across, so the next one shows it is there. */
 @media (max-width: 999px) {
   .bb-people--few {
     grid-template-columns: 1fr;
   }
 
-  .bb-people__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .bb-people__list,
+  .bb-people--few .bb-people__list {
+    --bb-people-across: 2.4;
   }
 }
 
-@media (max-width: 499px) {
-  .bb-people__list {
-    gap: 28px 12px;
+/* Phones: one and a bit across, the row running to the screen's edges to be swiped; the track
+   without arrows. */
+@media (max-width: 599px) {
+  .bb-people__list,
+  .bb-people--few .bb-people__list {
+    --bb-people-across: 1.6;
+
+    gap: 12px;
+    margin-inline: calc(-1 * var(--bb-gutter, 20px));
+    padding-inline: var(--bb-gutter, 20px);
+    scroll-padding-inline: var(--bb-gutter, 20px);
+  }
+
+  .bb-people__arrow {
+    display: none;
+  }
+
+  .bb-people__track {
+    margin-right: 0;
   }
 
   .bb-person__name {
     font-size: 25px;
+  }
+}
+
+/* With the switch over them (the Instructors page), everyone stands in a grid instead: four
+   across, two on tablets and phones. */
+.bb-people--grouped .bb-people__list {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+@media (max-width: 999px) {
+  .bb-people--grouped .bb-people__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-people--grouped .bb-people__list {
+    gap: 28px 12px;
+    margin-inline: 0;
+    padding-inline: 0;
   }
 }
 
@@ -1294,7 +1413,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 /*# sourceURL=/wp-includes/css/wp-block-template-skip-link.min.css */
 </style>
 <link rel='stylesheet' id='cmplz-general-css' href='../../wp-content/plugins/complianz-gdpr/assets/css/cookieblocker.min.css?ver=1789006564' media='all' />
-<link rel='stylesheet' id='bluebird-css' href='../../wp-content/themes/bluebird/assets/css/theme.css?ver=1790642095' media='all' />
+<link rel='stylesheet' id='bluebird-css' href='../../wp-content/themes/bluebird/assets/css/theme.css?ver=1790644123' media='all' />
 <link rel='stylesheet' id='bluebird-kit-css' href='../../wp-content/themes/bluebird/assets/css/kit.css?ver=1790641236' media='all' />
 <link rel='stylesheet' id='popup-maker-site-css' href='../../wp-content/plugins/popup-maker/dist/assets/site.css?ver=1.25.0' media='all' />
 <style id="popup-maker-site-inline-css">
@@ -1363,7 +1482,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 <link rel='stylesheet' id='cmplz-banner-1-optin-css' href='../../wp-content/uploads/complianz/css/banner-1-optin.css?ver=1790616954' media='all' />
 <script data-wp-strategy="defer" defer id="bluebird-language-switcher-view-script-js" src="../../wp-content/themes/bluebird/blocks/language-switcher/view.js?ver=1790556424"></script>
 <script data-wp-strategy="defer" defer id="bluebird-menu-view-script-js" src="../../wp-content/themes/bluebird/blocks/menu/view.js?ver=1790625456"></script>
-<script data-wp-strategy="defer" defer id="bluebird-instructors-view-script-js" src="../../wp-content/themes/bluebird/blocks/instructors/view.js?ver=1790626453"></script>
+<script data-wp-strategy="defer" defer id="bluebird-instructors-view-script-js" src="../../wp-content/themes/bluebird/blocks/instructors/view.js?ver=1790644361"></script>
 <script data-wp-strategy="defer" defer id="bluebird-sun-js" src="../../wp-content/themes/bluebird/assets/js/sun.js?ver=1790640213"></script>
 <script data-wp-strategy="defer" defer id="bluebird-closing-view-script-js" src="../../wp-content/themes/bluebird/blocks/closing/view.js?ver=1790638426"></script>
 <script id="jquery-core-js" src="../../wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
@@ -1526,6 +1645,8 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 </div>
 </div>
 
+
+<span class="bb-bird-settings" data-bird="{&quot;speed&quot;:0.68,&quot;phoneSpeed&quot;:0.52,&quot;paceMin&quot;:0.9,&quot;paceMax&quot;:1.06,&quot;turn&quot;:0.016,&quot;flapRate&quot;:1,&quot;flapWidth&quot;:1,&quot;size&quot;:1,&quot;homeRest&quot;:14,&quot;homeRestMore&quot;:10,&quot;awayRest&quot;:7,&quot;awayRestMore&quot;:5,&quot;badge&quot;:0.33,&quot;phoneBadge&quot;:0.4}" hidden></span>
 </header>
 
 
@@ -1653,7 +1774,12 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 		<header class="bb-intro bb-intro--start"><p class="is-style-label">Your instructors</p><h2 class="bb-intro__title">Who teaches skiing</h2><p class="bb-intro__text">Choose your instructor when you book, or let us match you.</p></header>			</div>
 	<ul class="bb-people__list">
 		<li data-sports="ski" data-group="ski"><a class="bb-person is-standin" href="../../instructors/ski-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a ski instructor in the sun"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a ski instructor in the sun</span></span></span><span class="bb-person__name">Ski instructor</span><ul class="bb-chips bb-person__sports"><li class="bb-chip">Ski</li></ul><span class="bb-person__line">Joining this season</span></a></li><li data-sports="freeride ski touring" data-group="freeride"><a class="bb-person is-standin" href="../../instructors/freeride-instructor/"><span class="bb-person__photo"><span class="bb-photo bb-wanted" role="img" aria-label="Portrait of a freeride instructor with an avalanche pack"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a freeride instructor with an avalanche pack</span></span></span><span class="bb-person__name">Freeride instructor</span><ul class="bb-chips bb-person__sports"><li class="bb-chip">Freeride</li><li class="bb-chip">Ski</li><li class="bb-chip">Touring</li></ul><span class="bb-person__line">Joining this season</span></a></li>	</ul>
-</section>
+			<div class="bb-people__arrows" hidden>
+			<span class="bb-people__track" aria-hidden="true"><span class="bb-people__thumb"></span></span>
+			<button type="button" class="bb-people__arrow" data-step="-1" aria-label="Previous instructors"><span aria-hidden="true">←</span></button>
+			<button type="button" class="bb-people__arrow" data-step="1" aria-label="More instructors"><span aria-hidden="true">→</span></button>
+		</div>
+	</section>
 
 
 
@@ -1965,7 +2091,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 var bluebirdBird = {"src":"../../wp-content/themes/bluebird/assets/images/bird.png"};
 //# sourceURL=bluebird-bird-js-extra
 </script>
-<script data-wp-strategy="defer" defer id="bluebird-bird-js" src="../../wp-content/themes/bluebird/assets/js/bird.js?ver=1790641408"></script>
+<script data-wp-strategy="defer" defer id="bluebird-bird-js" src="../../wp-content/themes/bluebird/assets/js/bird.js?ver=1790644478"></script>
 <script id="jquery-ui-core-js-before">
 jQuery.uiBackCompat = true;
 //# sourceURL=jquery-ui-core-js-before
