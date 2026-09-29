@@ -516,28 +516,33 @@ html.has-bb-sheet {
   width: 84px;
 }
 
+.bb-sheet__bar > .bb-lang {
+  justify-self: end;
+}
+
+/* Short and ordered: each entry's name, its big entries two to a row, the small links as pills. */
 .bb-sheet__body {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 36px var(--bb-gutter, 20px) 32px;
+  padding: 26px var(--bb-gutter, 20px) 28px;
 }
 
 .bb-sheet__group + .bb-sheet__group {
   border-top: 1px solid var(--wp--preset--color--line);
-  margin-top: 30px;
-  padding-top: 26px;
+  margin-top: 22px;
+  padding-top: 20px;
 }
 
 .bb-sheet__title {
   color: var(--wp--preset--color--contrast);
   display: block;
   font-family: var(--wp--preset--font-family--instrument-serif);
-  font-size: 44px;
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: -0.015em;
   line-height: 1;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
 }
 
 a.bb-sheet__title {
@@ -545,7 +550,7 @@ a.bb-sheet__title {
 }
 
 .bb-sheet__column + .bb-sheet__column {
-  margin-top: 22px;
+  margin-top: 16px;
 }
 
 .bb-sheet__heading {
@@ -553,42 +558,40 @@ a.bb-sheet__title {
 }
 
 .bb-sheet__entries {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  gap: 14px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.bb-sheet__column:has(.bb-sheet__link) .bb-sheet__entries {
-  flex-direction: row;
+/* Small links under big entries take a line of their own. */
+.bb-sheet__entries > li:has(> .bb-sheet__link) {
+  grid-column: 1 / -1;
+}
+
+.bb-sheet__entries > li:has(> .bb-sheet__entry) + li:has(> .bb-sheet__link) {
+  margin-top: 4px;
+}
+
+/* A column of small links only: pills in a row. */
+.bb-sheet__column:not(:has(.bb-sheet__entry)) .bb-sheet__entries {
+  display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-/* Big entries among small links keep a line each, one under the other; the small links follow in
-   a row. */
-.bb-sheet__entries > li:has(> .bb-sheet__entry) {
-  flex-basis: 100%;
-}
-
-.bb-sheet__column:has(.bb-sheet__link)
-  .bb-sheet__entries
-  > li:has(> .bb-sheet__entry)
-  + li:has(> .bb-sheet__link) {
-  margin-top: 6px;
 }
 
 .bb-sheet__entry {
   color: var(--wp--preset--color--contrast);
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .bb-sheet__entry-title {
   font-family: var(--wp--preset--font-family--instrument-serif);
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: -0.01em;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .bb-sheet__link {
@@ -596,18 +599,13 @@ a.bb-sheet__title {
   border-radius: var(--wp--custom--radius--pill);
   color: var(--wp--preset--color--contrast);
   display: inline-block;
-  font-size: var(--wp--preset--font-size--interface);
-  padding: 9px 16px;
+  font-size: var(--wp--preset--font-size--small);
+  padding: 7px 12px;
 }
 
 .bb-sheet__entry[aria-current] .bb-sheet__entry-title,
 .bb-sheet__link[aria-current] {
   color: var(--wp--preset--color--plum);
-}
-
-.bb-sheet__feature {
-  height: 190px;
-  margin-top: 22px;
 }
 
 .bb-sheet__foot {

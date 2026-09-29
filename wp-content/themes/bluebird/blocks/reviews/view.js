@@ -1,6 +1,6 @@
 /**
  * One quote at a time: the current one fades out before the next fades in, so two never overlap.
- * The sun sets across the band's full height. Both rest while the band is off screen, and neither
+ * The sun sets across the band's full height, a slightly different way each time (assets/js/sun.js). Both rest while the band is off screen, and neither
  * moves for visitors who ask for reduced motion.
  */
 (function () {
@@ -17,6 +17,25 @@
     const measure = () => band.style.setProperty("--bb-band-height", band.offsetHeight + "px");
     measure();
     new ResizeObserver(measure).observe(band);
+
+    // The sun sets down the band's right side and rises again, a slightly different way each time.
+    window.bluebirdSun(band.querySelector(".bb-reviews__sun"), band, () =>
+      band.offsetWidth < 600
+        ? {
+            risen: [0, 0],
+            set: [20, band.offsetHeight - 40],
+            wander: [8, 14],
+            bow: 10,
+            duration: 28000,
+          }
+        : {
+            risen: [0, -30],
+            set: [70, band.offsetHeight - 60],
+            wander: [18, 16],
+            bow: 20,
+            duration: 28000,
+          },
+    );
 
     if (quotes.length < 2 || !dotsBar) {
       return;

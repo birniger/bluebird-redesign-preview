@@ -1,0 +1,1657 @@
+<!doctype html>
+<html lang="en" class="wp-toolbar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Bluebird Booking Settings (mockup)</title>
+<link rel="stylesheet" href="settings.css">
+</head>
+<body class="wp-admin wp-core-ui no-js toplevel_page_bluebird-booking-settings auto-fold  branch-7-1 version-7-1-2 admin-color-modern locale-en-us no-customize-support svg wp-theme-bluebird php-error">
+<div id="wpwrap">
+<div id="wpcontent"><div id="wpbody"><div id="wpbody-content">
+<div class="wrap">
+<h1>
+                Bluebird Booking Settings            </h1>
+<form>
+
+<nav aria-label="Settings sections" class="nav-tab-wrapper bluebird-settings-tabs">
+<a class="nav-tab nav-tab-active" data-tab="booking-rules" href="#">Booking Rules</a>
+<a class="nav-tab" data-tab="wizard-setup" href="#">Booking Wizard</a>
+<a class="nav-tab" data-tab="customer-area" href="#">Customer Area</a>
+<a class="nav-tab" data-tab="texts" href="#">Texts &amp; Languages</a>
+<a class="nav-tab" data-tab="availability" href="#">Availability</a>
+<a class="nav-tab" data-tab="system" href="#">System</a>
+</nav>
+<div class="bluebird-tab-content" data-tab="booking-rules">
+<h2>
+                        Booking Cutoff Time                    </h2>
+<p class="description" style="margin-bottom: 15px;">
+                        How late a customer can still book a lesson online.                    </p>
+<table class="form-table" role="presentation">
+<tr>
+<th scope="row">
+                                Enable Booking Cutoff                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Stop online booking at a set time before the lesson                                </label>
+<p class="description">
+                                    When off, only LatePoint's own booking limits apply.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Cutoff Time                            </th>
+<td>
+<select>
+<option value="0">
+                                            00:00                                        </option>
+<option value="1">
+                                            01:00                                        </option>
+<option value="2">
+                                            02:00                                        </option>
+<option value="3">
+                                            03:00                                        </option>
+<option value="4">
+                                            04:00                                        </option>
+<option value="5">
+                                            05:00                                        </option>
+<option value="6">
+                                            06:00                                        </option>
+<option value="7">
+                                            07:00                                        </option>
+<option value="8">
+                                            08:00                                        </option>
+<option value="9">
+                                            09:00                                        </option>
+<option value="10">
+                                            10:00                                        </option>
+<option value="11">
+                                            11:00                                        </option>
+<option value="12">
+                                            12:00                                        </option>
+<option value="13">
+                                            13:00                                        </option>
+<option value="14">
+                                            14:00                                        </option>
+<option value="15">
+                                            15:00                                        </option>
+<option value="16">
+                                            16:00                                        </option>
+<option value="17">
+                                            17:00                                        </option>
+<option value="18">
+                                            18:00                                        </option>
+<option selected="selected" value="19">
+                                            19:00                                        </option>
+<option value="20">
+                                            20:00                                        </option>
+<option value="21">
+                                            21:00                                        </option>
+<option value="22">
+                                            22:00                                        </option>
+<option value="23">
+                                            23:00                                        </option>
+</select>
+
+<p class="description">
+                                    Online booking closes at this time.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Days Before Lesson                            </th>
+<td>
+<input class="small-text" max="30" min="1" type="number" value="1"/>
+<p class="description">
+                                    1 = the day before the lesson, 2 = two days before.                                </p>
+</td>
+</tr>
+</table>
+<h2>Cancellation Deadline</h2>
+<p class="description" style="max-width: 40em;">
+                        How late a customer can cancel or reschedule a lesson they have booked. Keep it the same as your terms and FAQ.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Cancellation Deadline                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Stop cancelling and rescheduling at a set time before the lesson                                </label>
+<p class="description">
+                                    When off, customers can cancel or reschedule right up to the lesson.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Deadline Time                            </th>
+<td>
+<select>
+<option value="0">
+                                            00:00                                        </option>
+<option value="1">
+                                            01:00                                        </option>
+<option value="2">
+                                            02:00                                        </option>
+<option value="3">
+                                            03:00                                        </option>
+<option value="4">
+                                            04:00                                        </option>
+<option value="5">
+                                            05:00                                        </option>
+<option value="6">
+                                            06:00                                        </option>
+<option value="7">
+                                            07:00                                        </option>
+<option value="8">
+                                            08:00                                        </option>
+<option value="9">
+                                            09:00                                        </option>
+<option value="10">
+                                            10:00                                        </option>
+<option value="11">
+                                            11:00                                        </option>
+<option value="12">
+                                            12:00                                        </option>
+<option value="13">
+                                            13:00                                        </option>
+<option value="14">
+                                            14:00                                        </option>
+<option value="15">
+                                            15:00                                        </option>
+<option value="16">
+                                            16:00                                        </option>
+<option selected="selected" value="17">
+                                            17:00                                        </option>
+<option value="18">
+                                            18:00                                        </option>
+<option value="19">
+                                            19:00                                        </option>
+<option value="20">
+                                            20:00                                        </option>
+<option value="21">
+                                            21:00                                        </option>
+<option value="22">
+                                            22:00                                        </option>
+<option value="23">
+                                            23:00                                        </option>
+</select>
+
+<p class="description">
+                                    Cancelling and rescheduling close at this time.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Days Before Lesson                            </th>
+<td>
+<input class="small-text" max="30" min="1" type="number" value="1"/>
+<p class="description">
+                                    1 = the day before the lesson, 2 = two days before.                                </p>
+</td>
+</tr>
+</table>
+<div class="notice notice-info inline" style="margin: 20px 0; padding: 12px;">
+<p><strong>
+                                Current Setting:                            </strong></p>
+<p>
+                            Bookings must be made by 19:00 the day before the lesson.                        </p>
+<p>
+                            Cancelling and rescheduling is possible until 17:00 the day before the lesson.                        </p>
+<p>
+<em>
+                                    Example: a lesson on October 1 can be booked until September 30 at 19:00.                                </em>
+</p>
+</div>
+
+<h2>
+                        Multi-Day Booking                    </h2>
+<p class="description">
+                        Let customers book several days of the same lesson in one go.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Enable Multi-Day Booking                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="on"/>
+                                    Customers can add more days in the calendar                                </label>
+<p class="description">
+                                    After choosing a time, they click further days. Every day gets the same time and the same options.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<label for="bluebird_multi_day_max_days">
+                                    Maximum Days Per Booking                                </label>
+</th>
+<td>
+<input class="small-text" id="bluebird_multi_day_max_days" max="30" min="2" type="number" value="14"/>
+<p class="description">
+                                    Between 2 and 30.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Lessons that can span several days                            </th>
+<td>
+<p class="description" style="margin-bottom: 10px;">
+                                    Untick a lesson to allow only one day for it. Applies only while multi-day booking is on.                                </p>
+<fieldset style="border: 1px solid #ccd0d4; padding: 15px; background: #f9f9f9;">
+<label style="display: block; margin-bottom: 8px;">
+
+<input checked="checked" type="checkbox" value="1"/>
+                                                Full Day                                            </label>
+<label style="display: block; margin-bottom: 8px;">
+
+<input checked="checked" type="checkbox" value="1"/>
+                                                Afternoon                                            </label>
+<label style="display: block; margin-bottom: 8px;">
+
+<input checked="checked" type="checkbox" value="1"/>
+                                                Morning                                            </label>
+<label style="display: block; margin-bottom: 8px;">
+
+<input type="checkbox" value="1"/>
+                                                Custom Lesson                                            </label>
+</fieldset>
+</td>
+</tr>
+</table>
+
+<h2>
+                        Terms &amp; Conditions                    </h2>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Terms checkbox                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Customers tick that they accept your terms before booking                                </label>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<label for="bluebird_terms_page">
+                                    Terms page                                </label>
+</th>
+<td>
+<select id="bluebird_terms_page">
+<option value="0">— An address instead —</option>
+<option class="level-0" value="432">Bluebird</option>
+<option class="level-0" value="228">Booking</option>
+<option class="level-0" value="1084">Contact</option>
+<option class="level-0" value="426">Cookie Policy (EU)</option>
+<option class="level-0" value="1128">Extras</option>
+<option class="level-0" value="1056">Free lesson days</option>
+<option class="level-0" value="109">Frequently Asked Questions</option>
+<option class="level-0" value="222">Guest Login</option>
+<option class="level-0" value="194">Home</option>
+<option class="level-0" value="113">Instructors</option>
+<option class="level-1" value="107">   Basil</option>
+<option class="level-1" value="1166">   Freeride instructor</option>
+<option class="level-1" value="1164">   Ski instructor</option>
+<option class="level-1" value="1165">   Snowboard instructor</option>
+<option class="level-0" value="131">Legal Notice</option>
+<option class="level-0" value="121">Lessons</option>
+<option class="level-1" value="1080">   Freeride</option>
+<option class="level-1" value="1078">   Ski lessons</option>
+<option class="level-1" value="1079">   Snowboard lessons</option>
+<option class="level-1" value="1127">   Touring</option>
+<option class="level-0" value="1082">Plan your day</option>
+<option class="level-0" value="1081">Prices</option>
+<option class="level-0" value="115">Privacy Policy</option>
+<option class="level-0" value="117">Terms &amp; Conditions</option>
+<option class="level-0" value="438">The Bluebird Code</option>
+<option class="level-0" value="1083">Tours &amp; weeks</option>
+</select>
+<p class="description">
+                                    Each language links to its own translation of this page, found automatically. Opens in a new tab.                                </p>
+<p class="bluebird-terms-url">
+<label for="bluebird_terms_url">Address</label>
+<input class="regular-text" id="bluebird_terms_url" placeholder="https://example.com/terms" type="url" value="https://yourschool.ch/terms-conditions/"/>
+<span class="description">For terms kept outside this site. Its translations are in your translation plugin.</span>
+</p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<label for="bluebird_terms_link_text">
+                                    Link Text                                </label>
+</th>
+<td>
+<input class="regular-text" id="bluebird_terms_link_text" placeholder="Terms &amp; Conditions" type="text" value="Terms &amp; Conditions"/>
+<p class="description">
+                                    The linked words in "I accept the [Link Text]".                                </p>
+</td>
+</tr>
+</table>
+<h2>Review Requests</h2>
+<p class="description">
+                        After a lesson, LatePoint's "Booking Ended" automation asks the customer how it went. These limit how often one customer is asked. A single customer or booking can be left out in LatePoint: open the customer, or the booking in its order.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+<label for="bluebird_review_pause_days">
+                                    Pause Between Requests                                </label>
+</th>
+<td>
+<input class="small-text" id="bluebird_review_pause_days" min="0" type="number" value="0"/>
+                                days                                <p class="description">
+                                    A customer who was asked in the last this-many days is not asked again. 0 means no pause.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Only Once                            </th>
+<td>
+<label>
+<input type="checkbox" value="on"/>
+                                    Never ask the same customer twice                                </label>
+</td>
+</tr>
+</table>
+</div>
+<div class="bluebird-tab-content" data-tab="wizard-setup" style="display: none;">
+<h2>Questions and answers</h2>
+<p class="description bluebird-lead">
+                        The questions the booking wizard asks, and the answers it offers. The same answers are the dropdowns for sport, level and language in LatePoint's order form, and instructors are matched on them (LatePoint -&gt; Agents).                    </p>
+<div class="bluebird-callout">
+<p><strong>Renaming or retiring an answer</strong></p>
+<p>A lesson remembers which answer was chosen, not its wording. Renaming an answer changes it on every lesson booked with it, and its translation moves with it: use it to correct or improve the wording. For a different kind of lesson, add a new answer and retire the old one: the wizard stops offering it, and lessons booked with it keep it.</p>
+</div>
+<div id="bluebird-step-editor">
+<div class="bluebird-step-card" data-step-key="sport">
+<div class="bluebird-step-head">
+<span aria-hidden="true" class="bluebird-drag-handle" title="Drag to reorder">⋮⋮</span>
+<label class="screen-reader-text" for="bluebird-step-sport">Question</label>
+<input class="bluebird-step-label" id="bluebird-step-sport" type="text" value="Sport"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">sport</code>
+<button class="button-link button-link-delete bluebird-remove-step" type="button">
+                                        Remove question                                    </button>
+</div>
+<table class="widefat bluebird-choices">
+<thead>
+<tr>
+<th class="bluebird-col-drag"><span class="screen-reader-text">Order</span></th>
+<th class="bluebird-col-name">Answer</th>
+<th>Description</th>
+<th class="bluebird-col-icon">Icon</th>
+<th class="bluebird-col-image">Image</th>
+<th class="bluebird-col-used">Lessons</th>
+<th class="bluebird-col-action"><span class="screen-reader-text">Actions</span></th>
+</tr>
+</thead>
+<tbody class="bluebird-options-sortable">
+<tr data-option-key="snowboarding" data-used="11">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="Snowboarding"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">snowboarding</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value=""/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value="🏂"/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">11</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" hidden="" type="button">Delete</button>
+</td>
+</tr>
+</tbody>
+<tbody class="bluebird-retired-choices" hidden="">
+<tr class="bluebird-retired-head"><td></td><td colspan="6">Retired: not offered, kept for the lessons booked with them</td></tr>
+</tbody>
+</table>
+<button class="button bluebird-add-option" type="button">
+                                    + Add answer                                </button>
+
+</div>
+<div class="bluebird-step-card" data-step-key="level">
+<div class="bluebird-step-head">
+<span aria-hidden="true" class="bluebird-drag-handle" title="Drag to reorder">⋮⋮</span>
+<label class="screen-reader-text" for="bluebird-step-level">Question</label>
+<input class="bluebird-step-label" id="bluebird-step-level" type="text" value="Level"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">level</code>
+<button class="button-link button-link-delete bluebird-remove-step" type="button">
+                                        Remove question                                    </button>
+</div>
+<table class="widefat bluebird-choices">
+<thead>
+<tr>
+<th class="bluebird-col-drag"><span class="screen-reader-text">Order</span></th>
+<th class="bluebird-col-name">Answer</th>
+<th>Description</th>
+<th class="bluebird-col-icon">Icon</th>
+<th class="bluebird-col-image">Image</th>
+<th class="bluebird-col-used">Lessons</th>
+<th class="bluebird-col-action"><span class="screen-reader-text">Actions</span></th>
+</tr>
+</thead>
+<tbody class="bluebird-options-sortable">
+<tr data-option-key="beginner" data-used="10">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="Beginner"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">beginner</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value="First time or learning basics"/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value=""/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">10</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" hidden="" type="button">Delete</button>
+</td>
+</tr>
+<tr data-option-key="intermediate" data-used="7">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="Intermediate"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">intermediate</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value="Comfortable on blue runs"/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value=""/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">7</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" hidden="" type="button">Delete</button>
+</td>
+</tr>
+<tr data-option-key="advanced" data-used="0">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="Advanced"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">advanced</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value="Confident on all terrain"/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value=""/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">0</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" hidden="" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" type="button">Delete</button>
+</td>
+</tr>
+</tbody>
+<tbody class="bluebird-retired-choices" hidden="">
+<tr class="bluebird-retired-head"><td></td><td colspan="6">Retired: not offered, kept for the lessons booked with them</td></tr>
+</tbody>
+</table>
+<button class="button bluebird-add-option" type="button">
+                                    + Add answer                                </button>
+
+</div>
+<div class="bluebird-step-card" data-step-key="language">
+<div class="bluebird-step-head">
+<span aria-hidden="true" class="bluebird-drag-handle" title="Drag to reorder">⋮⋮</span>
+<label class="screen-reader-text" for="bluebird-step-language">Question</label>
+<input class="bluebird-step-label" id="bluebird-step-language" type="text" value="Language"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">language</code>
+<button class="button-link button-link-delete bluebird-remove-step" type="button">
+                                        Remove question                                    </button>
+</div>
+<table class="widefat bluebird-choices">
+<thead>
+<tr>
+<th class="bluebird-col-drag"><span class="screen-reader-text">Order</span></th>
+<th class="bluebird-col-name">Answer</th>
+<th>Description</th>
+<th class="bluebird-col-icon">Icon</th>
+<th class="bluebird-col-image">Image</th>
+<th class="bluebird-col-used">Lessons</th>
+<th class="bluebird-col-action"><span class="screen-reader-text">Actions</span></th>
+</tr>
+</thead>
+<tbody class="bluebird-options-sortable">
+<tr data-option-key="de" data-used="10">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="German"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">de</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value=""/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value="🇩🇪"/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">10</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" hidden="" type="button">Delete</button>
+</td>
+</tr>
+<tr data-option-key="en" data-used="9">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="English"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">en</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value=""/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value="🇬🇧"/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">9</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" hidden="" type="button">Delete</button>
+</td>
+</tr>
+<tr data-option-key="fr" data-used="0">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="French"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">fr</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value=""/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value="🇫🇷"/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">0</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" hidden="" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" type="button">Delete</button>
+</td>
+</tr>
+</tbody>
+<tbody class="bluebird-retired-choices" hidden="">
+<tr class="bluebird-retired-head"><td></td><td colspan="6">Retired: not offered, kept for the lessons booked with them</td></tr>
+</tbody>
+</table>
+<button class="button bluebird-add-option" type="button">
+                                    + Add answer                                </button>
+
+</div>
+</div>
+<template id="bluebird-choice-row-template">
+<tr data-option-key="__KEY__" data-used="0">
+<td class="bluebird-col-drag">
+<span aria-hidden="true" class="bluebird-option-drag-handle" title="Drag to reorder">⋮</span>
+
+
+
+</td>
+<td class="bluebird-col-name">
+<input aria-label="Answer" type="text" value="__LABEL__"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">__KEY__</code>
+</td>
+<td>
+<input aria-label="Description" maxlength="100" placeholder="Optional, up to 100 characters" type="text" value=""/>
+</td>
+<td class="bluebird-col-icon">
+<input aria-label="Icon" type="text" value=""/>
+</td>
+<td class="bluebird-col-image">
+<span class="bluebird-image-field">
+<input aria-label="Image address" class="bluebird-image-url" type="text" value=""/>
+<button class="button bluebird-upload-image" type="button">Choose</button>
+</span>
+</td>
+<td class="bluebird-col-used">0</td>
+<td class="bluebird-col-action">
+<button class="button-link bluebird-retire-option" hidden="" type="button">Retire</button>
+<button class="button-link bluebird-restore-option" hidden="" type="button">Restore</button>
+<button class="button-link button-link-delete bluebird-remove-option" type="button">Delete</button>
+</td>
+</tr>
+</template>
+<template id="bluebird-step-card-template">
+<div class="bluebird-step-card" data-step-key="__STEP__">
+<div class="bluebird-step-head">
+<span aria-hidden="true" class="bluebird-drag-handle" title="Drag to reorder">⋮⋮</span>
+<label class="screen-reader-text" for="bluebird-step-__STEP__">Question</label>
+<input class="bluebird-step-label" id="bluebird-step-__STEP__" type="text" value="__LABEL__"/>
+<code class="bluebird-code" title="The code lessons record. It never changes.">__STEP__</code>
+<button class="button-link button-link-delete bluebird-remove-step" type="button">
+                                        Remove question                                    </button>
+</div>
+<table class="widefat bluebird-choices">
+<thead>
+<tr>
+<th class="bluebird-col-drag"><span class="screen-reader-text">Order</span></th>
+<th class="bluebird-col-name">Answer</th>
+<th>Description</th>
+<th class="bluebird-col-icon">Icon</th>
+<th class="bluebird-col-image">Image</th>
+<th class="bluebird-col-used">Lessons</th>
+<th class="bluebird-col-action"><span class="screen-reader-text">Actions</span></th>
+</tr>
+</thead>
+<tbody class="bluebird-options-sortable">
+</tbody>
+<tbody class="bluebird-retired-choices" hidden="">
+<tr class="bluebird-retired-head"><td></td><td colspan="6">Retired: not offered, kept for the lessons booked with them</td></tr>
+</tbody>
+</table>
+<button class="button bluebird-add-option" type="button">
+                                    + Add answer                                </button>
+
+</div>
+</template>
+<p class="bluebird-editor-actions">
+<button class="button" id="bluebird-add-step" type="button">
+                            + Add question                        </button>
+<button class="button" hidden="" id="bluebird-add-language-step" title="Add a lesson-language question. Its answer decides the language of the customer's emails." type="button">
+                            + Add language question                        </button>
+</p>
+<p class="description">
+                        Removing a whole question leaves instructors set up for something the wizard no longer asks; check them in LatePoint -&gt; Agents afterwards.                    </p>
+<h2>Lessons</h2>
+<p class="description">
+                            How each LatePoint service appears in the wizard's last question, in this order. Drag a row to move it.                        </p>
+<table class="widefat striped" id="bluebird-services-table">
+<thead>
+<tr>
+<th style="width: 40px;" title="Drag to reorder">
+</th>
+<th>
+                                        Service Name                                    </th>
+<th style="width: 80px;">
+                                        Icon                                    </th>
+<th>
+                                        Description                                    </th>
+</tr>
+</thead>
+<tbody>
+<tr data-service-id="26">
+<td style="text-align: center; cursor: grab;">
+<span class="bluebird-service-drag-handle" style="font-size: 16px; color: #999;">⋮⋮</span>
+</td>
+<td><strong>
+                                                Full Day                                            </strong>
+
+</td>
+<td>
+<input placeholder="⏱️" style="width: 60px; text-align: center; font-size: 16px;" type="text" value=""/>
+</td>
+<td>
+<input placeholder="e.g., Perfect for beginners" style="width: 100%;" type="text" value="6h (10:15-16:15)"/>
+</td>
+</tr>
+<tr data-service-id="28">
+<td style="text-align: center; cursor: grab;">
+<span class="bluebird-service-drag-handle" style="font-size: 16px; color: #999;">⋮⋮</span>
+</td>
+<td><strong>
+                                                Morning                                            </strong>
+
+</td>
+<td>
+<input placeholder="⏱️" style="width: 60px; text-align: center; font-size: 16px;" type="text" value=""/>
+</td>
+<td>
+<input placeholder="e.g., Perfect for beginners" style="width: 100%;" type="text" value="3h (09:15-12:15)"/>
+</td>
+</tr>
+<tr data-service-id="27">
+<td style="text-align: center; cursor: grab;">
+<span class="bluebird-service-drag-handle" style="font-size: 16px; color: #999;">⋮⋮</span>
+</td>
+<td><strong>
+                                                Afternoon                                            </strong>
+
+</td>
+<td>
+<input placeholder="⏱️" style="width: 60px; text-align: center; font-size: 16px;" type="text" value=""/>
+</td>
+<td>
+<input placeholder="e.g., Perfect for beginners" style="width: 100%;" type="text" value="3h (13:15-16:15)"/>
+</td>
+</tr>
+<tr data-service-id="29">
+<td style="text-align: center; cursor: grab;">
+<span class="bluebird-service-drag-handle" style="font-size: 16px; color: #999;">⋮⋮</span>
+</td>
+<td><strong>
+                                                Custom Lesson                                            </strong>
+
+</td>
+<td>
+<input placeholder="⏱️" style="width: 60px; text-align: center; font-size: 16px;" type="text" value=""/>
+</td>
+<td>
+<input placeholder="e.g., Perfect for beginners" style="width: 100%;" type="text" value=""/>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="description">
+                            An empty icon shows ⏱️. Times in a description follow Swiss conventions when they are on (Texts &amp; Languages).                        </p>
+<h2>Pricing and Pickup</h2>
+<table class="form-table" role="presentation">
+<tr>
+<th scope="row">
+                                Extra Participant Surcharge                            </th>
+<td>
+<input class="small-text" min="0" step="0.01" type="number" value="30"/>
+                                CHF                                <p class="description">
+                                    Added for each person after the first.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Pickup Postcodes                            </th>
+<td>
+<textarea class="bluebird-postcodes code" placeholder="6003 6004 6005" rows="4">6000 6002 6003 6004 6005 6006 6007 6009 6014 6015</textarea>
+<p class="description">
+                                    10 postcodes. Pickup is offered only to these; separate them with spaces, commas or new lines.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Pickup City Name                            </th>
+<td>
+<input class="regular-text" placeholder="e.g., Lucerne, Innsbruck, Chamonix" type="text" value="Lucerne"/>
+<p class="description">
+                                    Shown to customers in the pickup fields and in their error messages.                                </p>
+</td>
+</tr>
+</table>
+<h2>
+                            Extras                        </h2>
+<p class="description">
+                            What the booking form asks for when a customer chooses each extra.                        </p>
+<table class="widefat striped bluebird-extras-table">
+<thead>
+<tr>
+<th>
+                                        Extra                                    </th>
+<th style="text-align: center;">
+                                        Asks for a pickup address                                    </th>
+<th style="text-align: center;">
+                                        Asks for the participants                                    </th>
+<th style="text-align: center;">
+                                        Asks about a Half-Fare card                                    </th>
+<th style="text-align: center;">
+                                        Required                                    </th>
+<th style="text-align: center;">
+                                        Text instead of a price                                    </th>
+<th style="text-align: center;">
+                                        Email block                                    </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>
+                                                Lucerne Pickup 1st Class Train                                            </strong></td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input class="bluebird-input-m" placeholder="e.g. payment link" type="text" value=""/>
+</td>
+<td style="text-align: center;">
+<label class="bluebird-email-block">
+<input checked="checked" class="bluebird-email-conditional-toggle" type="checkbox" value="1"/>
+<input class="bluebird-email-var-input" data-default="lucerne_pickup_1st_class_train" style="width: 120px; font-family: monospace; font-size: 11px; color: #000;" type="text" value="pickup1"/>
+</label>
+</td>
+</tr>
+<tr>
+<td><strong>
+                                                Lucerne Pickup 2nd Class Train                                            </strong></td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input class="bluebird-input-m" placeholder="e.g. payment link" type="text" value=""/>
+</td>
+<td style="text-align: center;">
+<label class="bluebird-email-block">
+<input checked="checked" class="bluebird-email-conditional-toggle" type="checkbox" value="1"/>
+<input class="bluebird-email-var-input" data-default="lucerne_pickup_2nd_class_train" style="width: 120px; font-family: monospace; font-size: 11px; color: #000;" type="text" value="pickup2"/>
+</label>
+</td>
+</tr>
+<tr>
+<td><strong>
+                                                Train Tickets                                            </strong></td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input class="bluebird-input-m" placeholder="e.g. payment link" type="text" value="payment link"/>
+</td>
+<td style="text-align: center;">
+<label class="bluebird-email-block">
+<input checked="checked" class="bluebird-email-conditional-toggle" type="checkbox" value="1"/>
+<input class="bluebird-email-var-input" data-default="train_tickets" style="width: 120px; font-family: monospace; font-size: 11px; color: #000;" type="text" value="train_tickets"/>
+</label>
+</td>
+</tr>
+<tr>
+<td><strong>
+                                                Lift Pass                                            </strong></td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input class="bluebird-input-m" placeholder="e.g. payment link" type="text" value="payment link"/>
+</td>
+<td style="text-align: center;">
+<label class="bluebird-email-block">
+<input checked="checked" class="bluebird-email-conditional-toggle" type="checkbox" value="1"/>
+<input class="bluebird-email-var-input" data-default="lift_pass" style="width: 120px; font-family: monospace; font-size: 11px; color: #000;" type="text" value="lift_pass"/>
+</label>
+</td>
+</tr>
+<tr>
+<td><strong>
+                                                Lucerne Pickup Taxi                                             </strong></td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td style="text-align: center;">
+<input class="bluebird-input-m" placeholder="e.g. payment link" type="text" value=""/>
+</td>
+<td style="text-align: center;">
+<label class="bluebird-email-block">
+<input checked="checked" class="bluebird-email-conditional-toggle" type="checkbox" value="1"/>
+<input class="bluebird-email-var-input" data-default="lucerne_pickup_taxi_" style="width: 120px; font-family: monospace; font-size: 11px; color: #000;" type="text" value="pickup_taxi"/>
+</label>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="description" style="margin-bottom: 20px;">
+                            "Text instead of a price" is shown where the extra's price would be, e.g. "payment link" instead of 0.00. The Half-Fare question needs "Asks for the participants". An email block, when ticked, lets an email template show text only when the extra was chosen: {{#if_extra:name}}...{{/if_extra:name}}, with the name in the field.                        </p>
+
+<h2>
+                        Always-Show Fields                    </h2>
+<p class="description">
+                        Ask for these on every booking, whatever extras are chosen.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Always Show Pickup Fields                            </th>
+<td>
+<label>
+<input id="bluebird_always_show_pickup" type="checkbox" value="on"/>
+                                    Ask for a pickup address on every booking                                </label>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Always Show Participant Fields                            </th>
+<td>
+<label>
+<input checked="checked" id="bluebird_always_show_participants" type="checkbox" value="on"/>
+                                    Ask for every participant's name and date of birth on every booking                                </label>
+<p class="description" style="margin-top: 5px; color: #666;">
+<strong>Note:</strong>
+                                    The Half-Fare question still appears only with a ticket extra.                                </p>
+</td>
+</tr>
+</table>
+
+<h2>
+                        Field Description Text                    </h2>
+<p class="description">
+                        The line shown to customers above each group of fields.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Pickup Address Description                            </th>
+<td>
+<textarea class="large-text" placeholder="Pickup is available within Lucerne city limits only." rows="2"></textarea>
+<p class="description">
+                                    Empty uses the text shown. {city} becomes the pickup city.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Participant Info Description                            </th>
+<td>
+<textarea class="large-text" placeholder="Please provide information for each participant. This is required for ticket purchases." rows="2">Please fill in the details for each participant. This helps your instructor plan the lesson and, if selected, buy your tickets.</textarea>
+<p class="description">
+                                    Empty uses the text shown.                                </p>
+</td>
+</tr>
+</table>
+
+<h2>Appearance</h2>
+<table class="form-table" role="presentation">
+<tr>
+<th scope="row">
+                                Accent Color                            </th>
+<td>
+<input class="bluebird-color-picker" data-default-color="#2563eb" type="text" value="#063e5f"/>
+<p class="description">
+                                    Colour of the wizard's buttons and highlights. The customer area and LatePoint's own screens take the site's colours from the Site Enhancements plugin.                                </p>
+</td>
+</tr>
+</table>
+<h2>Start over</h2>
+<p class="description">
+                        Replaces every question and answer with the add-on's defaults. Lessons keep what they recorded, but instructors' settings and translations of removed answers are lost.                    </p>
+<p>
+<button class="button bluebird-button-danger" data-confirm="Replace every question and answer with the defaults? This cannot be undone." data-nonce="dbda031e2a" id="bluebird-reset-defaults" type="button">
+                            Reset the wizard to its defaults                        </button>
+</p>
+</div>
+<div class="bluebird-tab-content" data-tab="customer-area" style="display: none;">
+<h2>Addresses</h2>
+<p class="description">
+                        Where a customer lands after the login code, after logging out, from the welcome email, and from the email sent when a day of a multi-day lesson changes.                    </p>
+<p class="description">
+                        Found automatically: each language uses its translation of LatePoint's customer area page, and the site's default language uses LatePoint's page itself. You only enter an address here for a language that needs a different one, or for a language the translation plugin does not have. Leave the field empty to keep the address found automatically.                    </p>
+<table class="widefat striped" style="max-width:60em;">
+<thead>
+<tr>
+<th scope="col">Language</th>
+<th scope="col">Address in use</th>
+<th scope="col">Found how</th>
+<th scope="col">Your address (optional)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><label for="bluebird_customer_area_url_en"><code>en</code></label></td>
+<td><a href="#" rel="noopener" target="_blank">https://yourschool.ch/login/</a></td>
+<td>Automatically: LatePoint's page</td>
+<td>
+<input class="regular-text code" id="bluebird_customer_area_url_en" placeholder="found automatically" type="text" value=""/>
+</td>
+</tr>
+<tr>
+<td><label for="bluebird_customer_area_url_de"><code>de</code></label></td>
+<td><a href="#" rel="noopener" target="_blank">https://yourschool.ch/de/login/</a></td>
+<td>Automatically: the translated page</td>
+<td>
+<input class="regular-text code" id="bluebird_customer_area_url_de" placeholder="found automatically" type="text" value=""/>
+</td>
+</tr>
+<tr>
+<td>
+<label class="screen-reader-text" for="bluebird_customer_area_new_code">Language code to add</label>
+<input class="small-text code" id="bluebird_customer_area_new_code" placeholder="e.g. fr" type="text"/>
+</td>
+<td class="description" colspan="2">To add a language: its code on the left, its address on the right.</td>
+<td>
+<label class="screen-reader-text" for="bluebird_customer_area_new_url">Address for the language to add</label>
+<input class="regular-text code" id="bluebird_customer_area_new_url" placeholder="e.g. /fr/connexion/" type="text"/>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="description">
+                        An address is a path on this site, like /fr/connexion/, or a full address. A language code has two or three letters, with a region if needed: fr, de-ch, pt-br.                    </p>
+<h2>Behaviour</h2>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Fixes                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Fix what LatePoint's customer area gets wrong                                </label>
+<p class="description">
+                                    On a phone: buttons, tabs and profile fields that fit the screen, and no second box around the page. For every customer: no password form while customers log in by emailed code only, a saved message that goes away after a few seconds, cancelled lessons marked in the orders and messages tabs, and no pay button on an order whose lessons are all cancelled. Switch it off to see LatePoint's customer area exactly as LatePoint draws it.                                </p>
+</td>
+</tr>
+</table>
+</div>
+<div class="bluebird-tab-content" data-tab="texts" style="display: none;">
+<h2>Languages</h2>
+<p class="description" style="max-width: 44em;">
+                        The add-on uses whichever translation plugin is active. This is what it found.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">Detected plugin</th>
+<td>
+<code>Polylang 3.8.9</code>
+<p class="description">
+                                    Polylang and WPML both work. With neither, the site simply stays in one language.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">Languages</th>
+<td>
+<code>en, de</code>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Register strings                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Register the booking text for translation                                </label>
+<p class="description">
+                                    Lesson names and descriptions, extras, the wizard's questions and the email templates. They appear in your translation plugin's string list, in the group "bluebird-content".                                </p>
+</td>
+</tr>
+</table>
+<h2>Wording</h2>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                LatePoint wording                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="on"/>
+                                    Use this add-on's wording on LatePoint's customer screens                                </label>
+<p class="description">
+                                    Replaces a few dozen of LatePoint's phrases where this add-on has its own wording, such as "Verschieben" for "Reschedule", "Bestellung" for "Auftrag" and "Your verification code" for "Your OTP Code", and writes German dates one way: "28. Nov. 2026", "28. November 2026". LatePoint's own translation stays underneath. Untick it to show LatePoint's wording and dates everywhere.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Swiss conventions                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="on"/>
+                                    Write the Swiss way                                </label>
+<p class="description">
+                                    "ss" instead of "ß" in LatePoint's German, and times as "10:15–16:15" in every language, including the lesson descriptions in the wizard.                                </p>
+</td>
+</tr>
+</table>
+<h2>Email languages</h2>
+<p class="description">
+                        A lesson's emails are in the lesson's language and a website order's in the language of its page. Each customer has a language too, set from the page of their latest online booking and shown in their LatePoint profile; it is used for the welcome email and for an order entered by staff. Each instructor chooses theirs on their LatePoint profile.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+<label for="bluebird_admin_email_language">The school's copies</label>
+</th>
+<td>
+<select id="bluebird_admin_email_language">
+<option value="">The site's language (English)</option>
+<option value="en">English</option>
+<option value="de">Deutsch</option>
+</select>
+<p class="description">
+                                    For every copy that goes to neither the customer nor the instructor, such as the one to the school's own address in LatePoint's automations. An email with no text in that language yet arrives in the site's language.                                </p>
+</td>
+</tr>
+</table>
+
+<h2>
+                        Terminology                    </h2>
+<p class="description">
+                        LatePoint's words for the people and the bookings, as customers read them: "Instructor" for "Agent", "Lesson" for "Appointment". Enter the English; the German is in your translation plugin.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                "Agent" Label                            </th>
+<td>
+<input class="bluebird-input-m" placeholder="Instructor" type="text" value="Instructor"/>
+<span aria-hidden="true" class="bluebird-arrow">→</span>
+<input class="bluebird-input-m" placeholder="Instructors" type="text" value="Instructors"/>
+<span class="description">singular, plural</span>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                "Appointment" Label                            </th>
+<td>
+<input class="bluebird-input-m" placeholder="Lesson" type="text" value="Lesson"/>
+<span aria-hidden="true" class="bluebird-arrow">→</span>
+<input class="bluebird-input-m" placeholder="Lessons" type="text" value="Lessons"/>
+<span class="description">singular, plural</span>
+</td>
+</tr>
+</table>
+
+</div>
+<div class="bluebird-tab-content" data-tab="availability" style="display: none;">
+
+<h2>
+                        Instructor Availability                    </h2>
+<p class="description">
+                        A popup calendar of the days an instructor is free, with their schedule, bookings and Google Calendar taken into account.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Option 1: Shortcode                            </th>
+<td>
+<code>[bluebird_instructor_availability agent_id="1"]</code>
+<p class="description">
+                                    Shows a "View Availability" button. Replace 1 with the instructor's ID from LatePoint → Agents.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Option 2: Custom Button                            </th>
+<td>
+<p class="description" style="margin-bottom: 10px;">
+                                    Add these custom attributes to any button or link:                                </p>
+<table class="widefat" style="max-width: 500px;">
+<thead>
+<tr>
+<th>
+                                                Attribute                                            </th>
+<th>
+                                                Value                                            </th>
+<th>
+                                                Required                                            </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data-bluebird-availability</code></td>
+<td>
+                                                Instructor ID (e.g., 1)                                            </td>
+<td>
+                                                Yes                                            </td>
+</tr>
+<tr>
+<td><code>data-agent-name</code></td>
+<td>
+                                                Instructor name (e.g., John)                                            </td>
+<td>
+                                                Optional                                            </td>
+</tr>
+<tr>
+<td><code>href</code></td>
+<td><code>#</code></td>
+<td>
+                                                For links                                            </td>
+</tr>
+</tbody>
+</table>
+<p class="description" style="margin-top: 10px;">
+<strong>
+                                        Example:                                    </strong><br/>
+<code>&lt;a href="#" data-bluebird-availability="1" data-agent-name="John"&gt;Check Schedule&lt;/a&gt;</code>
+</p>
+</td>
+</tr>
+</table>
+
+<h2>
+                        Availability Calendar Settings                    </h2>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Enable Custom Lesson Filter                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="on"/>
+                                    Offer "Custom Lesson" in the calendar's dropdown                                </label>
+<p class="description">
+                                    It shows the days with at least the free time set below. Custom lessons are requested rather than booked online, so this appears only in the calendar.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<label for="bluebird_custom_lesson_min">
+                                    Custom Lesson Minimum                                </label>
+</th>
+<td>
+<input class="small-text" id="bluebird_custom_lesson_min" max="480" min="15" step="15" type="number" value="60"/>
+                                minutes                                <p class="description">
+                                    A day needs this much free time to show for a custom lesson.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+<label for="bluebird_custom_lesson_service_id">
+                                    Custom Lesson Service                                </label>
+</th>
+<td>
+<select id="bluebird_custom_lesson_service_id">
+<option value="0">— Disabled —</option>
+<option value="26">
+                                            Full Day                                        </option>
+<option value="27">
+                                            Afternoon                                        </option>
+<option value="28">
+                                            Morning                                        </option>
+<option selected="selected" value="29">
+                                            Custom Lesson                                        </option>
+</select>
+<p class="description">
+                                    The LatePoint service staff use to book custom lessons. Customers cannot book it online; the calendar offers it as "Custom Lesson" instead.                                </p>
+</td>
+</tr>
+</table>
+
+<h2>
+                        Availability Calendar - Dropdown Configuration                    </h2>
+<p class="description">
+                        Which lessons the calendar's dropdown offers, in what order, and how it marks free mornings and afternoons.                    </p>
+
+<div style="background: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin: 15px 0;">
+<h4 style="margin-top: 0;">
+                            1. Create Bundles                        </h4>
+<p class="description" style="margin-bottom: 10px;">
+                            Offer several lessons as one choice, e.g. Morning and Afternoon as "Half Day".                        </p>
+
+
+<div id="bluebird-bundles-editor">
+<div class="bluebird-bundle-card" data-bundle-id="bundle_1769060612466" style="background: #f9f9f9; border: 1px solid #ccc; border-radius: 4px; padding: 12px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<strong>
+                                                    Bundle Name:                                                </strong>
+<input placeholder="e.g., Half Day" style="width: 150px;" type="text" value="Half Day"/>
+</div>
+<button class="button-link bluebird-remove-bundle" style="color: #b32d2e;" type="button">
+                                                Remove Bundle                                            </button>
+</div>
+<div style="display: flex; gap: 15px; flex-wrap: wrap;">
+<label style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: #fff; border: 1px solid #ddd; border-radius: 3px;">
+<input class="bluebird-bundle-service-checkbox" type="checkbox" value="26"/>
+                                                    Full Day                                                </label>
+<label style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: #e8f5e9; border: 1px solid #ddd; border-radius: 3px;">
+<input checked="checked" class="bluebird-bundle-service-checkbox" type="checkbox" value="27"/>
+                                                    Afternoon                                                </label>
+<label style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: #e8f5e9; border: 1px solid #ddd; border-radius: 3px;">
+<input checked="checked" class="bluebird-bundle-service-checkbox" type="checkbox" value="28"/>
+                                                    Morning                                                </label>
+<label style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: #fff; border: 1px solid #ddd; border-radius: 3px;">
+<input class="bluebird-bundle-service-checkbox" type="checkbox" value="29"/>
+                                                    Custom Lesson                                                </label>
+</div>
+</div>
+</div>
+<button class="button" id="bluebird-add-bundle" type="button">
+                            + Create New Bundle                        </button>
+</div>
+
+<div style="background: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin: 15px 0;">
+<h4 style="margin-top: 0;">
+                            2. Dropdown Order &amp; AM/PM Display                        </h4>
+<p class="description" style="margin-bottom: 10px;">
+                            Drag to change the order. The cutoff and the labels decide how a free morning or afternoon is marked.                        </p>
+<table class="widefat" id="bluebird-dropdown-order-table" style="margin-bottom: 10px;">
+<thead>
+<tr>
+<th style="width: 30px;"></th>
+<th>
+                                        Item                                    </th>
+<th style="width: 60px; text-align: center;">
+                                        AM/PM                                    </th>
+<th style="width: 90px;">
+                                        Cutoff                                    </th>
+<th style="width: 70px;">
+                                        AM Label                                    </th>
+<th style="width: 70px;">
+                                        PM Label                                    </th>
+</tr>
+</thead>
+<tbody id="bluebird-dropdown-order-list">
+<tr class="bluebird-dropdown-item" data-item-id="any" data-item-type="special">
+<td class="bluebird-dropdown-drag-handle" style="cursor: move; text-align: center; color: #999;">⋮⋮</td>
+<td>
+<strong>
+                                                Any Lesson                                            </strong>
+<span style="color: #999; font-size: 11px;">(
+                                                    Built-in)
+                                                </span>
+
+
+</td>
+<td style="text-align: center; color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+</tr>
+<tr class="bluebird-dropdown-item" data-item-id="bundle_1769060612466" data-item-type="bundle">
+<td class="bluebird-dropdown-drag-handle" style="cursor: move; text-align: center; color: #999;">⋮⋮</td>
+<td>
+<strong>
+                                                Half Day                                            </strong>
+<span style="color: #666; font-size: 11px;">(
+                                                    Bundle)
+                                                </span>
+
+
+</td>
+<td style="text-align: center;">
+<input checked="checked" type="checkbox" value="1"/>
+</td>
+<td>
+<input style="width: 85px;" type="time" value="12:15"/>
+</td>
+<td>
+<input placeholder="AM" style="width: 55px;" type="text" value="AM"/>
+</td>
+<td>
+<input placeholder="PM" style="width: 55px;" type="text" value="PM"/>
+</td>
+</tr>
+<tr class="bluebird-dropdown-item" data-item-id="service_26" data-item-type="service">
+<td class="bluebird-dropdown-drag-handle" style="cursor: move; text-align: center; color: #999;">⋮⋮</td>
+<td>
+<strong>
+                                                Full Day                                            </strong>
+
+
+
+</td>
+<td style="text-align: center;">
+<input type="checkbox" value="1"/>
+</td>
+<td>
+<input style="width: 85px;" type="time" value="12:15"/>
+</td>
+<td>
+<input placeholder="AM" style="width: 55px;" type="text" value="AM"/>
+</td>
+<td>
+<input placeholder="PM" style="width: 55px;" type="text" value="PM"/>
+</td>
+</tr>
+<tr class="bluebird-dropdown-item" data-item-id="custom" data-item-type="special">
+<td class="bluebird-dropdown-drag-handle" style="cursor: move; text-align: center; color: #999;">⋮⋮</td>
+<td>
+<strong>
+                                                Custom Lesson                                            </strong>
+<span style="color: #999; font-size: 11px;">(
+                                                    Built-in)
+                                                </span>
+
+
+</td>
+<td style="text-align: center; color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+<td style="color: #ccc;">—</td>
+</tr>
+</tbody>
+</table>
+<p class="description">
+                            A free slot ending before the cutoff gets the AM label; one starting after it gets the PM label.                        </p>
+</div>
+</div>
+<div class="bluebird-tab-content" data-tab="system" style="display: none;">
+<h2>Loading</h2>
+<p class="description">
+                        Where the add-on's scripts and styles are loaded.                    </p>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Conditional Loading                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="1"/>
+                                    Only load assets on pages that need them                                </label>
+<p class="description">
+                                    When disabled, Bluebird assets load on all frontend pages.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Additional Pages                            </th>
+<td>
+<div id="bluebird-additional-pages-list">
+<div class="bluebird-page-row" style="margin-bottom: 8px; display: flex; gap: 8px; align-items: center;">
+<input class="regular-text" placeholder="/your-page-slug/" type="text" value="/instructors/"/>
+<button class="button bluebird-remove-page" title="Remove" type="button">×</button>
+</div>
+</div>
+<button class="button bluebird-add-page" style="margin-top: 5px;" type="button">
+                                    + Add Page                                </button>
+<p class="description">
+                                    Page URLs or slugs where assets should always load (used with conditional loading).                                </p>
+</td>
+</tr>
+</table>
+
+
+<h2>Debugging</h2>
+<table class="form-table">
+<tr>
+<th scope="row">
+                                Enable Debug Mode                            </th>
+<td>
+<label>
+<input checked="checked" type="checkbox" value="on"/>
+                                    Standard: record what the server does with every booking                                </label>
+<p class="description">
+                                    One line for every booking, change, order and payment, and the steps in between. About ten lines per visit to the booking page; made to be left on. Failures and warnings are recorded even when this is off.                                    <br/>
+                                    Writes to wp-content/uploads/bluebird-logs/debug.log, not readable from the web. Rotates at 8 MB, keeps 3 files, deletes after 14 days.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Verbose                            </th>
+<td>
+<label>
+<input type="checkbox" value="on"/>
+                                    Also record the booking form in the visitor's browser                                </label>
+<p class="description">
+                                    Needs Standard. While a visitor has the booking form open, their browser reports to the site every five seconds, which uses some of the server's capacity. Turn it on to reproduce a problem, and off again afterwards; it stays on until you do.                                </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Customer details in the log                            </th>
+<td>
+<label>
+<input type="checkbox" value="on"/>
+                                    Record addresses, names, emails and phone numbers in full                                </label>
+<p class="description">
+                                    Normally replaced with a short marker, so two bookings can still be told apart. Turn on only while chasing a problem that needs the real value.                                    <br/>
+                                                                            Off. Turns itself off 24 hours after you switch it on.                                                                    </p>
+</td>
+</tr>
+<tr>
+<th scope="row">
+                                Debug Log                            </th>
+<td>
+<p style="margin: 0 0 10px 0;">
+<strong>File size:</strong>
+<span id="bluebird-log-size">2.8 MB</span>
+<button class="button" id="bluebird-clear-logs" style="margin-left: 10px;" type="button">
+                                        Clear Logs                                    </button>
+<button class="button" id="bluebird-refresh-logs" style="margin-left: 5px;" type="button">
+                                        Refresh                                    </button>
+<a class="button" href="#" style="margin-left: 5px;">
+                                        Download Log                                    </a>
+</p>
+<p style="margin: 0 0 10px 0;">
+<label for="bluebird-log-filter" style="font-weight: 600;">
+                                        Only lines containing:                                    </label>
+<input class="regular-text" id="bluebird-log-filter" placeholder="e.g. ERROR, a booking code, or a request id" type="search"/>
+<span class="description" style="display: block; margin-top: 4px;">
+                                        Every line carries the id of the request that wrote it, so pasting one id here gives you that single booking from start to finish.                                    </span>
+</p>
+<details open="" style="margin-top: 10px;">
+<summary style="cursor: pointer; font-weight: 600;">
+                                        View last 50 log entries                                    </summary>
+<textarea id="bluebird-log-viewer" readonly="" rows="9" style="width: 100%; height: 300px; font-family: monospace; font-size: 11px; margin-top: 10px; background: #1e1e1e; color: #d4d4d4; padding: 10px; border-radius: 4px;">[2026-09-29 02:42:15][INFO][TRANSLATION][········] Registered custom price text | {"extra_id":"4","canonical_name":"[redacted #cb03]","stri…
+[2026-09-29 02:42:15][INFO][TRANSLATION][········] Registered custom price text | {"extra_id":"5","canonical_name":"[redacted #bc99]","stri…
+[2026-09-29 02:42:15][INFO][TRANSLATION][········] Settings-based email registration complete | {"templates_registered":9}
+[2026-09-29 02:42:17][INFO][RESCHEDULE][········] HOOKS REGISTERED: save_conditional_data attached to latepoint_booking_updated | {"request…
+[2026-09-29 02:42:17][INFO][PRICING][········] Multi-Day Booking filters registered | {"add_days_label":"priority 10","apply_custom_price_t…
+[2026-09-29 02:42:17][INFO][TRANSLATION][········] Registered custom price text | {"extra_id":"4","canonical_name":"[redacted #cb03]","stri…
+[2026-09-29 02:42:17][INFO][TRANSLATION][········] Registered custom price text | {"extra_id":"5","canonical_name":"[redacted #bc99]","stri…
+[2026-09-29 02:42:17][INFO][TRANSLATION][········] Settings-based email registration complete | {"templates_registered":9}</textarea>
+</details>
+</td>
+</tr>
+</table>
+</div>
+<div class="bluebird-savebar">
+<input class="button button-primary" id="submit" type="submit" value="Save Changes"> <span class="bluebird-unsaved" hidden="">Unsaved changes</span>
+<a class="bluebird-status-link" href="#">Status and checks</a>
+</input></div>
+</form>
+</div>
+</div></div></div>
+</div>
+<p class="bb-mockup-note" role="status">A mockup: nothing here is saved.</p>
+<script>
+(function () {
+  var tabs = document.querySelectorAll(".bluebird-settings-tabs .nav-tab");
+  var panels = document.querySelectorAll(".bluebird-tab-content");
+  var note = document.querySelector(".bb-mockup-note");
+  var timer = 0;
+  function say() {
+    note.classList.add("is-shown");
+    clearTimeout(timer);
+    timer = setTimeout(function () { note.classList.remove("is-shown"); }, 2600);
+  }
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function (event) {
+      event.preventDefault();
+      tabs.forEach(function (t) { t.classList.toggle("nav-tab-active", t === tab); });
+      panels.forEach(function (p) { p.style.display = p.dataset.tab === tab.dataset.tab ? "" : "none"; });
+      document.querySelector(".wrap").scrollIntoView();
+    });
+  });
+  document.addEventListener("click", function (event) {
+    var hit = event.target.closest("a, button, input[type=submit]");
+    if (!hit || hit.classList.contains("nav-tab")) { return; }
+    event.preventDefault();
+    say();
+  });
+  document.addEventListener("submit", function (event) { event.preventDefault(); say(); });
+})();
+</script>
+</body>
+</html>

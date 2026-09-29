@@ -1,0 +1,238 @@
+/**
+ * Settings to try: the words on the left, a browser window on the right with the settings page
+ * small inside; a click opens it large in a dialog. On narrow screens the window follows the words.
+ */
+
+.bb-try {
+  align-items: center;
+  display: grid;
+  gap: var(--wp--preset--spacing--50) var(--wp--preset--spacing--60);
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+}
+
+.bb-try__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+
+.bb-try__points li {
+  background: var(--wp--preset--color--teal);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 500;
+  padding: 7px 14px;
+}
+
+.bb-try__words > .bb-actions {
+  margin-top: 30px;
+}
+
+/* The small window: the whole of it is the button that opens the large one. */
+.bb-try__window,
+.bb-try__large-window {
+  background: var(--wp--preset--color--white);
+  border-radius: 18px;
+  box-shadow: var(--wp--preset--shadow--float);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-try__window {
+  border: 0;
+  color: inherit;
+  cursor: zoom-in;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+  transition: transform 0.4s ease;
+  width: 100%;
+}
+
+.bb-try__window:hover {
+  transform: translateY(-3px);
+}
+
+.bb-try__window:focus-visible {
+  outline: 2px solid var(--wp--preset--color--plum);
+  outline-offset: 4px;
+}
+
+.bb-try__bar {
+  align-items: center;
+  background: #eef3f4;
+  display: flex;
+  flex-shrink: 0;
+  gap: 16px;
+  padding: 11px 16px;
+}
+
+.bb-try__lights {
+  display: flex;
+  gap: 6px;
+}
+
+.bb-try__lights i {
+  background: #cfdbdd;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+
+.bb-try__lights i:first-child {
+  background: var(--wp--preset--color--sun);
+}
+
+.bb-try__address {
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--muted);
+  flex: 1;
+  font-size: 12px;
+  max-width: 360px;
+  overflow: hidden;
+  padding: 4px 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bb-try__screen {
+  background: #f0f0f1;
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.bb-try__window .bb-try__screen {
+  aspect-ratio: 4 / 3;
+}
+
+.bb-try__window .bb-try__frame {
+  pointer-events: none;
+}
+
+.bb-try__frame {
+  border: 0;
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+/* On the photo's glass, the invitation to open it. */
+.bb-try__hint {
+  -webkit-backdrop-filter: blur(var(--wp--custom--glass--blur));
+  backdrop-filter: blur(var(--wp--custom--glass--blur));
+  background: var(--wp--custom--glass--background);
+  border-radius: var(--wp--custom--radius--pill);
+  bottom: 16px;
+  box-shadow: var(--wp--preset--shadow--float);
+  color: var(--wp--preset--color--contrast);
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 600;
+  padding: 10px 18px;
+  position: absolute;
+  right: 16px;
+}
+
+/* The large window. */
+.bb-try__large {
+  background: transparent;
+  border: 0;
+  height: 100%;
+  max-height: none;
+  max-width: none;
+  padding: clamp(12px, 3vw, 40px);
+  width: 100%;
+}
+
+.bb-try__large[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-try__large::backdrop {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  background: rgba(6, 62, 95, 0.55);
+}
+
+.bb-try__large-window {
+  height: min(900px, 100%);
+  width: min(1320px, 100%);
+}
+
+.bb-try__large-window .bb-try__screen {
+  flex: 1;
+}
+
+.bb-try__close {
+  align-items: center;
+  background: var(--wp--preset--color--white);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--wp--preset--shadow--float);
+  color: var(--wp--preset--color--contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 24px;
+  height: 44px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: clamp(18px, 3vw, 48px);
+  top: clamp(18px, 3vw, 48px);
+  width: 44px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bb-try__large[open] .bb-try__large-window {
+    animation: bb-try-in 0.35s ease both;
+  }
+}
+
+@keyframes bb-try-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@media (max-width: 999px) {
+  .bb-try {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 599px) {
+  .bb-try__window {
+    border-radius: 16px;
+  }
+
+  .bb-try__address {
+    display: none;
+  }
+
+  .bb-try__large {
+    padding: 0;
+  }
+
+  .bb-try__large-window {
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .bb-try__close {
+    right: 10px;
+    top: 4px;
+  }
+}

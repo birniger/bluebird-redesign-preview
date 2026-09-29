@@ -31,6 +31,11 @@
   animation-play-state: paused;
 }
 
+/* With the script, each setting and rise takes a slightly different way (assets/js/sun.js). */
+.bb-reviews__sun.is-drifting {
+  animation: none;
+}
+
 @keyframes bb-sunset {
   from {
     transform: translate(0, -30px);
@@ -75,9 +80,16 @@
 
 .bb-reviews__quotes > .wp-block-quote {
   align-items: center;
+  border: 0;
+  color: var(--wp--preset--color--contrast);
   display: flex;
   flex-direction: column;
+  font-family: var(--wp--preset--font-family--instrument-serif);
   font-size: var(--wp--preset--font-size--quote);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  padding-inline: 0;
   grid-area: 1 / 1;
   justify-content: center;
   margin: 0;
@@ -97,6 +109,16 @@
   transition:
     opacity 0.7s ease,
     visibility 0s linear 0.7s;
+}
+
+/* After the guest's name, quietly: the way to the whole review on Google. */
+.bb-reviews__more {
+  color: var(--wp--preset--color--plum);
+  font-style: normal;
+  margin-left: 10px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .bb-reviews__dots {

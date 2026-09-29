@@ -12,6 +12,11 @@
   --bb-ease: var(--wp--custom--motion--ease);
   --bb-section: var(--wp--preset--spacing--70);
   --bb-line-soft: var(--wp--custom--line--soft);
+}
+
+/* The page's side margin, as WordPress sets it for the content (20px on phones, up to 48px). It
+   has to be read on the body, where WordPress defines it, not on the root above it. */
+body {
   --bb-gutter: var(--wp--style--root--padding-left, 48px);
 }
 
@@ -449,6 +454,17 @@ p.is-style-label {
   margin: 0;
 }
 
+/* The Book button's shorter words, for phones (see below). */
+.bb-book__short {
+  display: none;
+}
+
+@media (max-width: 389px) {
+  .bb-book__now {
+    display: none;
+  }
+}
+
 /* Language switcher ------------------------------------------------------------------------ */
 
 .bb-lang {
@@ -786,14 +802,15 @@ p.is-style-label {
 
 /* The bird --------------------------------------------------------------------------------- */
 
+/* Its size follows the screen: 40px wide on phones, growing to 58px on wide screens. */
 .bb-bird {
+  aspect-ratio: 52 / 43;
   cursor: grab;
-  height: 43px;
   left: 0;
   position: absolute;
   top: 0;
   touch-action: none;
-  width: 52px;
+  width: clamp(40px, 1.6vw + 34px, 58px);
   will-change: transform;
   z-index: 55;
 }
@@ -826,17 +843,58 @@ p.is-style-label {
   opacity: 0.4;
 }
 
+/* The sun's pulse -------------------------------------------------------------------------- */
+
+/* Wherever the sun sits still (the request form's corner, a menu tile, the mark on what matters
+   most), it breathes: it swells a touch and back, slowly, like warmth rather than a signal. The
+   big ones swell less. Still for visitors who ask for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(
+    .bb-ask__sun,
+    .bb-nav__sun,
+    .bb-sheet__sun,
+    .bb-wanted__sun,
+    .bb-route__meeting-sun,
+    .bb-season__empty-sun,
+    .bb-steps__step.is-sun .bb-steps__dot,
+    .bb-route__stop.is-sun .bb-route__dot
+  ),
+  .bb-ruler__row.is-sun h3::after,
+  .bb-ticket.is-sun .bb-ticket__name::after,
+  .bb-event.is-next .bb-event__date::after {
+    animation: bb-sun-pulse 3.6s ease-in-out infinite alternate;
+  }
+
+  .bb-ask__sun {
+    --bb-pulse: 1.07;
+
+    animation-duration: 4.8s;
+  }
+}
+
+@keyframes bb-sun-pulse {
+  from {
+    scale: 1;
+  }
+
+  to {
+    scale: var(--bb-pulse, 1.16);
+  }
+}
+
 /* Tablet and phone ------------------------------------------------------------------------- */
 
 /* With the menu behind its round button, the header's three parts line up on one axis. */
+/* With the menu behind its round button, the header's buttons line up below the top edge, with
+   room above the Book button for the bird to sit on it. */
 @media (max-width: 1119px) {
   .bb-header {
-    align-items: center;
     gap: 12px;
   }
 
+  .bb-header > .bb-nav,
   .bb-header__end {
-    margin-top: 0 !important;
+    margin-top: 40px !important;
   }
 }
 
@@ -885,8 +943,37 @@ p.is-style-label {
     width: 84px;
   }
 
-  .bb-header__book {
-    display: none !important;
+  .bb-header > .bb-nav,
+  .bb-header__end {
+    margin-top: 36px !important;
+  }
+
+  /* On phones the Book button keeps the top right, as "Book now", or "Book" on the narrowest, its
+     size easing with the screen; screen readers still hear "Book a lesson". The language switch
+     moves into the menu sheet's top bar. */
+  .bb-header__end .bb-lang {
+    display: none;
+  }
+
+  .bb-header__book .wp-block-button__link {
+    font-size: clamp(14px, 3.8vw, 15px);
+    padding: 13px clamp(14px, 4.6vw, 20px);
+    white-space: nowrap;
+  }
+
+  .bb-book__full {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .bb-book__short {
+    display: inline;
   }
 
   .bb-lang__toggle {

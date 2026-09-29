@@ -983,6 +983,11 @@ p.bb-small {
   animation-play-state: paused;
 }
 
+/* With the script, each rise and setting takes a slightly different way (assets/js/sun.js). */
+.bb-closing__sun.is-drifting {
+  animation: none;
+}
+
 /* Risen, it stands clear of the bird; set, only its top shows above the band's edge. */
 @keyframes bb-closing-sun {
   from {
@@ -1022,6 +1027,15 @@ p.bb-small {
   .bb-closing__sun {
     transform: translate(-4px, -30px);
   }
+}
+
+/* The narrower the box, the higher the ridge stands above its bottom edge, so its feet never
+   touch it: on wide screens as the draft has it, rising smoothly to 16px on phones, in every box
+   that carries it. */
+.bb-ridge-mark,
+.bb-closing .bb-closing__ridge,
+.bb-reviews .bb-reviews__ridge {
+  bottom: clamp(-6px, 44px - 3.5vw, 16px);
 }
 
 /* A photo frame: one photo, or the placeholder, in a window of a set shape. ------------------ */

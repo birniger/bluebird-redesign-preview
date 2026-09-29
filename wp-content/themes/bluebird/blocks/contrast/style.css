@@ -92,8 +92,9 @@
   width: 5px;
 }
 
-.bb-contrast__notes {
-  margin-top: 36px;
+/* Clear of the cards above; the dotted line's own reset would otherwise hold it tight to them. */
+.bb-contrast .bb-contrast__notes {
+  margin-top: 40px;
 }
 
 @media (max-width: 799px) {

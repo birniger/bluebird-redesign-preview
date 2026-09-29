@@ -558,28 +558,33 @@ html.has-bb-sheet {
   width: 84px;
 }
 
+.bb-sheet__bar > .bb-lang {
+  justify-self: end;
+}
+
+/* Short and ordered: each entry's name, its big entries two to a row, the small links as pills. */
 .bb-sheet__body {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 36px var(--bb-gutter, 20px) 32px;
+  padding: 26px var(--bb-gutter, 20px) 28px;
 }
 
 .bb-sheet__group + .bb-sheet__group {
   border-top: 1px solid var(--wp--preset--color--line);
-  margin-top: 30px;
-  padding-top: 26px;
+  margin-top: 22px;
+  padding-top: 20px;
 }
 
 .bb-sheet__title {
   color: var(--wp--preset--color--contrast);
   display: block;
   font-family: var(--wp--preset--font-family--instrument-serif);
-  font-size: 44px;
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: -0.015em;
   line-height: 1;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
 }
 
 a.bb-sheet__title {
@@ -587,7 +592,7 @@ a.bb-sheet__title {
 }
 
 .bb-sheet__column + .bb-sheet__column {
-  margin-top: 22px;
+  margin-top: 16px;
 }
 
 .bb-sheet__heading {
@@ -595,42 +600,40 @@ a.bb-sheet__title {
 }
 
 .bb-sheet__entries {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  gap: 14px 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.bb-sheet__column:has(.bb-sheet__link) .bb-sheet__entries {
-  flex-direction: row;
+/* Small links under big entries take a line of their own. */
+.bb-sheet__entries > li:has(> .bb-sheet__link) {
+  grid-column: 1 / -1;
+}
+
+.bb-sheet__entries > li:has(> .bb-sheet__entry) + li:has(> .bb-sheet__link) {
+  margin-top: 4px;
+}
+
+/* A column of small links only: pills in a row. */
+.bb-sheet__column:not(:has(.bb-sheet__entry)) .bb-sheet__entries {
+  display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-/* Big entries among small links keep a line each, one under the other; the small links follow in
-   a row. */
-.bb-sheet__entries > li:has(> .bb-sheet__entry) {
-  flex-basis: 100%;
-}
-
-.bb-sheet__column:has(.bb-sheet__link)
-  .bb-sheet__entries
-  > li:has(> .bb-sheet__entry)
-  + li:has(> .bb-sheet__link) {
-  margin-top: 6px;
 }
 
 .bb-sheet__entry {
   color: var(--wp--preset--color--contrast);
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .bb-sheet__entry-title {
   font-family: var(--wp--preset--font-family--instrument-serif);
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: -0.01em;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .bb-sheet__link {
@@ -638,18 +641,13 @@ a.bb-sheet__title {
   border-radius: var(--wp--custom--radius--pill);
   color: var(--wp--preset--color--contrast);
   display: inline-block;
-  font-size: var(--wp--preset--font-size--interface);
-  padding: 9px 16px;
+  font-size: var(--wp--preset--font-size--small);
+  padding: 7px 12px;
 }
 
 .bb-sheet__entry[aria-current] .bb-sheet__entry-title,
 .bb-sheet__link[aria-current] {
   color: var(--wp--preset--color--plum);
-}
-
-.bb-sheet__feature {
-  height: 190px;
-  margin-top: 22px;
 }
 
 .bb-sheet__foot {
@@ -804,8 +802,8 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 <link rel='stylesheet' id='bluebird-latepoint-frontend-css' href='../../wp-content/plugins/bluebird-latepoint-addon/assets/css/frontend.min.css?ver=3.9.2' media='all' />
 <link rel='stylesheet' id='bluebird-multi-day-css' href='../../wp-content/plugins/bluebird-latepoint-addon/assets/css/multi-day.min.css?ver=3.9.2' media='all' />
 <link rel='stylesheet' id='bluebird-instructor-availability-css' href='../../wp-content/plugins/bluebird-latepoint-addon/assets/css/instructor-availability.min.css?ver=3.9.2' media='all' />
-<link rel='stylesheet' id='bluebird-css' href='../../wp-content/themes/bluebird/assets/css/theme.css?ver=1790625026' media='all' />
-<link rel='stylesheet' id='bluebird-kit-css' href='../../wp-content/themes/bluebird/assets/css/kit.css?ver=1790624616' media='all' />
+<link rel='stylesheet' id='bluebird-css' href='../../wp-content/themes/bluebird/assets/css/theme.css?ver=1790642095' media='all' />
+<link rel='stylesheet' id='bluebird-kit-css' href='../../wp-content/themes/bluebird/assets/css/kit.css?ver=1790641236' media='all' />
 <link rel='stylesheet' id='popup-maker-site-css' href='../../wp-content/plugins/popup-maker/dist/assets/site.css?ver=1.25.0' media='all' />
 <style id="popup-maker-site-inline-css">
 /* Popup Theme 168: Enterprise Blue */
@@ -876,9 +874,10 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 /*# sourceURL=bluebird-se-latepoint-look-inline-css */
 </style>
 <link rel='stylesheet' id='cmplz-banner-1-optin-css' href='../../wp-content/uploads/complianz/css/banner-1-optin.css?ver=1790616954' media='all' />
-<script data-wp-strategy="defer" defer id="bluebird-menu-view-script-js" src="../../wp-content/themes/bluebird/blocks/menu/view.js?ver=1790625456"></script>
 <script data-wp-strategy="defer" defer id="bluebird-language-switcher-view-script-js" src="../../wp-content/themes/bluebird/blocks/language-switcher/view.js?ver=1790556424"></script>
-<script data-wp-strategy="defer" defer id="bluebird-closing-view-script-js" src="../../wp-content/themes/bluebird/blocks/closing/view.js?ver=1790614724"></script>
+<script data-wp-strategy="defer" defer id="bluebird-menu-view-script-js" src="../../wp-content/themes/bluebird/blocks/menu/view.js?ver=1790625456"></script>
+<script data-wp-strategy="defer" defer id="bluebird-sun-js" src="../../wp-content/themes/bluebird/assets/js/sun.js?ver=1790640213"></script>
+<script data-wp-strategy="defer" defer id="bluebird-closing-view-script-js" src="../../wp-content/themes/bluebird/blocks/closing/view.js?ver=1790638426"></script>
 <script id="jquery-core-js" src="../../wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
 <script id="jquery-migrate-js" src="../../wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
 <script id="wp-hooks-js" src="../../wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255"></script>
@@ -942,7 +941,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 						Bluebird<span class="bb-chevron" aria-hidden="true"></span>
 					</button>
 					<div class="bb-nav__panel" id="bb-nav-panel-9">
-						<div class="bb-nav__column"><p class="bb-nav__heading" id="bb-nav-heading-10">Bluebird</p><ul class="bb-nav__entries" aria-labelledby="bb-nav-heading-10"><li><a class="bb-nav__entry" href="../../bluebird/"><span class="bb-nav__entry-title">Why Bluebird</span><span class="bb-nav__entry-text">Book directly with your instructor</span></a></li><li><a class="bb-nav__entry" href="../../#reviews"><span class="bb-nav__entry-title">Reviews</span><span class="bb-nav__entry-text">What guests say on Google</span></a></li></ul></div><div class="bb-nav__column"><p class="bb-nav__heading" id="bb-nav-heading-11">Help</p><ul class="bb-nav__entries" aria-labelledby="bb-nav-heading-11"><li><a class="bb-nav__link" href="../../faq/">FAQ</a></li><li><a class="bb-nav__link" href="../../contact/">Contact</a></li><li><a class="bb-nav__link" href="../../preview/">Guest login</a></li></ul></div><a class="bb-nav__feature" href="../../contact/"><span class="bb-nav__slide is-current" data-url="../../contact/"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg" class="bb-nav__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, 210px" srcset="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg 1024w, ../../wp-content/uploads/2025/12/edit-7-300x200.jpg 300w, ../../wp-content/uploads/2025/12/edit-7-768x512.jpg 768w, ../../wp-content/uploads/2025/12/edit-7-1536x1024.jpg 1536w, ../../wp-content/uploads/2025/12/edit-7-scaled-e1768856050276.jpg 2048w" /></span><span class="bb-nav__caption"><span class="bb-nav__kicker">Talk to us</span><span class="bb-nav__feature-title">Contact instructors directly</span><span class="bb-nav__feature-text">WhatsApp or email</span></span></span><span class="bb-nav__sun" aria-hidden="true"></span></a>					</div>
+						<div class="bb-nav__column"><p class="bb-nav__heading" id="bb-nav-heading-10">Bluebird</p><ul class="bb-nav__entries" aria-labelledby="bb-nav-heading-10"><li><a class="bb-nav__entry" href="../../bluebird/"><span class="bb-nav__entry-title">Why Bluebird</span><span class="bb-nav__entry-text">Book directly with your instructor</span></a></li><li><a class="bb-nav__entry" href="../../#reviews"><span class="bb-nav__entry-title">Reviews</span><span class="bb-nav__entry-text">What guests say on Google</span></a></li><li><a class="bb-nav__entry" href="../../the-bluebird-code/"><span class="bb-nav__entry-title">The Bluebird Code</span><span class="bb-nav__entry-text">Our booking add-on, for schools</span></a></li></ul></div><div class="bb-nav__column"><p class="bb-nav__heading" id="bb-nav-heading-11">Help</p><ul class="bb-nav__entries" aria-labelledby="bb-nav-heading-11"><li><a class="bb-nav__link" href="../../faq/">FAQ</a></li><li><a class="bb-nav__link" href="../../contact/">Contact</a></li><li><a class="bb-nav__link" href="../../preview/">Guest login</a></li></ul></div><a class="bb-nav__feature" href="../../contact/"><span class="bb-nav__slide is-current" data-url="../../contact/"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg" class="bb-nav__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, 210px" srcset="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg 1024w, ../../wp-content/uploads/2025/12/edit-7-300x200.jpg 300w, ../../wp-content/uploads/2025/12/edit-7-768x512.jpg 768w, ../../wp-content/uploads/2025/12/edit-7-1536x1024.jpg 1536w, ../../wp-content/uploads/2025/12/edit-7-scaled-e1768856050276.jpg 2048w" /></span><span class="bb-nav__caption"><span class="bb-nav__kicker">Talk to us</span><span class="bb-nav__feature-title">Contact instructors directly</span><span class="bb-nav__feature-text">WhatsApp or email</span></span></span><span class="bb-nav__sun" aria-hidden="true"></span></a>					</div>
 				</li>
 						</ul>
 
@@ -959,22 +958,45 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 			</button>
 			<a class="bb-sheet__logo" href="../../">
 				<img width="300" height="300" src="../../wp-content/uploads/2025/12/logo_1-300x300.png" class="attachment-medium size-medium" alt="Bluebird Snowsports" loading="lazy" sizes="auto, 84px" decoding="async" srcset="../../wp-content/uploads/2025/12/logo_1-300x300.png 300w, ../../wp-content/uploads/2025/12/logo_1-150x150.png 150w, ../../wp-content/uploads/2025/12/logo_1-768x768.png 768w, ../../wp-content/uploads/2025/12/logo_1.png 1024w" />			</a>
-			<span></span>
+			<div class="bb-lang wp-block-bluebird-language-switcher">
+	<button type="button" class="bb-lang__toggle" aria-expanded="false" aria-controls="bb-lang-12">
+		<span aria-hidden="true">EN</span>
+		<span class="screen-reader-text">
+			Language: English		</span>
+		<span class="bb-chevron" aria-hidden="true"></span>
+	</button>
+	<ul class="bb-lang__list" id="bb-lang-12">
+					<li>
+				<a
+					href="./"
+					hreflang="en-US"
+					lang="en"
+					aria-current="true" class="is-current"				>English<span aria-hidden="true">EN</span></a>
+			</li>
+					<li>
+				<a
+					href="../../preview/"
+					hreflang="de-DE"
+					lang="de"
+									>Deutsch<span aria-hidden="true">DE</span></a>
+			</li>
+			</ul>
+</div>
 		</div>
 
 		<div class="bb-sheet__body">
 							<section class="bb-sheet__group">
 											<h2 class="bb-sheet__title">Lessons</h2>
-						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-12">Lessons</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-12"><li><a class="bb-sheet__entry" href="../../lessons/snowboard/"><span class="bb-sheet__entry-title">Snowboard</span><span class="bb-sheet__entry-text">Beginners, park and powder</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/ski/"><span class="bb-sheet__entry-title">Ski</span><span class="bb-sheet__entry-text">First turns to carving on Titlis</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/freeride/"><span class="bb-sheet__entry-title">Freeride</span><span class="bb-sheet__entry-text">Half and full days off piste</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/touring/"><span class="bb-sheet__entry-title">Touring</span><span class="bb-sheet__entry-text">Ski touring and splitboarding on request</span></a></li></ul></div><div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-13">Good to know</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-13"><li><a class="bb-sheet__link" href="../../prices/">Prices</a></li><li><a class="bb-sheet__link" href="../../plan-your-day/">Plan your day</a></li><li><a class="bb-sheet__link" href="../../extras/">Extras</a></li><li><a class="bb-sheet__link" href="../../faq/">FAQ</a></li></ul></div><a class="bb-sheet__feature" href="../../lessons/#formats" data-slides="3"><span class="bb-sheet__slide is-current" data-url="../../lessons/#formats"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg" class="bb-sheet__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, (max-width: 999px) 100vw, 480px" srcset="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg 1024w, ../../wp-content/uploads/2026/01/DSC07826-300x200.jpg 300w, ../../wp-content/uploads/2026/01/DSC07826-768x512.jpg 768w, ../../wp-content/uploads/2026/01/DSC07826-1536x1024.jpg 1536w, ../../wp-content/uploads/2026/01/DSC07826-scaled-e1769006920194.jpg 2048w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Most booked</span><span class="bb-sheet__feature-title">Half day</span><span class="bb-sheet__feature-text">from CHF 250</span></span></span><span class="bb-sheet__slide" data-url="../../lessons/#formats" aria-hidden="true"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg" class="bb-sheet__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, (max-width: 999px) 100vw, 480px" srcset="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg 1024w, ../../wp-content/uploads/2026/01/DSC07826-300x200.jpg 300w, ../../wp-content/uploads/2026/01/DSC07826-768x512.jpg 768w, ../../wp-content/uploads/2026/01/DSC07826-1536x1024.jpg 1536w, ../../wp-content/uploads/2026/01/DSC07826-scaled-e1769006920194.jpg 2048w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Six hours</span><span class="bb-sheet__feature-title">Full day</span><span class="bb-sheet__feature-text">from CHF 420</span></span></span><span class="bb-sheet__slide" data-url="../../lessons/#formats" aria-hidden="true"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg" class="bb-sheet__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, (max-width: 999px) 100vw, 480px" srcset="../../wp-content/uploads/2026/01/DSC07826-1024x683.jpg 1024w, ../../wp-content/uploads/2026/01/DSC07826-300x200.jpg 300w, ../../wp-content/uploads/2026/01/DSC07826-768x512.jpg 768w, ../../wp-content/uploads/2026/01/DSC07826-1536x1024.jpg 1536w, ../../wp-content/uploads/2026/01/DSC07826-scaled-e1769006920194.jpg 2048w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Your hours</span><span class="bb-sheet__feature-title">Custom</span><span class="bb-sheet__feature-text">CHF 95 per hour</span></span></span><span class="bb-sheet__sun" aria-hidden="true"></span></a>									</section>
+						<div class="bb-sheet__column"><ul class="bb-sheet__entries"><li><a class="bb-sheet__entry" href="../../lessons/snowboard/"><span class="bb-sheet__entry-title">Snowboard</span><span class="bb-sheet__entry-text">Beginners, park and powder</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/ski/"><span class="bb-sheet__entry-title">Ski</span><span class="bb-sheet__entry-text">First turns to carving on Titlis</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/freeride/"><span class="bb-sheet__entry-title">Freeride</span><span class="bb-sheet__entry-text">Half and full days off piste</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/touring/"><span class="bb-sheet__entry-title">Touring</span><span class="bb-sheet__entry-text">Ski touring and splitboarding on request</span></a></li></ul></div><div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-14">Good to know</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-14"><li><a class="bb-sheet__link" href="../../prices/">Prices</a></li><li><a class="bb-sheet__link" href="../../plan-your-day/">Plan your day</a></li><li><a class="bb-sheet__link" href="../../extras/">Extras</a></li><li><a class="bb-sheet__link" href="../../faq/">FAQ</a></li></ul></div>									</section>
 							<section class="bb-sheet__group">
 											<h2 class="bb-sheet__title">Tours &amp; weeks</h2>
-						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-14">This season</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-14"><li><a class="bb-sheet__entry" href="../../tours-and-weeks/#tours"><span class="bb-sheet__entry-title">Posted tours</span><span class="bb-sheet__entry-text">Dates to join</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/touring/"><span class="bb-sheet__entry-title">Touring on request</span><span class="bb-sheet__entry-text">Any day the snow is right</span></a></li><li><a class="bb-sheet__entry" href="../../tours-and-weeks/#weeks"><span class="bb-sheet__entry-title">Group weeks</span><span class="bb-sheet__entry-text">Five days with the same group</span></a></li></ul></div><a class="bb-sheet__feature" href="../../tours-and-weeks/"><span class="bb-sheet__slide is-current" data-url="../../tours-and-weeks/"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2026/01/DSC07604-1024x683.jpg" class="bb-sheet__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, (max-width: 999px) 100vw, 480px" srcset="../../wp-content/uploads/2026/01/DSC07604-1024x683.jpg 1024w, ../../wp-content/uploads/2026/01/DSC07604-300x200.jpg 300w, ../../wp-content/uploads/2026/01/DSC07604-768x512.jpg 768w, ../../wp-content/uploads/2026/01/DSC07604-1536x1024.jpg 1536w, ../../wp-content/uploads/2026/01/DSC07604-scaled-e1769006889930.jpg 2048w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Next date</span><span class="bb-sheet__feature-title">Kids’ week</span><span class="bb-sheet__feature-text">27 Dec – 31 Dec</span></span></span><span class="bb-sheet__sun" aria-hidden="true"></span></a>									</section>
+						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-15">This season</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-15"><li><a class="bb-sheet__entry" href="../../tours-and-weeks/#tours"><span class="bb-sheet__entry-title">Posted tours</span><span class="bb-sheet__entry-text">Dates to join</span></a></li><li><a class="bb-sheet__entry" href="../../lessons/touring/"><span class="bb-sheet__entry-title">Touring on request</span><span class="bb-sheet__entry-text">Any day the snow is right</span></a></li><li><a class="bb-sheet__entry" href="../../tours-and-weeks/#weeks"><span class="bb-sheet__entry-title">Group weeks</span><span class="bb-sheet__entry-text">Five days with the same group</span></a></li></ul></div>									</section>
 							<section class="bb-sheet__group">
 											<h2 class="bb-sheet__title">Instructors</h2>
-						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-15">By sport</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-15"><li><a class="bb-sheet__entry" href="../#snowboard" data-group="snowboard"><span class="bb-sheet__entry-title">Snowboard</span><span class="bb-sheet__entry-text">2 instructors</span></a></li><li><a class="bb-sheet__entry" href="../#ski" data-group="ski"><span class="bb-sheet__entry-title">Ski</span><span class="bb-sheet__entry-text">1 instructor</span></a></li><li><a class="bb-sheet__entry" href="../#freeride-touring" data-group="freeride"><span class="bb-sheet__entry-title">Freeride &amp; touring</span><span class="bb-sheet__entry-text">1 instructor</span></a></li><li><a class="bb-sheet__link" href="../">All instructors</a></li><li><a class="bb-sheet__link" href="../../preview/">Not sure? We’ll match you</a></li></ul></div><a class="bb-sheet__feature" href="../basil/" data-slides="4"><span class="bb-sheet__slide is-current" data-url="../basil/" data-group="snowboard"><span aria-hidden="true"><img width="683" height="1024" src="../../wp-content/uploads/2025/12/edit-5-683x1024.jpg" class="bb-photo bb-sheet__feature-image" alt="" sizes="auto, (max-width: 999px) 100vw, 480px" decoding="async" loading="lazy" style="object-position:50% 22%" srcset="../../wp-content/uploads/2025/12/edit-5-683x1024.jpg 683w, ../../wp-content/uploads/2025/12/edit-5-200x300.jpg 200w, ../../wp-content/uploads/2025/12/edit-5-768x1152.jpg 768w, ../../wp-content/uploads/2025/12/edit-5-1024x1536.jpg 1024w, ../../wp-content/uploads/2025/12/edit-5-1365x2048.jpg 1365w, ../../wp-content/uploads/2025/12/edit-5-scaled.jpg 1707w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Ride with</span><span class="bb-sheet__feature-title">Basil</span><span class="bb-sheet__feature-text">Snowboard</span></span></span><span class="bb-sheet__slide" data-url="../snowboard-instructor/" data-group="snowboard" aria-hidden="true"><span aria-hidden="true"><span class="bb-photo bb-wanted bb-sheet__feature-image" role="img" aria-label="Portrait of a snowboard instructor, board on the shoulder"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a snowboard instructor, board on the shoulder</span></span></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Ride with</span><span class="bb-sheet__feature-title">Snowboard instructor</span><span class="bb-sheet__feature-text">Snowboard</span></span></span><span class="bb-sheet__slide" data-url="../ski-instructor/" data-group="ski" aria-hidden="true"><span aria-hidden="true"><span class="bb-photo bb-wanted bb-sheet__feature-image" role="img" aria-label="Portrait of a ski instructor in the sun"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a ski instructor in the sun</span></span></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Ride with</span><span class="bb-sheet__feature-title">Ski instructor</span><span class="bb-sheet__feature-text">Ski</span></span></span><span class="bb-sheet__slide" data-url="./" data-group="freeride" aria-hidden="true"><span aria-hidden="true"><span class="bb-photo bb-wanted bb-sheet__feature-image" role="img" aria-label="Portrait of a freeride instructor with an avalanche pack"><span class="bb-wanted__sun" aria-hidden="true"></span><span class="bb-wanted__text" aria-hidden="true"><span class="bb-wanted__label">Photo wanted</span>Portrait of a freeride instructor with an avalanche pack</span></span></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Ride with</span><span class="bb-sheet__feature-title">Freeride instructor</span><span class="bb-sheet__feature-text">Freeride · Ski · Touring</span></span></span><span class="bb-sheet__sun" aria-hidden="true"></span></a>									</section>
+						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-16">By sport</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-16"><li><a class="bb-sheet__entry" href="../#snowboard" data-group="snowboard"><span class="bb-sheet__entry-title">Snowboard</span><span class="bb-sheet__entry-text">2 instructors</span></a></li><li><a class="bb-sheet__entry" href="../#ski" data-group="ski"><span class="bb-sheet__entry-title">Ski</span><span class="bb-sheet__entry-text">1 instructor</span></a></li><li><a class="bb-sheet__entry" href="../#freeride-touring" data-group="freeride"><span class="bb-sheet__entry-title">Freeride &amp; touring</span><span class="bb-sheet__entry-text">1 instructor</span></a></li><li><a class="bb-sheet__link" href="../">All instructors</a></li><li><a class="bb-sheet__link" href="../../preview/">Not sure? We’ll match you</a></li></ul></div>									</section>
 							<section class="bb-sheet__group">
 											<h2 class="bb-sheet__title">Bluebird</h2>
-						<div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-16">Bluebird</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-16"><li><a class="bb-sheet__entry" href="../../bluebird/"><span class="bb-sheet__entry-title">Why Bluebird</span><span class="bb-sheet__entry-text">Book directly with your instructor</span></a></li><li><a class="bb-sheet__entry" href="../../#reviews"><span class="bb-sheet__entry-title">Reviews</span><span class="bb-sheet__entry-text">What guests say on Google</span></a></li></ul></div><div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-17">Help</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-17"><li><a class="bb-sheet__link" href="../../faq/">FAQ</a></li><li><a class="bb-sheet__link" href="../../contact/">Contact</a></li><li><a class="bb-sheet__link" href="../../preview/">Guest login</a></li></ul></div><a class="bb-sheet__feature" href="../../contact/"><span class="bb-sheet__slide is-current" data-url="../../contact/"><span aria-hidden="true"><img width="1024" height="683" src="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg" class="bb-sheet__feature-image wp-post-image" alt="" loading="lazy" decoding="async" sizes="auto, (max-width: 999px) 100vw, 480px" srcset="../../wp-content/uploads/2025/12/edit-7-1024x683.jpg 1024w, ../../wp-content/uploads/2025/12/edit-7-300x200.jpg 300w, ../../wp-content/uploads/2025/12/edit-7-768x512.jpg 768w, ../../wp-content/uploads/2025/12/edit-7-1536x1024.jpg 1536w, ../../wp-content/uploads/2025/12/edit-7-scaled-e1768856050276.jpg 2048w" /></span><span class="bb-sheet__caption"><span class="bb-sheet__kicker">Talk to us</span><span class="bb-sheet__feature-title">Contact instructors directly</span><span class="bb-sheet__feature-text">WhatsApp or email</span></span></span><span class="bb-sheet__sun" aria-hidden="true"></span></a>									</section>
+						<div class="bb-sheet__column"><ul class="bb-sheet__entries"><li><a class="bb-sheet__entry" href="../../bluebird/"><span class="bb-sheet__entry-title">Why Bluebird</span><span class="bb-sheet__entry-text">Book directly with your instructor</span></a></li><li><a class="bb-sheet__entry" href="../../#reviews"><span class="bb-sheet__entry-title">Reviews</span><span class="bb-sheet__entry-text">What guests say on Google</span></a></li><li><a class="bb-sheet__entry" href="../../the-bluebird-code/"><span class="bb-sheet__entry-title">The Bluebird Code</span><span class="bb-sheet__entry-text">Our booking add-on, for schools</span></a></li></ul></div><div class="bb-sheet__column"><p class="bb-sheet__heading" id="bb-sheet-heading-18">Help</p><ul class="bb-sheet__entries" aria-labelledby="bb-sheet-heading-18"><li><a class="bb-sheet__link" href="../../faq/">FAQ</a></li><li><a class="bb-sheet__link" href="../../contact/">Contact</a></li><li><a class="bb-sheet__link" href="../../preview/">Guest login</a></li></ul></div>									</section>
 					</div>
 
 					<div class="bb-sheet__foot">
@@ -990,13 +1012,13 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 <div class="wp-block-group bb-header__end is-content-justification-right is-nowrap is-layout-flex wp-container-core-group-is-layout-a61d4a11 wp-block-group-is-layout-flex"><div class="bb-lang wp-block-bluebird-language-switcher">
-	<button type="button" class="bb-lang__toggle" aria-expanded="false" aria-controls="bb-lang-18">
+	<button type="button" class="bb-lang__toggle" aria-expanded="false" aria-controls="bb-lang-19">
 		<span aria-hidden="true">EN</span>
 		<span class="screen-reader-text">
 			Language: English		</span>
 		<span class="bb-chevron" aria-hidden="true"></span>
 	</button>
-	<ul class="bb-lang__list" id="bb-lang-18">
+	<ul class="bb-lang__list" id="bb-lang-19">
 					<li>
 				<a
 					href="./"
@@ -1017,7 +1039,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 
 
 <div class="wp-block-buttons bb-header__book is-layout-flex wp-block-buttons-is-layout-flex">
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="../../preview/">Book a lesson</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="../../preview/"><span class="bb-book__full">Book a lesson</span><span class="bb-book__short" aria-hidden="true">Book<span class="bb-book__now"> now</span></span></a></div>
 </div>
 </div>
 </div>
@@ -1345,7 +1367,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 var bluebirdBird = {"src":"../../wp-content/themes/bluebird/assets/images/bird.png"};
 //# sourceURL=bluebird-bird-js-extra
 </script>
-<script data-wp-strategy="defer" defer id="bluebird-bird-js" src="../../wp-content/themes/bluebird/assets/js/bird.js?ver=1790625695"></script>
+<script data-wp-strategy="defer" defer id="bluebird-bird-js" src="../../wp-content/themes/bluebird/assets/js/bird.js?ver=1790641408"></script>
 <script id="jquery-ui-core-js-before">
 jQuery.uiBackCompat = true;
 //# sourceURL=jquery-ui-core-js-before

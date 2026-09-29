@@ -1,8 +1,10 @@
 /**
  * The bird from the logo lives in the top right of every page and points the way to the Book
  * button. It keeps well right of the logo, away from the middle of the page. Over the page's first
- * photo or band it only ever dips to the top edge; where the page's column leaves room on the
- * right, it may drop a little lower there, into the free space under the buttons. Mostly it sits
+ * photo or band it only ever dips to the top edge; a page that opens with words instead lends it
+ * the first line of text that reaches its side, whose top it may land on. Where the page's column
+ * leaves room on the right beside a photo, it may drop a little lower there, into the free space
+ * under the buttons. Mostly it sits
  * on the Book button; now and then it takes a short, slow loop and lands on that top edge or on
  * the rating badge, then comes back. It turns gently: every change of course is a curve, never a
  * jolt. It can be picked up and dropped, and glides back into its space.
@@ -27,12 +29,20 @@
     ".bb-route",
     ".bb-band",
     ".bb-ask__form",
+    ".bb-try__window",
   ].join(", ");
-  // Half the bird's width: its centre keeps this far inside the edges.
-  const HALF = 26;
+  // Its size follows the screen (the stylesheet sets it: smaller on phones, larger on wide
+  // screens) and is measured once it is on the page. HALF is half its width, so its centre keeps
+  // this far inside the edges; LIFT is how far its centre sits above its feet, TALL its top above
+  // its centre.
+  let HALF = 26;
+  let LIFT = 17;
+  let TALL = 22;
   // How it flies: its top speed, the most its course may change in one frame (small: wide, calm
   // curves), and how far its centre may dip over a photo's top edge.
-  const SPEED = 0.6;
+  const SPEED = 0.52;
+  // Each flight has its own pace, a little slower or faster than the last; the wingbeat follows.
+  const PACE = [0.9, 1.06];
   const TURN = 0.016;
   const DIP = 2;
 
@@ -57,6 +67,26 @@
     const first = document.querySelector(".bb-sections > :first-child, main > :first-child");
     const badge = first ? first.querySelector(".bb-rating--badge") : null;
     const strip = first ? (first.matches(LANDING) ? first : first.querySelector(LANDING)) : null;
+    const heads = first
+      ? Array.from(first.querySelectorAll(".is-style-label, h1, h2")).slice(0, 3)
+      : [];
+
+    // Without a photo or band up top: the first line of the opening words, measured as the text
+    // itself, not the box around it.
+    function firstLine() {
+      for (const el of heads) {
+        if (!el.getClientRects().length) {
+          continue;
+        }
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        const line = range.getClientRects()[0];
+        if (line) {
+          return { l: line.left, r: line.right, t: line.top + window.scrollY, text: true };
+        }
+      }
+      return null;
+    }
 
     const bird = document.createElement("div");
     bird.className = "bb-bird";
@@ -70,6 +100,13 @@
       bird.appendChild(img);
     });
     document.body.appendChild(bird);
+    const size = () => {
+      const w = bird.offsetWidth || 52;
+      HALF = w / 2;
+      LIFT = w * 0.33;
+      TALL = w * 0.42;
+    };
+    size();
     const wing = bird.querySelector(".bb-bird__wing");
     const farWing = bird.querySelector(".bb-bird__far-wing");
 
@@ -88,7 +125,9 @@
      * The page as the bird sees it, measured afresh each frame. The zone: from a good way right of
      * the logo to the right margin, from the top down to the first photo's or band's top edge (a
      * short hop below the header where there is none). Where the page's column leaves room on the
-     * right, a side strip beside it reaches a little lower. The rating badge is steered around.
+     * right, a side strip beside it reaches a little lower. Where the page opens with words, the
+     * space below the header reaches left to the end of their first line, so the bird can land on
+     * it. The rating badge is steered around.
      */
     function measure() {
       const width = document.documentElement.clientWidth;
@@ -100,12 +139,20 @@
         (mark ? mark.r + (width < 600 ? 12 : 64) : width / 2) + HALF,
       );
       const cap = head.b + (width < 600 ? 170 : 250);
+      // The first photo or band if it is near the top, else the first line of words.
       let land = shown(strip) ? box(strip) : null;
+      if (!land || land.t > cap) {
+        land = firstLine();
+      }
       if (land && land.t > cap) {
         land = null;
       }
       let side = null;
-      if (land && width - land.r >= 2 * HALF + 28) {
+      let words = null;
+      if (land && land.text) {
+        words = { l: Math.min(left, land.r - 40), t: head.b + 6 };
+      }
+      if (land && !land.text && width - land.r >= 2 * HALF + 28) {
         side = { l: Math.max(left, land.r + 14 + HALF), b: Math.min(cap, land.t + 120) };
       }
       let rating = shown(badge) ? box(badge) : null;
@@ -117,7 +164,7 @@
         areas.push({ l: rating.l - 24, r: rating.r + 24, t: rating.t - 14, b: rating.b + 20 });
       }
       return {
-        zone: { l: left, r: right, t: 24, floor: land ? land.t + DIP : head.b + 20, side },
+        zone: { l: left, r: right, t: 24, floor: land ? land.t + DIP : head.b + 20, side, words },
         land,
         rating,
         areas,
@@ -126,12 +173,14 @@
 
     // How low it may fly at x: the side strip's floor beside the column, else the top edge.
     const floorAt = (z, x) => (z.side && x >= z.side.l ? z.side.b : z.floor);
+    // How far left it may fly at y: below the header, to the end of the first line of words.
+    const leftAt = (z, y) => (z.words && y > z.words.t ? z.words.l : z.l);
 
     // A spot on an element's top edge, inside the zone.
     function perchOn(el, zone) {
       const r = box(el);
       const x = r.l + (r.r - r.l) * (0.18 + Math.random() * 0.64);
-      return { x: Math.min(zone.r, Math.max(zone.l, x)), y: r.t - 17 };
+      return { x: Math.min(zone.r, Math.max(zone.l, x)), y: r.t - LIFT };
     }
 
     // The free stretches of the landing strip: inside the zone and clear of the badge.
@@ -139,8 +188,11 @@
       if (!g.land) {
         return [];
       }
-      const y = g.land.t - 17;
-      let parts = [[Math.max(g.land.l + 30, g.zone.l), Math.min(g.land.r - 30, g.zone.r)]];
+      const y = g.land.t - LIFT;
+      // A line of text lends its whole length; a photo keeps clear of its rounded corners.
+      const inset = g.land.text ? 6 : 30;
+      const from = g.land.text ? g.zone.words.l : g.zone.l;
+      let parts = [[Math.max(g.land.l + inset, from), Math.min(g.land.r - inset, g.zone.r)]];
       g.areas.forEach((a) => {
         if (y <= a.t || y >= a.b) {
           return;
@@ -172,10 +224,13 @@
         wing.style.transform = "rotate(-68deg) scaleY(.55)";
         farWing.style.transform = "rotate(-64deg) scaleY(.5) translate(-3px,-1px)";
         bird.style.transform =
-          "translate(" + (spot.x - HALF) + "px," + (spot.y - 22) + "px) scaleX(-1)";
+          "translate(" + (spot.x - HALF) + "px," + (spot.y - TALL) + "px) scaleX(-1)";
       };
       sit();
-      window.addEventListener("resize", sit);
+      window.addEventListener("resize", () => {
+        size();
+        sit();
+      });
       return;
     }
 
@@ -202,6 +257,8 @@
     let legs = 0;
     let lastSpot = "";
     let lastX = 0;
+    let pace = 1;
+    let cruise = 1;
 
     const hits = (x0, y0, x1, y1, a) => {
       for (let i = 1; i <= 16; i++) {
@@ -270,12 +327,14 @@
       if ("home" === lastSpot || !home()) {
         const g = measure();
         const free = stretches(g);
+        // The edge twice as often as the badge; on phones, where the badge is nearer, three to two.
+        const phone = document.documentElement.clientWidth < 600;
         const away = [];
         if (free.length) {
-          away.push("edge", "edge");
+          away.push(...(phone ? ["edge", "edge", "edge"] : ["edge", "edge"]));
         }
         if (g.rating) {
-          away.push("badge");
+          away.push(...(phone ? ["badge", "badge"] : ["badge"]));
         }
         const spot = away[Math.floor(Math.random() * away.length)];
         if ("edge" === spot) {
@@ -321,13 +380,24 @@
       // Somewhere free; failing that, the top right corner, which always is.
       tx = z.r - 30;
       ty = z.t + 20;
-      for (let i = 0; i < 30; i++) {
+      // It prefers a spot ahead of it, so it carries on in a curve rather than stopping to
+      // double back; only when nothing ahead is free does it turn round.
+      const moving = Math.hypot(vx, vy) > 0.1;
+      for (let i = 0; i < 40; i++) {
         const low = z.side && Math.random() < 0.4;
         const x = low
           ? z.side.l + Math.random() * (z.r - z.side.l)
-          : z.l + Math.random() * (z.r - z.l);
-        const y = z.t + 10 + Math.random() * Math.max(0, floorAt(z, x) - 18 - z.t - 10);
-        if (!g.areas.some((a) => inside(x, y, a))) {
+          : z.words && Math.random() < 0.4
+            ? z.words.l + Math.random() * (z.r - z.words.l)
+            : z.l + Math.random() * (z.r - z.l);
+        // Left of the logo only below the header.
+        const top = x < z.l && z.words ? z.words.t + 10 : z.t + 10;
+        const y = top + Math.random() * Math.max(0, floorAt(z, x) - 18 - top);
+        const back =
+          moving &&
+          i < 30 &&
+          (x - bx) * vx + (y - by) * vy < -0.2 * Math.hypot(vx, vy) * Math.hypot(x - bx, y - by);
+        if (!back && !g.areas.some((a) => inside(x, y, a))) {
           tx = x;
           ty = y;
           break;
@@ -335,6 +405,7 @@
       }
       mode = "fly";
       since = now;
+      pace = PACE[0] + Math.random() * (PACE[1] - PACE[0]);
     }
 
     bird.addEventListener("pointerdown", (event) => {
@@ -372,6 +443,10 @@
     // A new layout moves the button and the edges: it goes home and starts again from there.
     window.addEventListener("resize", () => {
       if (!held) {
+        size();
+        // Never left outside a narrower page, where it would widen it.
+        const z = measure().zone;
+        bx = Math.min(Math.max(bx, z.l), z.r);
         goHome(performance.now());
       }
     });
@@ -430,7 +505,9 @@
           const dy = target.y - by;
           const dist = Math.hypot(dx, dy) || 1;
           const landing = "toPerch" === mode && target.x === tx && target.y === ty;
-          const want = landing ? Math.min(SPEED, 0.1 + dist / 160) : SPEED;
+          cruise += (pace - cruise) * 0.01;
+          const topSpeed = SPEED * cruise;
+          const want = landing ? Math.min(topSpeed, 0.1 + dist / 160) : topSpeed;
           let fx = (dx / dist) * want - vx;
           let fy = (dy / dist) * want - vy;
           const force = Math.hypot(fx, fy);
@@ -445,8 +522,8 @@
           const floor = landing ? Math.max(floorAt(z, bx), ty + 20) : floorAt(z, bx);
           const top = landing ? Math.min(z.t, ty) : z.t + 20;
           const pad = landing ? 0 : 30;
-          const edge = (over, room) => Math.min(3, Math.max(0, over) / room) * TURN;
-          fx += edge(z.l + pad - bx, 30) - edge(bx - (z.r - pad), 30);
+          const edge = (over, room) => Math.min(2, Math.max(0, over) / room) * TURN;
+          fx += edge(leftAt(z, by) + pad - bx, 30) - edge(bx - (z.r - pad), 30);
           fy += edge(top - by, 20) - edge(by - (floor - 14), 14);
           if (!("badge" === lastSpot && landing)) {
             g.areas.forEach((a) => {
@@ -458,9 +535,9 @@
           vx += fx;
           vy += fy;
           const speed = Math.hypot(vx, vy);
-          if (speed > SPEED) {
-            vx *= SPEED / speed;
-            vy *= SPEED / speed;
+          if (speed > topSpeed) {
+            vx *= topSpeed / speed;
+            vy *= topSpeed / speed;
           }
           bx += vx * 3;
           by += vy * 3;
@@ -480,11 +557,17 @@
             burst--;
             energy = Math.max(energy, 0.32);
           }
-          const gliding = energy < 0.3 && burst <= 0;
-          phase += 0.055 + 0.12 * energy;
+          // It beats faster and a little wider when it climbs, slower when it comes down, and
+          // glides only when it has almost stopped, easing into a landing.
+          const climb = Math.max(0, -vy) / topSpeed;
+          const sink = Math.max(0, vy) / topSpeed;
+          const gliding = energy < 0.14 && burst <= 0;
+          phase +=
+            Math.max(0.035, 0.06 + 0.14 * energy + 0.06 * climb - 0.03 * sink) *
+            (0.7 + 0.3 * cruise);
           const goal = gliding
             ? -24 + Math.sin(now / 1100) * 2.5
-            : -28 + (8 + 22 * energy) * Math.sin(phase);
+            : -28 + (14 + 20 * energy + 4 * climb - 3 * sink) * Math.sin(phase);
           wingAngle += (goal - wingAngle) * 0.18;
           const fold = 1 - 0.35 * Math.max(0, Math.sin(phase)) * energy;
           wing.style.transform = "rotate(" + wingAngle + "deg) scaleY(" + fold + ")";
@@ -501,7 +584,7 @@
         "translate(" +
         (bx - HALF) +
         "px," +
-        (by - 22 + bob) +
+        (by - TALL + bob) +
         "px) scaleX(" +
         dir +
         ") rotate(" +
