@@ -373,6 +373,10 @@
           return { x: z.side.l + 12, y: z.floor - 18 };
         }
       }
+      // The badge is an obstacle on other flights, but it must remain reachable as a perch.
+      if ("badge" === lastSpot && "toPerch" === mode) {
+        return { x: tx, y: ty };
+      }
       for (const a of g.areas) {
         if (!hits(bx, by, tx, ty, a)) {
           continue;
@@ -727,8 +731,27 @@
       goHome(performance.now());
       resume();
     };
-    // The phone notice opens a moment after load; let it appear before deciding Book is clear.
-    window.setTimeout(arrive, phone() ? 1200 : 0);
+    // A phone notice can open after load. Wait for its trigger only while it can still open;
+    // the static preview and visits after dismissal start their first flight straight away.
+    let noticeDelay = 0;
+    const notice = document.querySelector(".pum.auto_open");
+    if (phone() && window.PUM && notice) {
+      try {
+        const trigger = JSON.parse(notice.dataset.popmake || "{}").triggers.find(
+          (item) => item.type === "auto_open",
+        );
+        const cookies = document.cookie.split("; ").map((cookie) => cookie.split("=")[0]);
+        if (
+          getComputedStyle(notice).display === "none" &&
+          !trigger.settings.cookie_name.some((name) => cookies.includes(name))
+        ) {
+          noticeDelay = Number(trigger.settings.delay) + 200;
+        }
+      } catch (e) {
+        noticeDelay = 1200;
+      }
+    }
+    window.setTimeout(arrive, noticeDelay);
 
     // The tuning panel: a slider for each value, applied as it moves and kept in this browser.
     function tunePanel() {
