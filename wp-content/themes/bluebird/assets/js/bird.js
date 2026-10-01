@@ -9,8 +9,8 @@
  * the rating badge, then comes back. It turns gently: every change of course is a curve, never a
  * jolt. It can be picked up and dropped, and glides back into its space.
  *
- * It starts only once the page has shown, rests while the header is off screen, and for visitors
- * who ask for reduced motion it simply sits on the Book button.
+ * It starts only once the page has shown and the Book button is clear, rests while the header is
+ * off screen, and for visitors who ask for reduced motion it simply sits on the Book button.
  */
 (function () {
   const settings = window.bluebirdBird || {};
@@ -167,6 +167,7 @@
 
     const bird = document.createElement("div");
     bird.className = "bb-bird";
+    bird.style.visibility = "hidden";
     bird.setAttribute("aria-hidden", "true");
     ["bb-bird__far-wing", "bb-bird__body", "bb-bird__wing"].forEach((part) => {
       const img = document.createElement("img");
@@ -308,6 +309,7 @@
         farWing.style.transform = "rotate(-64deg) scaleY(.5) translate(-3px,-1px)";
         bird.style.transform =
           "translate(" + (spot.x - HALF) + "px," + (spot.y - TALL) + "px) scaleX(-1)";
+        bird.style.visibility = "visible";
       };
       sit();
       window.addEventListener("resize", () => {
@@ -318,8 +320,9 @@
     }
 
     const startZone = measure().zone;
-    let bx = startZone.r - 40;
-    let by = startZone.t + 30;
+    // Start beyond the top right edge at every width, then fly in to the visible Book button.
+    let bx = document.documentElement.clientWidth + HALF;
+    let by = startZone.t - TALL;
     let vx = 0;
     let vy = 0;
     let phase = 0;
@@ -678,6 +681,7 @@
         ") rotate(" +
         tilt +
         "deg)";
+      bird.style.visibility = "visible";
       if (running) {
         request = window.requestAnimationFrame(frame);
       }
@@ -686,8 +690,9 @@
     // Rest while the top of the page is off screen.
     let running = false;
     let request = 0;
+    let arrivalReady = false;
     const resume = () => {
-      if (!running) {
+      if (arrivalReady && !running) {
         running = true;
         request = window.requestAnimationFrame(frame);
       }
@@ -704,9 +709,26 @@
       tunePanel();
     }
 
-    // It arrives from the right and settles on the Book button first.
-    goHome(performance.now());
-    resume();
+    // A notice may cover Book on a first phone visit. Wait until the button is visible so the
+    // entrance happens in view, including after a reload or when the tab comes to the front.
+    const arrive = () => {
+      const target = home();
+      const r = target && target.getBoundingClientRect();
+      const top = r && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      if (document.visibilityState !== "visible" || !target || !target.contains(top)) {
+        window.setTimeout(arrive, 250);
+        return;
+      }
+      size();
+      bx = document.documentElement.clientWidth + HALF;
+      by = measure().zone.t - TALL;
+      vx = vy = 0;
+      arrivalReady = true;
+      goHome(performance.now());
+      resume();
+    };
+    // The phone notice opens a moment after load; let it appear before deciding Book is clear.
+    window.setTimeout(arrive, phone() ? 1200 : 0);
 
     // The tuning panel: a slider for each value, applied as it moves and kept in this browser.
     function tunePanel() {
