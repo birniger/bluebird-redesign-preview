@@ -1,0 +1,137 @@
+/* An instructor's next free days, on the closing band's navy: a row per day, its date and the
+   lessons to book at their start times (render.php, view.js). */
+/* Smaller than the closing band it borrows its look from: a heading, a line, three short rows. */
+.bb-closing.bb-next-days {
+  padding: clamp(40px, 4vw, 60px) clamp(20px, 4vw, 56px) clamp(96px, 9vw, 128px);
+}
+
+.bb-closing.bb-next-days h2 {
+  font-size: clamp(32px, 3.4vw, 48px);
+}
+
+.bb-closing.bb-next-days .bb-intro__text {
+  font-size: var(--wp--preset--font-size--small);
+  margin-top: 10px;
+}
+
+.bb-closing.bb-next-days .bb-actions {
+  gap: 10px 28px;
+  margin-top: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+/* The links onward, light on navy. */
+.bb-closing.bb-next-days .bb-more {
+  color: var(--wp--preset--color--white);
+  margin: 0;
+}
+
+.bb-closing.bb-next-days .bb-more:hover {
+  color: var(--wp--preset--color--teal);
+}
+
+.bb-next-days__list {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 22px auto 0 !important;
+  max-width: 720px;
+  padding: 0;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.bb-next-days__day {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--wp--custom--radius--card);
+  display: grid;
+  gap: 10px 18px;
+  grid-template-columns: 5.2em minmax(0, 1fr);
+  padding: 10px 12px 10px 16px;
+  text-align: left;
+}
+
+.bb-next-days__date {
+  color: var(--wp--preset--color--white);
+  font-family: var(--wp--preset--font-family--instrument-serif);
+  font-size: 20px;
+  line-height: 1.05;
+}
+
+.bb-next-days__date > span {
+  color: var(--wp--preset--color--teal);
+  display: block;
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bb-next-days__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bb-next-days__time {
+  align-items: baseline;
+  background: var(--wp--preset--color--white);
+  border-radius: var(--wp--custom--radius--pill);
+  color: var(--wp--preset--color--contrast);
+  display: inline-flex;
+  font-size: 13px;
+  gap: 6px;
+  padding: 6px 12px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.bb-next-days__time strong {
+  font-weight: 700;
+}
+
+.bb-next-days__time:hover,
+.bb-next-days__time:focus-visible {
+  background: var(--wp--preset--color--teal);
+  color: var(--wp--preset--color--contrast);
+}
+
+.bb-next-days__note {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: var(--wp--preset--font-size--small);
+}
+
+/* A phone: the date beside its lessons still, each day on one row; the start times are left to the
+   booking. */
+@media (max-width: 560px) {
+  .bb-closing.bb-next-days {
+    padding-inline: 14px;
+  }
+
+  .bb-next-days__day {
+    gap: 8px;
+    grid-template-columns: 3.4em minmax(0, 1fr);
+    padding: 9px 8px 9px 12px;
+  }
+
+  .bb-next-days__date {
+    font-size: 18px;
+  }
+
+  .bb-next-days__times {
+    gap: 5px;
+  }
+
+  .bb-next-days__time {
+    font-size: 12px;
+    padding: 5px 9px;
+  }
+
+  .bb-next-days__time strong {
+    display: none;
+  }
+}

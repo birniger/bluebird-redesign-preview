@@ -1,0 +1,2 @@
+(function(){document.querySelectorAll(".bb-checklist[data-key]").forEach((list)=>{const key=list.dataset.key;const boxes=Array.from(list.querySelectorAll('input[type="checkbox"]'));let saved=[];try{saved=JSON.parse(window.localStorage.getItem(key)||"[]");}catch(e){saved=[];}
+boxes.forEach((box,i)=>{box.checked=saved.includes(i);box.addEventListener("change",()=>{const ticked=boxes.map((b,j)=>(b.checked?j:-1)).filter((j)=>j>=0);try{window.localStorage.setItem(key,JSON.stringify(ticked));}catch(e){}});});});})();

@@ -13,6 +13,56 @@
   position: relative;
 }
 
+/* A real route's height line gets more room, so its climb reads; each dot sits where its stop is
+   on the route, and a dotted drop in the drawing leads to its words. */
+.bb-steps__track.is-profile {
+  --ridge: clamp(150px, 16vw, 230px);
+}
+
+/* Wide screens only: on phones the stops keep the list with its line down the side. */
+@media (min-width: 900px) {
+  .bb-steps__track.is-profile .bb-steps__dot {
+    left: calc(50% + var(--dx, 0) * 100%);
+  }
+
+  .bb-steps__track.is-profile .bb-steps__step::before {
+    height: 16px;
+    top: var(--ridge);
+  }
+}
+
+/* A place passed on the way: a small dot on the line, its short label above. */
+.bb-steps__mark {
+  background: var(--bb-ground);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--wp--preset--color--contrast);
+  height: 10px;
+  position: absolute;
+  top: calc(var(--y) / 100 * var(--ridge));
+  transform: translate(-50%, -50%);
+  width: 10px;
+  z-index: 1;
+}
+
+.bb-steps__mark-label {
+  bottom: calc(100% + 8px);
+  color: var(--wp--preset--color--contrast);
+  font-size: 12px;
+  font-weight: 600;
+  left: 50%;
+  letter-spacing: 0.02em;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.bb-steps__ridge .bb-steps__drop {
+  opacity: 1;
+  stroke: var(--bb-line-soft);
+  stroke-dasharray: 1.5 3.5;
+  stroke-width: 1.5;
+}
+
 /* Sets: the switch under the intro, the chosen day's line rising in. */
 .bb-steps__switch {
   display: flex;
@@ -124,6 +174,16 @@
   line-height: 1;
 }
 
+/* The half day's afternoon time beside its morning one, small. */
+.bb-steps__figure-alt {
+  color: var(--wp--preset--color--muted);
+  font-family: var(--wp--preset--font-family--figtree);
+  font-size: max(13px, 0.3em);
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
 .bb-steps__title {
   font-size: var(--wp--preset--font-size--entry);
   line-height: 1.1;
@@ -144,7 +204,8 @@
 
 /* Narrow: one stop under the other, joined by a straight line. */
 @media (max-width: 899px) {
-  .bb-steps__ridge {
+  .bb-steps__ridge,
+  .bb-steps__mark {
     display: none;
   }
 

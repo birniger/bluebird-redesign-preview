@@ -1,0 +1,33 @@
+(function(){const params=new URLSearchParams(window.location.search);const topic=params.get("topic");const when=params.get("when");if(!topic&&!when){return;}
+const slug=(text)=>text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");document.querySelectorAll(".bb-ask__form").forEach((card)=>{if(topic){const choice=Array.from(card.querySelectorAll('input[type="radio"]')).find((input)=>slug(input.value)===slug(topic),);if(choice){choice.defaultChecked=true;choice.checked=true;}}
+const field=card.querySelector('input[name="when"]');if(when&&field&&!field.value){field.defaultValue=when.slice(0,120);field.value=field.defaultValue;}});})();(function(){const lang=document.documentElement.lang||"en";const de=/^de/.test(lang);const text={day:de?"Tag":"Day",from:de?"von":"from",until:de?"bis":"until",add:de?"Weiteren Tag hinzufügen":"Add another day",first:de?"Datum hinzufügen":"Add a date",remove:de?"Diesen Tag entfernen":"Remove this day",any:de?"jederzeit":"any time",asked:de?"Angefragt":"Asked about",timeHint:de?"Zuerst den Tag wählen; die Zeit ist freiwillig.":"Pick the day first; the time is optional.",posted:de?"Welches Datum?":"Which date?",choose:de?"Datum wählen":"Choose a date",};const today=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);const dateWords=(iso)=>new Date(iso+"T12:00:00").toLocaleDateString(de?"de-CH":"en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",});const slug=(value)=>value.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");const list=(card,name)=>{try{return JSON.parse(card.dataset[name]||"[]");}catch(e){return[];}};document.querySelectorAll(".bb-ask__form").forEach((card)=>{const field=card.querySelector('input[name="when"]');const label=field&&field.closest("label");if(!field||!label){return;}
+const posted=list(card,"posted");const touring=list(card,"touring");const heading=label.querySelector(".bb-field__label");const picker=document.createElement("div");picker.className="bb-days";picker.setAttribute("role","group");picker.setAttribute("aria-label",heading?heading.textContent:text.day);picker.innerHTML='<p class="bb-field__label">'+
+(heading?heading.textContent:"")+'</p><p class="bb-days__hint">'+
+text.timeHint+'</p><ul class="bb-days__summary" aria-live="polite"></ul>'+'<label class="bb-days__posted"><span class="screen-reader-text">'+
+text.posted+'</span><select><option value="">'+
+text.choose+"</option></select></label>"+'<div class="bb-days__rows"></div><button type="button" class="bb-days__add">+ '+
+text.add+"</button>";label.hidden=true;label.after(picker);const rows=picker.querySelector(".bb-days__rows");const adder=picker.querySelector(".bb-days__add");const name=()=>(adder.textContent="+ "+(rows.children.length?text.add:text.first));const summary=picker.querySelector(".bb-days__summary");const choosePosted=picker.querySelector(".bb-days__posted select");posted.forEach((words)=>choosePosted.add(new Option(words,words)));let brought="";const topic=()=>{const chosen=card.querySelector('input[name="topic"]:checked');return chosen?slug(chosen.value):"";};function mode(){const now=topic();const usePosted="a-posted-date"===now&&posted.length>0;picker.dataset.mode=usePosted?"posted":"custom-lesson"===now?"times":"days";write();}
+const instructor=card.querySelector('select[name="instructor"]');function offerTouring(){const radio=Array.from(card.querySelectorAll('input[name="topic"]')).find((input)=>"touring"===slug(input.value),);if(!radio){return;}
+const name=instructor?instructor.value:"";const offered=!name||touring.includes(name);const item=radio.closest(".wpcf7-list-item")||radio.closest("label");if(item){item.hidden=!offered;}
+if(!offered&&radio.checked){radio.checked=false;}
+mode();}
+card.addEventListener("bb-ask:day",(event)=>{brought=(event.detail||"").slice(0,120);choosePosted.value=posted.includes(brought)?brought:"";if(choosePosted.value){brought="";}
+offerTouring();});const chip=(words,remove)=>{const item=document.createElement("li");item.innerHTML='<span></span><button type="button" class="bb-days__remove" aria-label="'+
+text.remove+'">×</button>';item.querySelector("span").textContent=words;item.querySelector("button").addEventListener("click",remove);return item;};function write(){summary.textContent="";const days=[];if(brought){summary.appendChild(chip(text.asked+": "+brought,()=>{brought="";write();}),);days.push(brought);}
+if("posted"===picker.dataset.mode){if(choosePosted.value){days.push(choosePosted.value);}}else{const times="times"===picker.dataset.mode;Array.from(rows.children).forEach((row)=>{const[date,from,until]=row.querySelectorAll("input");row.classList.toggle("has-day",!!date.value);if(!date.value){return;}
+let words=dateWords(date.value);if(times){let time=text.any;if(from.value&&until.value){time=from.value+"–"+until.value;}else if(from.value){time=text.from+" "+from.value;}else if(until.value){time=text.until+" "+until.value;}
+words+=", "+time;}
+days.push(words);summary.appendChild(chip(words,()=>removeRow(row)));});}
+summary.hidden=!summary.children.length;field.value=days.filter(Boolean).join("; ").slice(0,400);}
+function removeRow(row){row.remove();name();write();}
+function addRow(){const row=document.createElement("div");row.className="bb-days__row";row.innerHTML='<label class="bb-days__date" data-placeholder="'+
+text.choose+'"><span class="screen-reader-text">'+
+text.day+'</span><input type="date" min="'+
+today+'"></label><label class="bb-days__time"><span>'+
+text.from+'</span><input type="time" step="900"></label><label class="bb-days__time"><span>'+
+text.until+'</span><input type="time" step="900"></label><button type="button" class="bb-days__remove" aria-label="'+
+text.remove+'">×</button>';rows.appendChild(row);return row;}
+function start(){rows.textContent="";brought=field.defaultValue||field.value||"";choosePosted.value=posted.includes(brought)?brought:"";if(choosePosted.value){brought="";}
+name();offerTouring();}
+picker.addEventListener("input",write);picker.addEventListener("change",write);card.addEventListener("change",(event)=>{if(event.target.matches('input[name="topic"]')){mode();}else if(event.target===instructor){offerTouring();}});picker.addEventListener("click",(event)=>{if(event.target.closest(".bb-days__add")){addRow().querySelector("input").focus();name();write();}else if(event.target.closest(".bb-days__row .bb-days__remove")){removeRow(event.target.closest(".bb-days__row"));}});const form=card.querySelector("form");if(form){form.addEventListener("reset",()=>window.setTimeout(start,0));}
+start();});})();
