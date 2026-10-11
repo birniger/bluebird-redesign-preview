@@ -1,5 +1,5 @@
 /**
- * The season's dates: a white card for each, the date on a mint tile, the next one with the sun.
+ * The season's dates: a white card for each, the date on a mint tile.
  * When nothing is posted, one quiet card says so and points to what can always be asked for.
  */
 
@@ -53,6 +53,20 @@
   position: relative;
 }
 
+a.bb-event__date-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+a.bb-event__date-link .bb-event__date {
+  transition: background-color 0.2s;
+}
+
+a.bb-event__date-link:hover .bb-event__date {
+  background: var(--wp--preset--color--line);
+}
+
 .bb-event__day {
   font-family: var(--wp--preset--font-family--instrument-serif);
   font-size: 40px;
@@ -68,16 +82,12 @@
   text-transform: uppercase;
 }
 
-.bb-event.is-next .bb-event__date::after {
-  background: var(--wp--preset--color--sun);
-  border-radius: 50%;
-  box-shadow: 0 0 0 5px rgba(242, 168, 90, 0.25);
-  content: "";
-  height: 12px;
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 12px;
+/* The body fills the card, so the buttons sit on the card's bottom edge: cards side by side in a
+   row end with their buttons level, however long their words. */
+.bb-event__body {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 .bb-event__body > * {
@@ -112,6 +122,7 @@
   display: inline-flex;
   font-size: 13px;
   font-weight: 600;
+  align-self: flex-start;
   gap: 8px;
   margin-top: 14px !important;
 }
@@ -130,11 +141,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px 18px;
-  margin-top: 16px !important;
+  align-content: flex-start;
+  margin-top: auto !important;
+  padding-top: 16px;
 }
 
 .bb-event__signup.wp-block-button__link {
   font-size: var(--wp--preset--font-size--small);
+  /* WordPress's button style sets height: 100%, which fills the whole actions row once the links
+     wrap onto two lines. */
+  height: auto;
   padding: 10px 18px;
 }
 

@@ -205,6 +205,10 @@
   padding: 0;
 }
 
+.bb-lessons__notes[hidden] {
+  display: none;
+}
+
 .bb-lessons__notes li {
   align-items: center;
   display: inline-flex;
