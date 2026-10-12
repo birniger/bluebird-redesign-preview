@@ -248,6 +248,37 @@
   padding-top: 14px;
 }
 
+/* A table's own way in, under its rows (touring: not booked online, ask for a plan): the words
+   on the left, the button on the right; its small print follows without another line. */
+.bb-price-table__ask {
+  align-items: center;
+  border-top: 1px solid var(--wp--preset--color--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.bb-price-table__ask > p {
+  color: var(--wp--preset--color--contrast);
+  flex: 1 1 320px;
+  font-size: var(--wp--preset--font-size--body);
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.bb-price-table__ask > .bb-actions {
+  flex: none;
+  margin: 0;
+}
+
+.bb-price-table__ask + .bb-price-table__footnote {
+  border-top: 0;
+  padding-top: 0;
+}
+
 @media (max-width: 699px) {
   .bb-price-table thead {
     display: none;

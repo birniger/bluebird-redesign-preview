@@ -1,0 +1,8 @@
+(function(){const hash=window.location.hash;if(!hash)return;let target;try{target=document.getElementById(decodeURIComponent(hash.slice(1)));}catch{return;}
+if(!target?.querySelector(".wp-block-accordion")||target.closest(".wp-block-accordion")){return;}
+const accordions=Array.from(document.querySelectorAll(".wp-block-accordion"));let loaded=document.readyState==="complete";let fontsReady=!document.fonts;let stopped=false;let queued=false;const interactions=["wheel","touchstart","pointerdown","keydown"];function stop(){stopped=true;observer.disconnect();interactions.forEach((event)=>window.removeEventListener(event,stop));window.removeEventListener("load",onLoad);window.removeEventListener("hashchange",stop);}
+function correct(){if(stopped||queued||!loaded||!fontsReady)return;const ready=accordions.every((accordion)=>Array.from(accordion.querySelectorAll(".wp-block-accordion-item")).every((item)=>item.classList.contains("is-open")||item.querySelector(".wp-block-accordion-panel")?.hasAttribute("hidden"),),);if(!ready)return;queued=true;window.requestAnimationFrame(()=>window.requestAnimationFrame(()=>{if(!stopped&&window.location.hash===hash){target.scrollIntoView({block:"start",behavior:"instant"});}
+stop();}),);}
+function onLoad(){loaded=true;correct();}
+const observer=new MutationObserver(correct);accordions.forEach((accordion)=>observer.observe(accordion,{subtree:true,attributes:true,attributeFilter:["hidden","class"],}),);interactions.forEach((event)=>window.addEventListener(event,stop,{passive:true}));window.addEventListener("load",onLoad,{once:true});window.addEventListener("hashchange",stop,{once:true});if(document.fonts){document.fonts.ready.then(()=>{fontsReady=true;correct();},stop);}
+correct();})();
