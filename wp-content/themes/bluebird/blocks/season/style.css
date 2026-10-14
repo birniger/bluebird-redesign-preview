@@ -158,6 +158,32 @@ a.bb-event__date-link:hover .bb-event__date {
   display: inline-flex;
 }
 
+/* A kind with nothing posted: an empty place in its group, the sun where the date would be. */
+.bb-event.is-placeholder {
+  --bb-placeholder-line: color-mix(in srgb, var(--wp--preset--color--muted) 40%, transparent);
+  background: transparent;
+  outline: 1.5px dashed var(--bb-placeholder-line);
+  outline-offset: -1.5px;
+}
+
+.bb-event.is-placeholder .bb-event__date {
+  background: transparent;
+  outline: 1.5px dashed var(--bb-placeholder-line);
+  outline-offset: -1.5px;
+}
+
+.bb-event__sun {
+  background: var(--wp--preset--color--sun);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px rgba(242, 168, 90, 0.2);
+  height: 18px;
+  width: 18px;
+}
+
+.bb-event.is-placeholder h3 {
+  color: var(--wp--preset--color--muted);
+}
+
 /* Nothing posted: one card, the sun, what can always be asked for. */
 .bb-season__empty {
   align-items: center;

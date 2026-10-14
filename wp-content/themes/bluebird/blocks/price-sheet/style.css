@@ -249,7 +249,8 @@
 }
 
 /* A table's own way in, under its rows (touring: not booked online, ask for a plan): the words
-   on the left, the button on the right; its small print follows without another line. */
+   on the left, the buttons on the right, wrapping on a phone; its small print follows without
+   another line. */
 .bb-price-table__ask {
   align-items: center;
   border-top: 1px solid var(--wp--preset--color--line);
@@ -270,7 +271,7 @@
 }
 
 .bb-price-table__ask > .bb-actions {
-  flex: none;
+  flex: 0 1 auto;
   margin: 0;
 }
 
