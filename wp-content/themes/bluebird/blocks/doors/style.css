@@ -139,6 +139,22 @@
   }
 
   .bb-door {
+    height: auto;
+  }
+
+  .bb-door__photo {
+    display: block;
     height: 230px;
+    inset: auto;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+  }
+
+  .bb-door__glass {
+    inset: auto;
+    margin: -32px 12px 12px;
+    position: relative;
+    z-index: 1;
   }
 }

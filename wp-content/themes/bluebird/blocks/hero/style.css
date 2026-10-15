@@ -48,9 +48,14 @@
   width: 100%;
 }
 
-/* Wide screens, where the glass card covers the photo's lower left: a photo's zoom (set per photo
-   in the hero's sidebar) enlarges it from its top left and slides it so its focus point lands
-   near the right third, never past an edge. Zoom 1 leaves the photo as it is. */
+/* A photo's zoom (set per photo in the hero's sidebar) enlarges it around its focus point. On
+   wide screens, where the glass card covers the photo's lower left, it also slides the photo so
+   the focus point lands near the right third, never past an edge. Zoom 1 leaves it as it is. */
+.bb-hero__slides img {
+  transform: scale(var(--bb-zoom, 1));
+  transform-origin: calc(var(--bb-fx, 0.5) * 100%) calc(var(--bb-fy, 0.5) * 100%);
+}
+
 @media (min-width: 1000px) {
   .bb-hero__slides img {
     transform: translate(
