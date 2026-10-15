@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-14T11:59:54+02:00",
+  "captured_at": "2026-10-15T16:12:46+02:00",
   "languages": [
     "en",
     "de"
@@ -62,7 +62,5 @@
     "/tours-and-weeks/"
   ],
   "page_count": 55,
-  "static_preview": true,
-  "updated_at": "2026-10-14T16:11:29+02:00",
-  "partial_update": "English homepage title, social titles and derived schema name match native WordPress; other pages retain the captured snapshot."
+  "static_preview": true
 }
