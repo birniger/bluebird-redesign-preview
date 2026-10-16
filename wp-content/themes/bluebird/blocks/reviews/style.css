@@ -124,9 +124,9 @@
 }
 
 .bb-reviews .bb-reviews__nav > .bb-turn {
-  --bb-turn-fill: rgba(255, 255, 255, 0.08);
+  --bb-turn-fill: transparent;
   --bb-turn-rim: rgba(6, 62, 95, 0.14);
-  --bb-turn-hover: var(--wp--preset--color--white);
+  --bb-turn-hover: transparent;
   color: rgba(6, 62, 95, 0.5);
   flex: none;
   inset: auto;
