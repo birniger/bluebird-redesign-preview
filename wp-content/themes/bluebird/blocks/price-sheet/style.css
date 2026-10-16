@@ -105,6 +105,16 @@
   white-space: nowrap;
 }
 
+/* A price in words is set a little smaller and may wrap, hyphenated in the page's language: the
+   stub is narrow, and the German "Zum Selbstkostenpreis" was cut off at every width (2026-10-16). */
+.bb-ticket__price--words {
+  font-size: clamp(24px, 2vw, 30px);
+  hyphens: auto;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  white-space: normal;
+}
+
 .bb-ticket__unit {
   color: var(--wp--preset--color--muted);
   font-size: 12px;
