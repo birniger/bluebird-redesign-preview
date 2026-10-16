@@ -129,7 +129,7 @@
 }
 
 .bb-passes__price.is-sun dt::after {
-  animation: bb-sun-pulse 3.6s ease-in-out infinite alternate;
+  animation: bb-sun-pulse 4.5s ease-in-out infinite alternate;
   background: var(--wp--preset--color--sun);
   border-radius: 50%;
   box-shadow: 0 0 0 5px rgba(242, 168, 90, 0.22);

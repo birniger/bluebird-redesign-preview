@@ -13,7 +13,8 @@
 }
 
 .bb-reviews__sun {
-  animation: bb-sunset 28s ease-in-out infinite alternate;
+  /* Without the script, about the scripted suns' pace (assets/js/sun.js). */
+  animation: bb-sunset 64s ease-in-out infinite alternate;
   background: var(--wp--preset--color--sun);
   border-radius: 50%;
   box-shadow:
@@ -134,31 +135,51 @@
 
 .bb-reviews__dots {
   display: flex;
-  gap: 8px;
   justify-content: center;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .bb-reviews__dots[hidden] {
   display: none;
 }
 
+/* A 24 px button around a small drawn dot, as in the hero (hero/style.css). */
 .bb-reviews__dots button {
+  align-items: center;
+  background: none;
   border: 0;
-  border-radius: 99px;
   cursor: pointer;
-  height: 8px;
-  padding: 0;
-  transition:
-    width 0.4s,
-    background-color 0.4s;
-  width: 8px;
+  display: flex;
+  height: 24px;
+  padding: 0 8px;
+  transition: width 0.4s;
+  width: 24px;
+}
+
+.bb-reviews__dots button::before {
   background: var(--wp--custom--line--soft);
+  border-radius: 99px;
+  content: "";
+  flex: 1;
+  height: 8px;
+  transition: background-color 0.4s;
 }
 
 .bb-reviews__dots button[aria-pressed="true"] {
+  width: 44px;
+}
+
+.bb-reviews__dots button:focus-visible {
+  outline: none;
+}
+
+.bb-reviews__dots button:focus-visible::before {
+  outline: 2px solid var(--wp--preset--color--plum);
+  outline-offset: 3px;
+}
+
+.bb-reviews__dots button[aria-pressed="true"]::before {
   background: var(--wp--preset--color--sun);
-  width: 28px;
 }
 
 @media (prefers-reduced-motion: reduce) {
