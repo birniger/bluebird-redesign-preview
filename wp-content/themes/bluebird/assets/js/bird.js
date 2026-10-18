@@ -184,8 +184,8 @@
           : [];
         const line = first
           ? {
-              left: Math.min(...same.map((b) => b.left)),
-              right: Math.max(...same.map((b) => b.right)),
+              left: Math.min(...same.map((b) => b.left)) + window.scrollX,
+              right: Math.max(...same.map((b) => b.right)) + window.scrollX,
               top: first.top,
               height: first.height,
             }
@@ -226,11 +226,21 @@
     viewport.className = "bb-bird-viewport";
     viewport.appendChild(bird);
     document.body.appendChild(viewport);
+    // Safari measures a zoomed page from what is on screen, not from the page: every rect is moved
+    // by how far the zoom has been panned, which scrollX and scrollY report, and the fixed layer
+    // moves with it. Document coordinates are a rect plus the scroll; the layer's own rect says how
+    // far it sits from the screen's corner (0 in other browsers, and when not zoomed).
     const followScroll = () => {
-      bird.style.translate = "0 " + -window.scrollY + "px";
+      const layer = viewport.getBoundingClientRect();
+      bird.style.translate =
+        -(window.scrollX + layer.left) + "px " + -(window.scrollY + layer.top) + "px";
     };
     followScroll();
     window.addEventListener("scroll", followScroll, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("scroll", followScroll, { passive: true });
+      window.visualViewport.addEventListener("resize", followScroll, { passive: true });
+    }
     const size = () => {
       bird.style.setProperty("--bb-bird-scale", String(T.size));
       const w = bird.offsetWidth || 52;
@@ -243,7 +253,12 @@
     const shown = (el) => el && el.getClientRects().length > 0;
     const box = (el) => {
       const r = el.getBoundingClientRect();
-      return { l: r.left, r: r.right, t: r.top + window.scrollY, b: r.bottom + window.scrollY };
+      return {
+        l: r.left + window.scrollX,
+        r: r.right + window.scrollX,
+        t: r.top + window.scrollY,
+        b: r.bottom + window.scrollY,
+      };
     };
     const inside = (x, y, a) => x > a.l && x < a.r && y > a.t && y < a.b;
 
@@ -770,9 +785,9 @@
       const g = glyphOf(letter, style);
       if (g) {
         const size = parseFloat(style.fontSize);
-        return g.peaks.map((t) => ({ x: r.left + t.dx * size, dy: t.dy * size }));
+        return g.peaks.map((t) => ({ x: r.left + window.scrollX + t.dx * size, dy: t.dy * size }));
       }
-      return [{ x: r.left + r.width / 2 + (lean * (baseline - ink)) / 2, dy: 0 }];
+      return [{ x: r.left + window.scrollX + r.width / 2 + (lean * (baseline - ink)) / 2, dy: 0 }];
     }
     let perchLetter = null;
     function tallLetters(g, small = false) {
@@ -1333,12 +1348,17 @@
 
     // A new layout (a zoom, a turned phone) moves the button and the edges. Sitting, it stays on
     // the same spot of its perch, as any part of the page would, instead of flying over to it
-    // after every zoom step (Basil, 2026-10-18). Flying, it goes home and starts again from there.
+    // after every zoom step (Basil, 2026-10-18). Flying, it carries on with the same flight from the
+    // same place on the screen: a zoom scales the page's measures, so its position, speed and
+    // waypoints are scaled with them, and a perch it was heading for is measured again (Basil,
+    // 2026-10-19: zoom has to work in flight too).
     window.addEventListener("resize", () => {
       followScroll();
+      const before = layoutWidth;
       if (!widthChanged() || held) {
         return;
       }
+      zoomed();
       size();
       if (away) {
         return;
@@ -1353,10 +1373,21 @@
         keepFlying();
         return;
       }
-      // Never left outside a narrower page, where it would widen it.
-      const z = measure().zone;
-      bx = Math.min(Math.max(bx, z.l), z.r);
-      goHome(performance.now());
+      const k = layoutWidth / before;
+      bx *= k;
+      by *= k;
+      vx *= k;
+      vy *= k;
+      tx *= k;
+      ty *= k;
+      lastX *= k;
+      route = route.map((point) => ({ x: point.x * k, y: point.y * k }));
+      landingArc = null;
+      flightProgress = null;
+      // Beyond the edge (flying in) it stays beyond it: its layer clips, so the page never widens.
+      if ("toPerch" === mode || "perch" === mode) {
+        goHome(performance.now());
+      }
     });
 
     // It moves in steps of a sixtieth of a second, however often the screen draws, so it keeps its
@@ -1785,6 +1816,39 @@
     const SETTLE_MS = 500;
     let settleTimer = 0;
     let flyWhenStill = false;
+
+    // A zoom under way, or just done: two fingers on the screen, a pinch on a trackpad, a zoomed-in
+    // page, or a new layout width. The page moves and scrolls with it, which is no scroll of the
+    // visitor's, so the bird sits it out. ZOOM_MS covers the scrolls a browser sends just after.
+    const ZOOM_MS = 600;
+    let pinching = false;
+    let zoomUntil = 0;
+    // A zoom also ends the scroll before it: a trackpad scrolls and zooms in quick turns, and the
+    // flight a quick scroll had in store would set off in the middle of the zoom.
+    const zoomed = () => {
+      zoomUntil = performance.now() + ZOOM_MS;
+      scrollRun = null;
+      flyWhenStill = false;
+      window.clearTimeout(settleTimer);
+      settleTimer = 0;
+    };
+    const zooming = (now) =>
+      pinching ||
+      now < zoomUntil ||
+      (window.visualViewport && Math.abs(window.visualViewport.scale - 1) > 0.01);
+    // Safari's trackpad pinch, and any zoom at all where the browser reports it.
+    window.addEventListener("gesturestart", zoomed, { passive: true });
+    window.addEventListener("gesturechange", zoomed, { passive: true });
+    if (window.visualViewport) {
+      let scale = window.visualViewport.scale;
+      window.visualViewport.addEventListener("resize", () => {
+        // Only a new scale: a phone's browser bar resizes it too, while scrolling.
+        if (window.visualViewport.scale !== scale) {
+          scale = window.visualViewport.scale;
+          zoomed();
+        }
+      });
+    }
     function settled() {
       settleTimer = 0;
       if (!flyWhenStill) {
@@ -1810,6 +1874,14 @@
     // cannot scroll any further, at its top or bottom, still sends the bird off, once it settles.
     function moved(push) {
       const now = performance.now();
+      if (zooming(now)) {
+        // A zoom is not a scroll: the page moves under the fingers, but nobody pushed it, and a
+        // quick pinch would otherwise send the bird off (Basil, 2026-10-19).
+        scrollRun = null;
+        flyWhenStill = false;
+        lastScrollY = window.scrollY;
+        return;
+      }
       if (!scrollRun || now - scrollRun.last > 600) {
         scrollRun = { from: lastScrollY, push: 0, last: now, recent: [] };
       }
@@ -1980,19 +2052,41 @@
     window.addEventListener("scroll", () => moved(0), { passive: true });
     window.addEventListener(
       "wheel",
-      (event) => moved(Math.abs(event.deltaY) * (1 === event.deltaMode ? 16 : 1)),
+      (event) => {
+        // A trackpad pinch (and Ctrl with the wheel) arrives as a wheel turn with Ctrl held.
+        if (event.ctrlKey) {
+          zoomed();
+          return;
+        }
+        moved(Math.abs(event.deltaY) * (1 === event.deltaMode ? 16 : 1));
+      },
       { passive: true },
     );
     window.addEventListener(
       "touchstart",
       (event) => {
+        if (event.touches.length > 1) {
+          pinching = true;
+        }
         touchY = event.touches.length ? event.touches[0].clientY : null;
       },
       { passive: true },
     );
+    const lifted = (event) => {
+      if (pinching && !event.touches.length) {
+        pinching = false;
+        zoomed();
+      }
+    };
+    window.addEventListener("touchend", lifted, { passive: true });
+    window.addEventListener("touchcancel", lifted, { passive: true });
     window.addEventListener(
       "touchmove",
       (event) => {
+        if (pinching) {
+          zoomed();
+          return;
+        }
         if (null !== touchY && event.touches.length) {
           moved(Math.abs(event.touches[0].clientY - touchY));
           touchY = event.touches[0].clientY;

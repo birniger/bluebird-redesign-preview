@@ -466,8 +466,11 @@
   background: transparent;
 }
 
+/* The page keeps its scrollbar's space while the sheet is open: without it the header's right side
+   jumped by the scrollbar's width (Basil, 2026-10-18). */
 html.has-bb-sheet {
   overflow: hidden;
+  scrollbar-gutter: stable;
 }
 
 .bb-sheet__bar {
