@@ -991,15 +991,21 @@
       goHome(now);
     }
 
+    // Where a small round below the button may start: the button's lower edge, or 0 where the words
+    // sit too close below it for the bird to fit between (Basil, 2026-10-18).
+    function roundFloor() {
+      const rest = home();
+      const under = shown(rest) ? box(rest).b : 0;
+      return under && floorAt(measure().zone, bx) - 18 - under > 16 ? under : 0;
+    }
+
     // A short loop: one or two turns somewhere free in its space, now and then down the side strip,
     // then a perch.
     function pickTarget(now, takeOff) {
       // Where words are the perches, an independent round is a small one below the button, between
       // it and the words, never up in the header above it (Basil, 2026-10-18). Where nothing fits
       // below, it keeps the whole band.
-      const rest = roundOnly ? home() : null;
-      const under = shown(rest) ? box(rest).b : 0;
-      const dip = under && floorAt(measure().zone, bx) - 18 - under > 16 ? under : 0;
+      const dip = roundOnly ? roundFloor() : 0;
       reached = dip ? 24 : 70;
       if (takeOff) {
         // With no other perch to go to, the outing is a proper round, not a hop and back.
@@ -1151,6 +1157,17 @@
           roundOnly = false;
           return;
         }
+      }
+      // No room below the button: no round above it either, only a hop along it now and then, and
+      // longer rests (Basil, 2026-10-18: quieter, flying less). A scroll's flight is not made.
+      if (roundOnly && "home" === lastSpot && !roundFloor()) {
+        scrollFlight = false;
+        if (!hop && Math.random() < 0.5 && startHop(now, true)) {
+          until = now + 1000 * (4 + Math.random() * 5);
+          return;
+        }
+        until = now + 1000 * (8 + Math.random() * 8);
+        return;
       }
       pickTarget(now, true);
     }
