@@ -514,6 +514,9 @@
     let grabY = 0;
     let legs = 0;
     let roundOnly = false;
+    // How near a leg's target counts as reached: a small round below the button must actually get
+    // down there, not turn back from the first few pixels.
+    let reached = 70;
     // Where the landing spots are letters: the flights after reaching the button, and after each
     // visit to a letter, are small rounds that neither head for a letter nor land on one (Basil,
     // 2026-10-18: on a phone the small flight just down and back had gone). Images and badges
@@ -991,6 +994,13 @@
     // A short loop: one or two turns somewhere free in its space, now and then down the side strip,
     // then a perch.
     function pickTarget(now, takeOff) {
+      // Where words are the perches, an independent round is a small one below the button, between
+      // it and the words, never up in the header above it (Basil, 2026-10-18). Where nothing fits
+      // below, it keeps the whole band.
+      const rest = roundOnly ? home() : null;
+      const under = shown(rest) ? box(rest).b : 0;
+      const dip = under && floorAt(measure().zone, bx) - 18 - under > 16 ? under : 0;
+      reached = dip ? 24 : 70;
       if (takeOff) {
         // With no other perch to go to, the outing is a proper round, not a hop and back.
         const g = measure();
@@ -998,7 +1008,9 @@
         // 2026-10-18: less space, less activity).
         const tight = cramped(g.zone);
         circuitOn =
-          (roundOnly || !(stretches(g).length || g.rating)) && (!tight || Math.random() < 0.2);
+          !dip &&
+          (roundOnly || !(stretches(g).length || g.rating)) &&
+          (!tight || Math.random() < 0.2);
         legs = circuitOn ? 2 : tight ? 1 : 1 + Math.floor(Math.random() * 2);
       }
       if (!takeOff && legs <= 0) {
@@ -1018,14 +1030,14 @@
         : 3 * HALF;
       // Somewhere free; failing that, the top right corner, which always is.
       tx = z.r - 30;
-      ty = z.t + 20;
+      ty = dip || z.t + 20;
       // It prefers a spot ahead of it, so it carries on in a curve rather than stopping to
       // double back; only when nothing ahead is free does it turn round.
       const moving = !takeOff && Math.hypot(vx, vy) > 0.1;
       // The loop: one long leg out and down towards the left, one back and up, instead of a run of
       // short ups and downs (Basil, 2026-10-18).
       const from = z.words ? z.words.l : z.l;
-      const high = z.t + 10;
+      const high = Math.max(z.t + 10, dip);
       let low = floorAt(z, z.r) - 18;
       // Over a tight space it keeps well above the letters.
       if (tight) {
@@ -1052,7 +1064,7 @@
           : z.words && Math.random() < 0.4
             ? z.words.l + Math.random() * (z.r - z.words.l)
             : z.l + Math.random() * (z.r - z.l);
-        if (tight) {
+        if (tight || dip) {
           // Below the header it may go left over the page's opening, as far as its words reach.
           x = Math.min(
             z.r,
@@ -1060,7 +1072,7 @@
           );
         }
         // Left of the logo only below the header.
-        const top = x < z.l && z.words ? z.words.t + 10 : z.t + 10;
+        const top = Math.max(x < z.l && z.words ? z.words.t + 10 : z.t + 10, dip);
         const bottom = floorAt(z, x) - 18;
         if (bottom < top) {
           continue;
@@ -1385,7 +1397,7 @@
           } else {
             pickTarget(now, true);
           }
-        } else if ("fly" === mode && !route.length && Math.hypot(tx - bx, ty - by) < 70) {
+        } else if ("fly" === mode && !route.length && Math.hypot(tx - bx, ty - by) < reached) {
           pickTarget(now);
         } else if (
           "toPerch" === mode &&
