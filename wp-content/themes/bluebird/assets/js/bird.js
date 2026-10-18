@@ -158,6 +158,9 @@
     const labels = first
       ? Array.from(first.querySelectorAll(".is-style-label, .bluebird-partner-kicker")).slice(0, 2)
       : [];
+    const textBlocks = first
+      ? Array.from(first.querySelectorAll("h1, h2, h3, h4, h5, h6, p, li, dt, dd, label, legend"))
+      : [];
 
     // Without a photo or band up top: the first line of the opening words, measured as the text
     // itself, not the box around it.
@@ -269,9 +272,9 @@
       let land = shown(strip) ? box(strip) : null;
       if (!land || land.t > cap) {
         land = firstLine();
-        // On wide screens a line of words lends itself only where it reaches the bird's own
-        // space near the button; one far off on the left would draw it across the page.
-        if (land && width >= 600 && land.r < left + 20) {
+        // A headline may end a little left of the header band: below the logo that last letter
+        // is still reachable. Use the bird's size, without a sudden cutoff at a screen width.
+        if (land && land.r < left - 4 * HALF) {
           land = null;
         }
       }
@@ -307,18 +310,45 @@
           }
           const r = box(el);
           if (r.b <= land.t + 4 && r.b > land.t - 3 * TALL) {
-            areas.push({ l: r.l - HALF, r: r.r + HALF, t: r.t - TALL, b: land.t });
+            areas.push({ l: r.l - HALF, r: r.r + HALF, t: r.t - TALL, b: land.t, label: true });
           }
         });
       }
       if (rating) {
         areas.push({ l: rating.l - 24, r: rating.r + 24, t: rating.t - 14, b: rating.b + 20 });
       }
-      // With no photo, band or line of words in reach it still gets a proper round: a good way
-      // down below the header and left over the page's opening, not tiny loops at the button's
-      // height (Basil, 2026-10-18).
+      let floor = land
+        ? land.text
+          ? land.ink - LIFT + 8
+          : land.t + DIP
+        : head.b + (width < 600 ? 140 : 180);
+      // No usable perch does not mean empty space: a short centred heading can be out of reach
+      // while its introduction fills the proposed round. Stop above the actual text lines,
+      // leaving room for the feet and open wings, rather than flying through those words.
       if (!land) {
-        words = { l: Math.min(left, width * 0.35), t: belowHeader };
+        const from = Math.min(left, width * 0.35);
+        textBlocks.forEach((el) => {
+          if (!shown(el)) {
+            return;
+          }
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          for (const r of range.getClientRects()) {
+            if (
+              r.width > 0 &&
+              r.height > 0 &&
+              r.right > from - HALF &&
+              r.left < right + HALF &&
+              r.bottom + window.scrollY > belowHeader
+            ) {
+              floor = Math.min(floor, r.top + window.scrollY - LIFT - HALF - 8);
+            }
+          }
+        });
+        // Only widen below the logo when a flight actually fits above the opening copy.
+        if (floor > belowHeader + HALF) {
+          words = { l: from, t: belowHeader };
+        }
       }
       return {
         logo: mark,
@@ -326,11 +356,7 @@
           l: left,
           r: right,
           t: 24,
-          floor: land
-            ? land.text
-              ? land.ink - LIFT + 8
-              : land.t + DIP
-            : head.b + (width < 600 ? 140 : 180),
+          floor,
           side,
           words,
         },
@@ -376,10 +402,15 @@
       }
       const y = g.land.t - LIFT;
       // A line of text lends its whole length; a photo keeps clear of its rounded corners.
-      const inset = g.land.text ? 6 : 30;
+      const inset = g.land.text ? 0 : 30;
       const from = g.land.text ? g.zone.words.l : g.zone.l;
       let parts = [[Math.max(g.land.l + inset, from), Math.min(g.land.r - inset, g.zone.r)]];
       g.areas.forEach((a) => {
+        // Letter heights and italic tips differ. Test their actual perch against obstacles in
+        // tallLetters(), rather than erasing a whole text stretch at an approximate height.
+        if (g.land.text) {
+          return;
+        }
         if (y <= a.t || y >= a.b) {
           return;
         }
@@ -482,6 +513,13 @@
     let grabX = 0;
     let grabY = 0;
     let legs = 0;
+    let roundOnly = false;
+    // Where the landing spots are letters: the flights after reaching the button, and after each
+    // visit to a letter, are small rounds that neither head for a letter nor land on one (Basil,
+    // 2026-10-18: on a phone the small flight just down and back had gone). Images and badges
+    // keep their own mix.
+    const SMALL_FIRST = 2;
+    let smallLeft = SMALL_FIRST;
     let lastSpot = "";
     // Slow scrolling leaves it sitting; a quick scroll makes it hop along what it sits on; only a
     // long quick one, past T.flyOff, sends it off (Basil, 2026-10-15 and -16: it left too readily).
@@ -580,6 +618,11 @@
       for (const a of g.areas) {
         if (!hits(bx, by, tx, ty, a)) {
           continue;
+        }
+        if (a.label && "letter" === lastSpot && "toPerch" === mode && ty >= a.b) {
+          // Descend beside the label before approaching a letter below it. Going above the
+          // label would leave the lower band and restart its entry waypoint on every attempt.
+          return { x: Math.min(z.r, a.r + 16), y: ty };
         }
         const leftCorner = { x: a.l - 16, y: a.t - 14 };
         const rightCorner = { x: a.r + 16, y: a.t - 14 };
@@ -729,7 +772,10 @@
           const baseline = r.top + r.height * share;
           const ink = baseline - pen.measureText(letter).actualBoundingBoxAscent;
           for (const spot of footSpots(letter, r, baseline, ink, lean, style)) {
-            if (free.some((part) => spot.x > part.s && spot.x < part.e)) {
+            if (
+              free.some((part) => spot.x > part.s && spot.x < part.e) &&
+              !g.areas.some((a) => inside(spot.x, ink + spot.dy + window.scrollY - LIFT, a))
+            ) {
               found.push({ x: spot.x, y: ink + spot.dy + window.scrollY });
             }
           }
@@ -883,6 +929,9 @@
           spot = "badge";
         }
         let letters = "edge" === spot && g.land.text ? landLetters(g) : [];
+        if ("edge" === spot && g.land.text && !letters.length) {
+          spot = "";
+        }
         // In little room choose a nearby usable letter rather than randomly rejecting it and
         // repeating an empty round. A genuinely distant headline still leaves it at Book.
         if (letters.length && cramped(g.zone)) {
@@ -948,17 +997,18 @@
         // In little room it is mostly a small flight, only now and then a whole round (Basil,
         // 2026-10-18: less space, less activity).
         const tight = cramped(g.zone);
-        circuitOn = !(stretches(g).length || g.rating) && (!tight || Math.random() < 0.2);
+        circuitOn =
+          (roundOnly || !(stretches(g).length || g.rating)) && (!tight || Math.random() < 0.2);
         legs = circuitOn ? 2 : tight ? 1 : 1 + Math.floor(Math.random() * 2);
       }
       if (!takeOff && legs <= 0) {
         circuitOn = false;
-        pickPerch(now);
+        roundOnly ? goHome(now) : pickPerch(now);
         return;
       }
       legs--;
       const g = measure();
-      const z = g.zone;
+      const z = roundOnly ? { ...g.zone, words: null } : g.zone;
       const tight = cramped(z);
       // How far a first try must lie from where it is: a good few body lengths, but in a small
       // space no more than about half of the room there is, or every try fails and the flight
@@ -1077,6 +1127,19 @@
       }
       // A soft push off; the steering does the rest.
       vy = -0.15;
+      // Decide before leaving: a real letter approach, or an independent round in the header
+      // band. A round never drifts towards the words and only then decides whether to land.
+      const g = measure();
+      roundOnly = !!g.land?.text;
+      if (roundOnly && "home" === lastSpot && smallLeft > 0) {
+        smallLeft--;
+      } else if (roundOnly && "home" === lastSpot && Math.random() < 0.65) {
+        pickPerch(now);
+        if ("toPerch" === mode && "letter" === lastSpot) {
+          roundOnly = false;
+          return;
+        }
+      }
       pickTarget(now, true);
     }
 
@@ -1338,6 +1401,7 @@
           scrollFlight = false;
           if ("letter" === lastSpot && perchLetter) {
             tx = perchLetter.x - dir * footShift();
+            smallLeft = SMALL_FIRST;
           }
           // The first rest after flying in: 10 to 18 seconds, and about one visit in four a quick
           // one, so someone new to the page may see the second flight (Basil, 2026-10-18).
