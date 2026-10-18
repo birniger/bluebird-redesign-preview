@@ -409,6 +409,20 @@
         attributeFilter: ["class"],
       });
 
+    // Only a new width is a new layout (a zoom, a turned phone, a resized window). A phone's
+    // browser bar sliding away as the page scrolls fires "resize" with the same width and a taller
+    // page, and each of those would have ended a hop at once, or sent a flying bird home (Basil,
+    // 2026-10-18: no hop on his iPhone).
+    let layoutWidth = document.documentElement.clientWidth;
+    const widthChanged = () => {
+      const width = document.documentElement.clientWidth;
+      if (width === layoutWidth) {
+        return false;
+      }
+      layoutWidth = width;
+      return true;
+    };
+
     // Reduced motion: it sits on the Book button, wings folded, and moves only with the layout.
     if (still.matches) {
       const sit = () => {
@@ -427,8 +441,10 @@
       sit();
       window.addEventListener("resize", () => {
         followScroll();
-        size();
-        sit();
+        if (widthChanged()) {
+          size();
+          sit();
+        }
       });
       watchBooking(() => (booking() ? (bird.style.display = "none") : sit()));
       return;
@@ -1190,7 +1206,7 @@
     // after every zoom step (Basil, 2026-10-18). Flying, it goes home and starts again from there.
     window.addEventListener("resize", () => {
       followScroll();
-      if (held) {
+      if (!widthChanged() || held) {
         return;
       }
       size();
