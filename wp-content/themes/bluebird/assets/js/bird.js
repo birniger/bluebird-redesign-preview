@@ -1648,9 +1648,37 @@
     const rest = () => {
       running = false;
     };
+    // A scroll never sends it flying while the page is still moving. It answers with one hop; a long
+    // or hard one, or one with no room to hop, makes it fly off only once the page has been still
+    // for SETTLE_MS. An iPhone's page also bounces back at the top, which kept the page moving
+    // for a while after it arrived and sent the bird off again the moment it landed (Basil,
+    // 2026-10-18: too wild after a quick scroll up). With its header out of sight it answers nothing.
+    const SETTLE_MS = 500;
+    let settleTimer = 0;
+    let flyWhenStill = false;
+    function settled() {
+      settleTimer = 0;
+      if (!flyWhenStill) {
+        return;
+      }
+      if (hop) {
+        // A hop under way finishes first.
+        settleTimer = window.setTimeout(settled, 250);
+        return;
+      }
+      flyWhenStill = false;
+      if (held || away || awaySince || "perch" !== mode) {
+        return;
+      }
+      scrollRun = null;
+      scrollFlight = true;
+      takeOff(performance.now());
+      keepFlying();
+    }
+
     // How hard the page was moved in one go (until it has been still a moment): how far it scrolled,
     // or how hard the wheel or a finger pushed, whichever is more. So a hard push where the page
-    // cannot scroll any further, at its top or bottom, still sends the bird off.
+    // cannot scroll any further, at its top or bottom, still sends the bird off, once it settles.
     function moved(push) {
       const now = performance.now();
       if (!scrollRun || now - scrollRun.last > 600) {
@@ -1663,6 +1691,17 @@
       scrollRun.recent.push([now, Math.abs(window.scrollY - lastScrollY), push]);
       scrollRun.recent = scrollRun.recent.filter((entry) => now - entry[0] <= QUICK_MS);
       lastScrollY = window.scrollY;
+      if (awaySince) {
+        // Its header is out of sight: nothing to show, so nothing to answer. The next run starts
+        // afresh from where the page is when it comes back.
+        scrollRun = null;
+        flyWhenStill = false;
+        return;
+      }
+      if (flyWhenStill) {
+        window.clearTimeout(settleTimer);
+        settleTimer = window.setTimeout(settled, SETTLE_MS);
+      }
       if (held || away || "perch" !== mode) {
         return;
       }
@@ -1672,17 +1711,19 @@
         return;
       }
       if (Math.max(Math.abs(window.scrollY - scrollRun.from), scrollRun.push) > T.flyOff) {
-        hop = 0;
-        hopY = 0;
-        scrollFlight = true;
-        takeOff(now);
-        keepFlying();
-      } else if (!hop && now - lastHop > HOP_REST) {
-        if (!startHop(now, false, Math.max(page, pushed) >= 3 * QUICK)) {
-          scrollFlight = true;
-          takeOff(now);
-          keepFlying();
-        }
+        flyWhenStill = true;
+      }
+      if (
+        !hop &&
+        now - lastHop > HOP_REST &&
+        !startHop(now, false, Math.max(page, pushed) >= 3 * QUICK)
+      ) {
+        // No room to hop: it flies off once the page is still.
+        flyWhenStill = true;
+      }
+      if (flyWhenStill) {
+        window.clearTimeout(settleTimer);
+        settleTimer = window.setTimeout(settled, SETTLE_MS);
       }
     }
 
