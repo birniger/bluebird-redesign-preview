@@ -1087,7 +1087,9 @@
         cry = new Audio();
         cry.preload = "none";
         cry.src = window.bluebirdBirdSound;
-        cry.volume = 0.25;
+        // Its level is in the clip itself (assets/audio, 22 dB under what it was): iPhone Safari
+        // ignores an audio element's volume, so 0.25 here left it at full level on phones (Basil,
+        // 2026-10-18: quite a bit lower).
         cry.loop = true;
       }
       return cry;
