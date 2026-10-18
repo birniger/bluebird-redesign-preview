@@ -298,19 +298,31 @@
     const body = element("path", { class: "bb-bird__torso-fill" });
     const bodyEdge = edge({ class: "bb-bird__torso-edge" });
     torso.append(body, bodyEdge);
+    const EYE_RY = 0.88;
+    const eye = element("ellipse", {
+      class: "bb-bird__eye",
+      cx: 101.61,
+      cy: 51.13,
+      rx: 2.37,
+      ry: EYE_RY,
+      transform: "rotate(-50.9 101.61 51.13)",
+      fill: "#a2b0b3",
+    });
+    // A blink: the eye narrows to a line and reopens. One follows a head movement, and one comes
+    // now and then on its own, sometimes twice in a row.
+    const BLINK = 0.15;
+    let blinkAt = -1,
+      nextBlink = 0,
+      lastTilt = 0,
+      doubleBlink = false;
+    const blink = (time) => {
+      if (reduced) return;
+      if (blinkAt < 0 || time - blinkAt > BLINK * 1000) blinkAt = time;
+      doubleBlink = Math.random() < 0.2;
+      nextBlink = time + 2500 + Math.random() * 4500;
+    };
     const head = element("g", { class: "bb-bird__head" });
-    head.append(
-      element("path", { d: HEAD + " L90 58 L104 61.5 Z" }),
-      edge({ d: HEAD }),
-      element("ellipse", {
-        cx: 101.61,
-        cy: 51.13,
-        rx: 2.37,
-        ry: 0.88,
-        transform: "rotate(-50.9 101.61 51.13)",
-        fill: "#a2b0b3",
-      }),
-    );
+    head.append(element("path", { d: HEAD + " L90 58 L104 61.5 Z" }), edge({ d: HEAD }), eye);
     pose.append(far.shoulder, farLeg, nearLeg, tail, torso, near.shoulder, head);
     svg.append(pose);
     host.appendChild(svg);
@@ -520,6 +532,23 @@
       const dt = previousTime ? Math.min(0.05, Math.max(0, (time - previousTime) / 1000)) : 1 / 60;
       previousTime = time;
       headAngle += (reduced ? 0 : headTilt - headAngle) * (1 - Math.exp(-12 * dt));
+      if (headTilt !== lastTilt) {
+        lastTilt = headTilt;
+        if (time - blinkAt > 600) blink(time);
+      } else if (!nextBlink) {
+        nextBlink = time + 1500 + Math.random() * 2500;
+      } else if (time > nextBlink) {
+        blink(time);
+      }
+      let lid = 1;
+      if (blinkAt >= 0) {
+        const t = (time - blinkAt) / (BLINK * 1000);
+        if (t >= 1) {
+          blinkAt = doubleBlink ? time + 120 : -1;
+          doubleBlink = false;
+        } else lid = Math.min(1, Math.abs(2 * t - 1));
+      }
+      eye.setAttribute("ry", f(EYE_RY * Math.max(0.06, lid)));
       // Approaching a perch, it brakes, pitches up and reaches with its feet.
       const wanted = !reduced && flying ? clamp(landing) : 0;
       approach += (wanted - approach) * (1 - Math.exp(-10 * dt));
