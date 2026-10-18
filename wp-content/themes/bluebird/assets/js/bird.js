@@ -11,13 +11,16 @@
  *
  * It starts only once the page has shown and the Book button is clear. Scrolling wakes it from a
  * perch; it finishes that flight before resting while the header is off screen. For visitors who
- * ask for reduced motion it simply sits on the Book button.
+ * ask for reduced motion, and on a page that keeps it still, it simply sits on the Book button.
  */
 (function () {
   if (!window.BluebirdRig) {
     return;
   }
   const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  // Reduced motion, or a page that keeps the bird on its button (the partner page, unless the
+  // partner freed it: Basil, 2026-10-18).
+  const calm = still.matches || !!window.bluebirdBirdStill;
 
   // What it may land on at the top of a page: the first photo window or band with a visible edge.
   const LANDING = [
@@ -216,7 +219,7 @@
     bird.className = "bb-bird";
     bird.style.visibility = "hidden";
     bird.setAttribute("aria-hidden", "true");
-    const rig = window.BluebirdRig(bird, { reduced: still.matches });
+    const rig = window.BluebirdRig(bird, { reduced: calm });
     // Keep the entrance outside the viewport without extending the page's scrollable width.
     // Its physics remain in document coordinates; translate compensates for the fixed layer.
     const viewport = document.createElement("div");
@@ -322,6 +325,38 @@
           ? land.ink - LIFT + 8
           : land.t + DIP
         : head.b + (width < 600 ? 140 : 180);
+      // A headline close under the button leaves no room to dip below it, but the column beside the
+      // headline's end is free, down to the next words: a side strip like the one beside a photo
+      // (Basil, 2026-10-18: on a phone's booking page it could dip there).
+      if (land && land.text && !side && width - land.r >= 2 * HALF + 28) {
+        const rest = home();
+        const under = shown(rest) ? box(rest).b : 0;
+        const colL = land.r + 14 + HALF;
+        if (under && floor - 18 - under <= 16 && right - colL >= 8) {
+          let colFloor = cap;
+          textBlocks.forEach((el) => {
+            if (!shown(el)) {
+              return;
+            }
+            const range = document.createRange();
+            range.selectNodeContents(el);
+            for (const r of range.getClientRects()) {
+              if (
+                r.width > 0 &&
+                r.height > 0 &&
+                r.right > colL - HALF &&
+                r.left < right + HALF &&
+                r.top + window.scrollY > land.t + 12
+              ) {
+                colFloor = Math.min(colFloor, r.top + window.scrollY - LIFT - HALF - 8);
+              }
+            }
+          });
+          if (colFloor - 18 - under > 16) {
+            side = { l: colL, b: colFloor };
+          }
+        }
+      }
       // No usable perch does not mean empty space: a short centred heading can be out of reach
       // while its introduction fills the proposed round. Stop above the actual text lines,
       // leaving room for the feet and open wings, rather than flying through those words.
@@ -455,7 +490,7 @@
     };
 
     // Reduced motion: it sits on the Book button, wings folded, and moves only with the layout.
-    if (still.matches) {
+    if (calm) {
       const sit = () => {
         const rest = home();
         if (!rest) {
@@ -996,7 +1031,8 @@
     function roundFloor() {
       const rest = home();
       const under = shown(rest) ? box(rest).b : 0;
-      return under && floorAt(measure().zone, bx) - 18 - under > 16 ? under : 0;
+      const z = measure().zone;
+      return under && floorAt(z, z.r) - 18 - under > 16 ? under : 0;
     }
 
     // A short loop: one or two turns somewhere free in its space, now and then down the side strip,
