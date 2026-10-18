@@ -1,0 +1,5 @@
+(function(){const assets=window.bluebirdBirdAssets;if(!assets||!document.querySelector(".bb-site-header")){return;}
+const scripts=assets.filter((_,index)=>index>0||!window.matchMedia("(prefers-reduced-motion: reduce)").matches,);const idle=(fn)=>{if(window.requestIdleCallback){window.requestIdleCallback(fn);}else{window.setTimeout(fn,300);}};const next=()=>{if(document.visibilityState==="hidden"){document.addEventListener("visibilitychange",next,{once:true});return;}
+idle(()=>{if(document.visibilityState==="hidden"){next();return;}
+const src=scripts.shift();if(!src){return;}
+const script=document.createElement("script");script.src=src;script.fetchPriority="low";script.onload=next;document.head.appendChild(script);});};if(document.readyState==="complete"){next();}else{window.addEventListener("load",next,{once:true});}})();
