@@ -1,0 +1,12 @@
+(function($){"use strict";var text=window.bluebirdEventsCheckout||{};var FIELDS='input[name$="[first_name]"], input[name$="[last_name]"], input[name$="[dob]"], select[name$="[sport]"]';$(document).on("latepoint:nextStepClicked",".latepoint-booking-form-element",function(event,data){if(data&&data.current_step==="event_waiting_list"&&$(this).find('input[name="presets[waiting_list_intent]"][value="on"]').length){$(this).data("next-submit-is-last","no");}},);function realBirthDate(value){var match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(value||"");if(!match){return false;}
+var date=new Date(Date.UTC(+match[1],+match[2]-1,+match[3]));if(date.getUTCMonth()!==+match[2]-1||date.getUTCDate()!==+match[3]){return false;}
+var now=new Date();var today=now.getFullYear()+"-"+
+String(now.getMonth()+1).padStart(2,"0")+"-"+
+String(now.getDate()).padStart(2,"0");return value>="1900-01-01"&&value<=today;}
+function check($participants){var missing=[];var errors=[];$participants.find("fieldset").each(function(index){var $person=$(this);var number=String(index+1);var empty=false;$person.find(FIELDS).each(function(){var blank=!$.trim($(this).val()||"");$(this).closest(".os-form-group").toggleClass("os-invalid",blank);empty=empty||blank;});if(empty){missing.push(number);return;}
+var $dob=$person.find('input[name$="[dob]"]');if(!realBirthDate($dob.val())){$dob.closest(".os-form-group").addClass("os-invalid");errors.push(String(text.dobInvalid||"").replace("%s",number));}});if(missing.length===1){errors.unshift(String(text.incomplete||"").replace("%s",missing[0]));}else if(missing.length>1){errors.unshift(String(text.incompleteMany||"").replace("%s",missing.join(", ")));}
+return errors;}
+$(document).on("latepoint:nextStepClicked",".latepoint-booking-form-element",function(event,data){var step=data&&data.current_step?String(data.current_step):"";if(step.indexOf("event_participants")===-1||typeof window.latepoint_add_action!=="function"){return;}
+var $participants=$(this).find(".bb-event-participants:visible").last();if(!$participants.length){return;}
+window.latepoint_add_action(data.callbacks_list,async function(){var errors=check($participants);if(errors.length){throw new Error(errors.join("\n"));}
+return true;},0,);},);$(document).on("input change",".bb-event-participants .os-form-control",function(){if($.trim($(this).val()||"")){$(this).closest(".os-form-group.os-invalid").removeClass("os-invalid");}});})(jQuery);

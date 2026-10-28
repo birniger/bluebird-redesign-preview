@@ -131,6 +131,24 @@
   }
 }
 
+/* The guiding languages, in the guide's card under the name: "LANGUAGES English and German". */
+.bb-tour-info__tile .bb-tour-info__languages {
+  color: var(--wp--preset--color--ink);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
+.bb-tour-info__languages .bb-tour-info__label {
+  display: inline;
+  margin: 0 8px 0 0;
+}
+
+/* Without a guide, the languages take a row across. */
+.bb-tour-info__wide {
+  grid-column: 1 / -1;
+}
+
 /* The guide: wide, with a portrait and the ways to reach them. */
 .bb-tour-info__guide {
   align-items: center;
